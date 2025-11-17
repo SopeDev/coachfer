@@ -205,7 +205,7 @@
 		const edgesGeo = new THREE.EdgesGeometry(baseGeometry)
 		const mat1 = new THREE.LineBasicMaterial({
 			color: 0xf973d1, // magenta-ish
-			linewidth: 5
+			linewidth: 100
 		})
 		const tetra1 = new THREE.LineSegments(edgesGeo, mat1)
 		
@@ -218,7 +218,7 @@
 		const tetra2 = tetra1.clone()
 		const mat2 = new THREE.LineBasicMaterial({
 			color: 0xf973d1, // magenta-ish
-			linewidth: 5
+			linewidth: 100
 		})
 		tetra2.material = mat2
 		tetra2.rotation.x += Math.PI // Invert vertically (flip upside down)
