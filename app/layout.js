@@ -11,6 +11,11 @@ const cormorantGaramond = Cormorant_Garamond({
 export const metadata = {
   title: "Fernando Quintero - Astrología Cuántica Kabbalista",
   description: "Reprogramación Cuántica del Destino - Un proceso de 3 sesiones para reconectarte con tu propósito más elevado",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
 }
 
 export default function RootLayout({ children }) {
