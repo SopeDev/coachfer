@@ -1,0 +1,119 @@
+@import "../../styles/globals.scss";
+
+.sobre-fernando {
+  background: var(--color-white);
+  padding: 4rem 1rem;
+  position: relative;
+
+  @media (min-width: $break-tablet) {
+    padding: 6rem 2rem;
+  }
+
+  @media (min-width: $break-desktop) {
+    padding: 8rem 4rem;
+  }
+
+  &__container {
+    max-width: $break-desktop;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: flex-start;
+
+    @media (min-width: $break-tablet) {
+      flex-direction: row;
+      gap: 4rem;
+      align-items: flex-start;
+    }
+
+    @media (min-width: $break-desktop) {
+      gap: 5rem;
+    }
+  }
+
+  &__image-wrapper {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    aspect-ratio: 3 / 4;
+
+    @media (min-width: $break-tablet) {
+      max-width: 450px;
+    }
+
+    @media (min-width: $break-desktop) {
+      max-width: 500px;
+    }
+  }
+
+  &__image-inner {
+    width: 100%;
+    height: 120%;
+    will-change: transform;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  &__text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &__title {
+    font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--color-indigo);
+    text-align: left;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+
+    @media (min-width: $break-tablet) {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: $break-desktop) {
+      font-size: 3rem;
+      margin-bottom: 2.5rem;
+    }
+  }
+
+  &__paragraph {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2a2a2a;
+    margin: 0;
+
+    strong {
+      color: var(--color-indigo);
+      font-weight: bold;
+    }
+
+    @media (min-width: $break-tablet) {
+      font-size: 1.125rem;
+    }
+
+    @media (min-width: $break-desktop) {
+      gap: 2rem;
+    }
+  }
+}
+

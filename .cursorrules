@@ -1,0 +1,347 @@
+# ============================================================
+# PROJECT RULES – Landing Page: Fernando Quintero Astro Coaching
+# ============================================================
+
+## 🔮 Project Overview
+We are building a **single-page landing website** for *Fernando Quintero*, coach especializado en **astrología cuántica kabbalista** y creador del método: *Reprogramación Cuántica del Destino* (3 sesiones).
+
+The site must feel:
+- Modern and elegant
+- Mystical yet professional (NOT "woo woo")
+- Clean with purposeful atmospheric elements
+- High-end wellness/transformation (think luxury meditation app)
+- Focused on selling the 3-session package
+- Mobile-first and high-performance
+- Smooth, subtle GSAP animations
+
+**Key Balance:** Quantum physics meets ancient wisdom. Legitimate and transformative, not fortune teller aesthetic.
+
+---
+
+# ============================================================
+# BRANDING GUIDELINES
+# ============================================================
+
+## 🎨 Colors (Brand Palette)
+Primary colors (from logo):
+- **Indigo Blue** – `#3a18b1`
+- **Gray** – `#777777`
+
+Neutrals:
+- **Pure White** – `#ffffff`
+- **Deep Space Background** – `#0A0A15` (for hero section)
+- Optional extra neutral: **Soft Gray** – `#f4f4f4`
+
+Accent colors:
+- **Golden Accent** – `#F59E0B` (for "Reprogramación Cuántica del Destino")
+- **Vibrant Purple/Indigo** – `#6366F1` (for CTA buttons)
+- **Soft Purple** – `#8B5CF6` (for glows and accents)
+
+Atmospheric effects (use sparingly):
+- Subtle radial glows: `rgba(107, 70, 193, 0.2-0.4)` behind key elements
+- Vignette edges: `rgba(0, 0, 0, 0.6)` at 70-100% radius
+- Geometric shapes: `rgba(139, 92, 246, 0.15-0.3)`
+
+**Critical Rule:** All mystical elements must be SUBTLE. Effects should be felt more than obviously seen.
+
+---
+
+## 🔤 Typography
+Primary font family:
+- **Cormorant Garamond** (Medium/SemiBold) for hero title and major headings
+  - Elegant serif that conveys authority and spiritual depth
+  - Use generous letter-spacing (1-2px)
+  
+- **Gadugi** (regular + bold) for navigation, body copy, and secondary headings
+  - Clean, modern sans-serif for readability
+
+Hierarchy:
+- Hero title: Cormorant Garamond Medium/SemiBold, 72-76px desktop, large letter-spacing
+- Section headings: Gadugi Bold
+- Body copy: Gadugi Regular, line-height 1.7-1.8 for readability
+- CTA buttons: Gadugi SemiBold
+
+Rules:
+- Use consistent font sizes from a scale defined in global SCSS
+- Avoid unnecessary weights; keep it elegant and minimal
+- Both fonts are Google Fonts (easy implementation)
+
+---
+
+# ============================================================
+# TECH + ARCHITECTURE RULES
+# ============================================================
+
+## ⚙️ Framework & Languages
+- **Next.js (latest)**
+- **JavaScript only (NO TypeScript)**
+- **GSAP** for animations
+- **Custom SASS (SCSS)**
+- NO Tailwind
+- NO external UI libraries
+- Mobile-first development approach
+
+---
+
+## 📁 Folder Structure Rules
+Each component must live in its own folder:
+
+```
+/components
+   /Header
+      Header.jsx
+      Header.scss
+   /Hero
+      Hero.jsx
+      Hero.scss
+   /Metodo
+      Metodo.jsx
+      Metodo.scss
+   /Testimonials
+      Testimonials.jsx
+      Testimonials.scss
+   /CTA
+      CTA.jsx
+      CTA.scss
+```
+
+Each `.scss` file must import the global settings file:
+
+```scss
+@import "../../styles/globals.scss";
+```
+
+Pages will live in `/app` (App Router).
+
+---
+
+## 🎨 Global Styles
+Inside `/styles/globals.scss` define:
+
+- Color variables
+- Font declarations (@import from Google Fonts)
+- Breakpoints
+- Reset (minimal)
+- Utility classes (only if strictly necessary)
+- Typography scale (h1, h2, body, small)
+
+Example:
+
+```scss
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Gadugi:wght@400;700&display=swap');
+
+:root {
+  --color-indigo: #3a18b1;
+  --color-gray: #777;
+  --color-white: #fff;
+  --color-space-bg: #0A0A15;
+  --color-golden: #F59E0B;
+  --color-purple: #6366F1;
+  --color-purple-light: #8B5CF6;
+
+  --font-primary: "Gadugi", sans-serif;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+}
+
+$break-mobile: 480px;
+$break-tablet: 768px;
+$break-desktop: 1180px;
+
+body {
+  font-family: var(--font-primary);
+  margin: 0;
+  background: var(--color-white);
+  color: var(--color-gray);
+}
+```
+
+---
+
+# ============================================================
+# DESIGN + UX RULES
+# ============================================================
+
+## 📱 Mobile First
+- Base styles: mobile
+- Use min-width media queries for tablet & desktop
+- Layout must be clean and vertical
+- Generous spacing
+- No clutter
+
+---
+
+## ✨ Look & Feel
+The site must communicate:
+- Autoridad espiritual
+- Profesionalismo moderno
+- Claridad
+- Profundidad sin exagerar lo "místico"
+
+**Hero Section Specifics:**
+- Dark cosmic background (#0A0A15) with animated stars
+- Subtle rotating geometric shape (hexagon) at 15-20% opacity
+- Soft radial glow behind text content (20-30% opacity)
+- Vignette effect around edges to focus attention
+- Large, commanding serif title (Cormoant Garamond)
+- Clean, readable body copy with good line-height
+- Prominent CTA with glow effect
+
+**Rest of Site:**
+- Light backgrounds (mostly white)
+- Indigo accents
+- Gray typography for balance
+- Thin separators
+- Subtle gradients (indigo → transparent)
+- Soft glows only behind symbols or key words
+
+Visual Balance:
+- ❌ Avoid: New Age crystal shop with rainbow gradients everywhere
+- ✅ Aim for: High-end meditation app or luxury wellness retreat
+- ❌ Avoid: Fortune teller neon signs
+- ✅ Aim for: Quantum physics meets ancient wisdom
+
+Avoid:
+- Heavy textures
+- Overly "esoteric" icons
+- Busy backgrounds
+- Too many animations
+- Anything that feels "woo woo" or illegitimate
+
+---
+
+## 🎥 Animations (GSAP)
+Use GSAP for:
+- Fade-in + upward motion on sections
+- Smooth stagger on text reveals
+- Slow rotating geometric shape in hero (left-right oscillation)
+- Twinkling stars (opacity fade in/out)
+- Subtle opacity background transitions
+- Hover effects on CTA buttons (glow intensity)
+
+Rules:
+- Animations must be **tasteful**, **slow**, **clean**
+- NO excessive bouncing or cartoon-like animations
+- Use ScrollTrigger only when appropriate
+- Hero animations should feel cosmic and elegant, never cheesy
+- Keep durations slow (2-4 seconds for background elements)
+
+---
+
+# ============================================================
+# CONTENT RULES
+# ============================================================
+
+## 📚 Core Sections for the Landing Page
+1. **Hero**
+   - Dark cosmic background with stars
+   - Rotating geometric shape
+   - Logo (top left)
+   - Title: "Renace en tu Propósito" (Cormorant Garamond)
+   - Subtitle with golden accent on "Reprogramación Cuántica del Destino"
+   - Prominent CTA button: "Agenda tu proceso"
+
+2. **Sobre Fernando**
+   - Extract content from "método de reprogramación" document
+   - Light background
+
+3. **Método de Reprogramación Cuántica**
+   - 3 sesiones
+   - Icons minimalistas
+   - Summary of each step
+
+4. **Resultados / Beneficios**
+   - Summary based on uploaded document
+
+5. **Testimonios**
+   - Placeholder until real content arrives
+
+6. **CTA Final**
+   - Strong headline
+   - Button to agendar
+
+---
+
+# ============================================================
+# COPYWRITING RULES
+# ============================================================
+
+Tone should be:
+- Claro
+- Inspirador
+- Espiritual moderno
+- Evitar cliché new-age
+- Usar palabras como:
+  - propósito
+  - destino
+  - reprogramación
+  - conciencia
+  - frecuencia
+  - transformación
+  - recordar quién eres
+  - cuántico
+  - alma
+  - potencial máximo
+
+Avoid:
+- Terminología excesivamente técnica
+- Exageraciones místicas sin fundamento
+- Lenguaje que suene a "fortune teller"
+- Promesas exageradas
+
+---
+
+# ============================================================
+# CODING STYLE RULES
+# ============================================================
+
+## 🧼 General
+- No semicolons
+- Use ES modules
+- Simple, clean React components
+- Avoid unnecessary abstraction
+
+## 🌿 SASS
+- One component → one Sass file
+- Reference global variables only
+- Avoid deep nesting (>3 levels)
+- DRY (reuse mixins/variables)
+
+---
+
+# ============================================================
+# WHAT NOT TO DO
+# ============================================================
+- Do NOT use TypeScript
+- Do NOT use Tailwind
+- Do NOT install UI libraries
+- Do NOT add random new brand colors
+- Do NOT overcomplicate animations
+- Do NOT introduce complex state management
+- Do NOT write magic numbers → always use variables, spacing scale
+- Do NOT make it look "woo woo" or illegitimate
+- Do NOT add heavy textures or busy backgrounds
+- Do NOT use aggressive or bouncy animations
+
+---
+
+# ============================================================
+# ATMOSPHERIC ELEMENTS - USE SPARINGLY
+# ============================================================
+Mystical elements that ARE allowed (when used subtly):
+- Slow rotating geometric shapes (low opacity)
+- Twinkling stars (elegant, not flashy)
+- Soft radial glows behind key content
+- Vignette effects to focus attention
+- Subtle gradient overlays
+- Particle effects (if extremely subtle)
+
+These should enhance the professional atmosphere, not distract from it.
+
+---
+
+# ============================================================
+# READY TO BUILD
+# ============================================================
+Follow these rules for ALL future code generation, component creation, style decisions, and page structure for this project.
+
+The goal is a landing page that feels like a premium transformation experience - legitimate, professional, and subtly mystical.

@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Gadugi:wght@400;700&display=swap');
+
+@font-face {
+  font-family: "Gadugi";
+  src: url("/fonts/gadugi-normal.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gadugi";
+  src: url("/fonts/gadugi-bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --color-indigo: #3a18b1;
+  --color-gray: #777777;
+  --color-white: #ffffff;
+  --color-soft-gray: #f4f4f4;
+  --color-indigo-glow: rgba(58, 24, 177, 0.18);
+  --color-golden: #F59E0B;
+
+  --font-primary: "Gadugi", sans-serif;
+  --font-cormorant: "Cormorant Garamond", Georgia, serif;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+}
+
+$break-mobile: 480px;
+$break-tablet: 768px;
+$break-desktop: 1200px;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-weight: normal;
+  margin: 0;
+  background: #0a0a0f;
+  color: var(--color-gray);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  font-weight: bold;
+  color: var(--color-indigo);
+  line-height: 1.2;
+  margin: 0;
+}
+
+h1 {
+  font-size: 2.5rem;
+  
+  @media (min-width: $break-tablet) {
+    font-size: 3.5rem;
+  }
+  
+  @media (min-width: $break-desktop) {
+    font-size: 4.5rem;
+  }
+}
+
+h2 {
+  font-size: 2rem;
+  
+  @media (min-width: $break-tablet) {
+    font-size: 2.5rem;
+  }
+  
+  @media (min-width: $break-desktop) {
+    font-size: 3rem;
+  }
+}
+
+h3 {
+  font-size: 1.5rem;
+  
+  @media (min-width: $break-tablet) {
+    font-size: 1.75rem;
+  }
+  
+  @media (min-width: $break-desktop) {
+    font-size: 2rem;
+  }
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 0;
+  
+  @media (min-width: $break-tablet) {
+    font-size: 1.125rem;
+  }
+}
+
+a {
+  color: var(--color-indigo);
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+button {
+  font-family: var(--font-primary);
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
