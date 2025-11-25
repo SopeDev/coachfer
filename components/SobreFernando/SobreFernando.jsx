@@ -90,7 +90,8 @@ export default function SobreFernando() {
             <p className="sobre-fernando__paragraph">
               Mi propósito es acompañarte para que puedas
               <strong>reconectarte con tu propósito más elevado,</strong>
-              liberar los patrones que te limitan y transformar tu realidad desde el plano cuántico, creando una nueva frecuencia de conciencia que te permita vivir en plenitud y realización.
+              liberar los patrones que te limitan y transformar tu realidad desde el plano cuántico, creando una nueva frecuencia de conciencia que te permita
+              <strong>vivir en plenitud y realización.</strong>
             </p>
           </div>
           
