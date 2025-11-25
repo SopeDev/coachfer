@@ -2,21 +2,28 @@
 
 import { useEffect, useRef } from "react"
 import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Button from "../Button/Button"
 import "./Hero.scss"
+
+gsap.registerPlugin(ScrollTrigger)
 
 export default function Hero() {
   const heroRef = useRef(null)
   const titleRef = useRef(null)
   const ctaRef = useRef(null)
   const starsRef = useRef(null)
+  const starsArrayRef = useRef([])
 
   useEffect(() => {
-    // Create dynamic stars
-    if (starsRef.current) {
+    // Create dynamic stars and apply parallax
+    if (starsRef.current && heroRef.current) {
       const starsContainer = starsRef.current
-      const starCount = 150
+      const starCount = 100
+      const stars = []
+      const scrollTriggers = []
 
+      // Create stars
       for (let i = 0; i < starCount; i++) {
         const star = document.createElement("div")
         star.className = "hero__star"
@@ -33,8 +40,67 @@ export default function Hero() {
         star.style.top = `${y}%`
         star.style.animationDelay = `${delay}s`
         star.style.animationDuration = `${duration}s`
+        // Enable hardware acceleration
+        star.style.willChange = "transform, opacity"
 
         starsContainer.appendChild(star)
+        stars.push(star)
+      }
+
+      starsArrayRef.current = stars
+
+      // Set initial state for entrance animation (stars start from bottom, invisible)
+      gsap.set(stars, {
+        opacity: 0,
+        y: 100 // Start 100px below their final position
+      })
+
+      // Animate stars entrance from bottom
+      gsap.to(stars, {
+        opacity: 0.3, // Final opacity (from CSS)
+        y: 0,
+        duration: 1.5,
+        ease: "expo.out", // Fast start, slow end
+        delay: 0.3 // Small delay before stars start appearing
+      })
+
+      // Apply parallax effect to ALL stars
+      // Wait a frame to ensure DOM is ready
+      requestAnimationFrame(() => {
+        const heroHeight = heroRef.current.offsetHeight || window.innerHeight
+
+        stars.forEach((star) => {
+          // Different parallax speeds: from 0.5 to 2.5 (noticeable range)
+          const parallaxSpeed = 0.5 + (Math.random() * 2.0) // Range: 0.5 to 2.5
+          
+          // Calculate movement based on hero height - reduced intensity (0.4 instead of 0.8)
+          const movementY = heroHeight * 0.4 * parallaxSpeed
+          
+          // Parallax animation with ScrollTrigger - using force3D for hardware acceleration
+          const animation = gsap.to(star, {
+            y: -movementY, // Move up as user scrolls down, back as scroll up
+            ease: "none",
+            force3D: true, // Force hardware acceleration
+            scrollTrigger: {
+              trigger: heroRef.current,
+              start: "top top",
+              end: "bottom top",
+              scrub: 1, // Smooth scrubbing - automatically bidirectional
+              invalidateOnRefresh: true
+            }
+          })
+
+          scrollTriggers.push(animation.scrollTrigger)
+        })
+      })
+
+      return () => {
+        // Cleanup all ScrollTriggers
+        scrollTriggers.forEach(trigger => {
+          if (trigger) trigger.kill()
+        })
+        // Clear stars array
+        starsArrayRef.current = []
       }
     }
   }, [])
@@ -43,12 +109,18 @@ export default function Hero() {
     const description = document.querySelector('.hero__description')
     if (!titleRef.current || !ctaRef.current || !description) return
 
-    gsap.set([titleRef.current, description, ctaRef.current], {
+    gsap.set(titleRef.current, {
       opacity: 0,
       y: 30
     })
+    
+    gsap.set([description, ctaRef.current], {
+      opacity: 0
+    })
 
-    const tl = gsap.timeline({ delay: 0.5 })
+    // Stars animation: delay 0.3s, duration 1.5s (ends ~1.8s)
+    // Start title after stars finish
+    const tl = gsap.timeline({ delay: 1.8 })
     
     tl.to(titleRef.current, {
       opacity: 1,
@@ -56,18 +128,11 @@ export default function Hero() {
       duration: 1.5,
       ease: "power3.out"
     })
-    .to(description, {
+    .to([description, ctaRef.current], {
       opacity: 1,
-      y: 0,
       duration: 1.2,
       ease: "power3.out"
-    }, "-=1")
-    .to(ctaRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power2.out"
-    }, "-=0.8")
+    }, "-=0.5") // Start simultaneously 0.5s before title ends
   }, [])
 
   return (
@@ -82,9 +147,9 @@ export default function Hero() {
           </h1>
           <p className="hero__description">
             ¿Sientes que repites los mismos patrones? ¿Que algo te impide vivir tu verdadero propósito? 
-            La <strong>Reprogramación Cuántica del Destino</strong> es un método único de 3 sesiones que libera 
+            Mi método de <strong>Reprogramación Cuántica del Destino</strong> es un proceso único de 3 sesiones que libera 
             las limitaciones kármicas, sana las heridas del alma y activa tu máximo potencial. 
-            Transforma tu realidad desde el plano cuántico.
+            Te ayudo a transformar tu realidad desde el plano cuántico.
           </p>
           <Button 
             ref={ctaRef}

@@ -1,0 +1,39 @@
+// Variables, mixins, and settings only
+// Import this in components, NOT globals.scss
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Gadugi:wght@400;700&display=swap');
+
+@font-face {
+  font-family: "Gadugi";
+  src: url("/fonts/gadugi-normal.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gadugi";
+  src: url("/fonts/gadugi-bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --color-indigo: #3a18b1;
+  --color-indigo-dark: #2a0f7d;
+  --color-gray: #777777;
+  --color-white: #ffffff;
+  --color-soft-gray: #f4f4f4;
+  --color-indigo-glow: rgba(58, 24, 177, 0.18);
+  --color-golden: #F59E0B;
+
+  --font-primary: "Gadugi", sans-serif;
+  --font-cormorant: "Cormorant Garamond", Georgia, serif;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+}
+
+$break-mobile: 480px;
+$break-tablet: 768px;
+$break-desktop: 1200px;
+

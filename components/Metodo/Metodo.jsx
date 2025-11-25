@@ -17,17 +17,17 @@ export default function Metodo() {
     {
       number: "01",
       title: "El Programa del Alma",
-      description: "Lectura Cuántica de tu Carta Natal: descubrirás el mapa de tu encarnación, tus misiones, contratos, desafíos y talentos. Comprenderás por qué elegiste esta vida, qué pactos hiciste antes de nacer y qué aprendizajes trae tu alma. Es el recuerdo del propósito original."
+      description: "En esta sesión, realizo una Lectura Cuántica de tu Carta Natal donde te muestro el mapa de tu encarnación: tus misiones, contratos, desafíos y talentos. Comprenderás por qué elegiste esta vida, qué pactos hiciste antes de nacer y qué aprendizajes trae tu alma. Es el recuerdo del propósito original."
     },
     {
       number: "02",
       title: "Reprogramación Kármica y Sanación de Linaje",
-      description: "A través del poder de las letras hebreas de la Kabbalah, conectadas con los planetas y los signos, trabajamos las memorias kármicas, las heridas de la infancia, las creencias de carencia y los programas ancestrales. Cada letra es una inteligencia creadora: al vibrarla, visualizarla y sentirla, reprogramas el código cuántico que sostiene la distorsión en tu realidad. Liberas el pasado y restauras el equilibrio del alma."
+      description: "A través del poder de las letras hebreas de la Kabbalah, conectadas con los planetas y los signos, trabajamos juntos las memorias kármicas, las heridas de la infancia, las creencias de carencia y los programas ancestrales. Cada letra es una inteligencia creadora: al vibrarla, visualizarla y sentirla contigo, reprogramamos el código cuántico que sostiene la distorsión en tu realidad. Liberamos el pasado y restauramos el equilibrio del alma."
     },
     {
       number: "03",
       title: "Activación del Propósito y del Yo del Futuro",
-      description: "Desde tu nueva frecuencia, abrimos el portal de tu destino superior, conectando con tu Yo Ascendido en la quinta dimensión: esa versión tuya que ya logró su propósito, que vive en abundancia, salud, amor y realización plena. Anclamos su energía en el presente, expandiendo tu campo cuántico hacia una nueva línea de realidad."
+      description: "Desde tu nueva frecuencia, abrimos juntos el portal de tu destino superior, conectando con tu Yo Ascendido en la quinta dimensión: esa versión tuya que ya logró su propósito, que vive en abundancia, salud, amor y realización plena. Anclamos su energía en el presente, expandiendo tu campo cuántico hacia una nueva línea de realidad."
     }
   ]
 
@@ -83,7 +83,7 @@ export default function Metodo() {
           La <span className="metodo__title-accent">Reprogramación Cuántica del Destino</span>
         </h2>
         <p ref={subtitleRef} className="metodo__subtitle">
-          Un proceso de <strong>3 sesiones profundas</strong>, diseñado para reconectarte con tu plan del alma, 
+          Un proceso de <strong>3 sesiones profundas</strong> que diseñé para reconectarte con tu plan del alma, 
           liberar las limitaciones y activar tu máximo potencial de destino.
         </p>
 

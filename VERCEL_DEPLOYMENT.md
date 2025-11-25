@@ -30,13 +30,15 @@
 
 **Framework Preset:** Next.js (auto-detected)
 
-**Build Command:** `npm run build` (default)
+**Build Command:** Leave empty (Vercel auto-detects `npm run build`)
 
-**Output Directory:** `.next` (default)
+**Output Directory:** Leave empty (Vercel handles this automatically for Next.js)
 
-**Install Command:** `npm install` (default)
+**Install Command:** Leave empty (Vercel auto-detects `npm install`)
 
-**Root Directory:** Leave empty (or set if your Next.js app is in a subdirectory)
+**Root Directory:** Leave empty (unless your Next.js app is in a subdirectory)
+
+**⚠️ IMPORTANT:** Do NOT manually set Output Directory to `.next` - let Vercel handle it automatically!
 
 ### 3. Environment Variables (if needed)
 
@@ -82,14 +84,47 @@ If you add any environment variables later:
 
 ## 🐛 Troubleshooting
 
+### 404 Not Found Error
+
+**Most Common Causes:**
+
+1. **Check Build Logs:**
+   - Go to Vercel Dashboard → Your Project → Deployments
+   - Click on the latest deployment
+   - Check the "Build Logs" tab
+   - Look for any errors or warnings
+
+2. **Verify Project Settings:**
+   - Go to Project Settings → General
+   - **Framework Preset:** Should be "Next.js"
+   - **Build Command:** Should be empty (auto-detected) OR `npm run build`
+   - **Output Directory:** Should be **EMPTY** (not `.next` or `out`)
+   - **Install Command:** Should be empty (auto-detected) OR `npm install`
+   - **Root Directory:** Should be empty (unless app is in subfolder)
+
+3. **Check Node.js Version:**
+   - Go to Project Settings → General
+   - **Node.js Version:** Should be 18.x or 20.x
+   - If not set, Vercel will use 18.x by default
+
+4. **Redeploy:**
+   - After fixing settings, trigger a new deployment
+   - Go to Deployments → Click "Redeploy" on latest deployment
+
+5. **Clear Build Cache:**
+   - Project Settings → General → Clear Build Cache
+   - Then redeploy
+
 ### Build Fails
 - Check build logs in Vercel dashboard
 - Ensure all dependencies are in `package.json`
 - Verify Node.js version (Vercel uses 18.x by default)
+- Make sure `sass` is in `devDependencies` (it is ✅)
 
 ### Images Not Loading
 - Ensure images are in `/public` folder
 - Check image paths are correct (starting with `/`)
+- Verify files are committed to Git
 
 ### GSAP/Animations Not Working
 - Ensure `"use client"` directive is on components using GSAP

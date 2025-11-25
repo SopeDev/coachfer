@@ -10,64 +10,57 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function SobreFernando() {
   const sectionRef = useRef(null)
-  const titleRef = useRef(null)
-  const contentRef = useRef(null)
-  const imageWrapperRef = useRef(null)
-  const imageRef = useRef(null)
+  const leftImageRef = useRef(null)
 
   useEffect(() => {
-    if (!sectionRef.current || !titleRef.current || !contentRef.current || !imageRef.current || !imageWrapperRef.current) return
+    if (!leftImageRef.current || !sectionRef.current) return
 
-    gsap.set([titleRef.current, contentRef.current, imageRef.current], {
-      opacity: 0,
-      y: 50
-    })
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%",
-        toggleActions: "play none none none"
-      }
-    })
-
-    tl.to(titleRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power3.out"
-    })
-    .to(imageRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power3.out"
-    }, "-=0.7")
-    .to(contentRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power3.out"
-    }, "-=0.7")
-
-    // Parallax effect for image
-    gsap.to(imageRef.current, {
-      yPercent: -15,
-      ease: "none",
-      scrollTrigger: {
-        trigger: imageWrapperRef.current,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true
+    // Parallax effect for left image (Fernando)
+    // Image is at 0% transform when section is centered in viewport (accounting for navbar)
+    const navbar = document.querySelector('.navbar')
+    const navbarHeight = navbar ? navbar.offsetHeight : 0
+    const viewportHeight = window.innerHeight
+    const adjustedCenter = viewportHeight / 2 + navbarHeight / 2
+    
+    const parallaxAnimation = ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: "top bottom", // Start when section enters viewport
+      end: "bottom top", // End when section leaves viewport
+      scrub: true,
+      onUpdate: (self) => {
+        // Get current position of section center relative to viewport
+        const triggerRect = sectionRef.current.getBoundingClientRect()
+        const sectionCenter = triggerRect.top + triggerRect.height / 2
+        
+        // Calculate progress where 0.5 = section center at adjustedCenter
+        // When section enters: sectionCenter ≈ viewportHeight (progress should be close to 0)
+        // When section centered: sectionCenter = adjustedCenter (progress should be 0.5)
+        // When section exits: sectionCenter ≈ -sectionHeight/2 (progress should be close to 1)
+        
+        const sectionHeight = triggerRect.height
+        const totalRange = viewportHeight + sectionHeight / 2
+        
+        // Raw progress: 0 when section enters, 1 when section exits
+        const rawProgress = (viewportHeight - sectionCenter + sectionHeight / 2) / totalRange
+        
+        // Adjust: shift so that when sectionCenter = adjustedCenter, progress = 0.5
+        const centerProgress = (viewportHeight - adjustedCenter + sectionHeight / 2) / totalRange
+        const adjustedProgress = rawProgress + (0.5 - centerProgress)
+        const progress = Math.max(0, Math.min(1, adjustedProgress))
+        
+        // When progress is 0.5 (section centered accounting for navbar), yPercent should be 0
+        // Range: +15% to -15%, with 0 at center (inverted direction)
+        const yPercent = (0.5 - progress) * 30 // Maps 0-1 progress to +15 to -15
+        gsap.set(leftImageRef.current, {
+          yPercent: yPercent
+        })
       }
     })
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.vars.trigger === sectionRef.current || trigger.vars.trigger === imageWrapperRef.current) {
-          trigger.kill()
-        }
-      })
+      if (parallaxAnimation) {
+        parallaxAnimation.kill()
+      }
     }
   }, [])
 
@@ -75,39 +68,32 @@ export default function SobreFernando() {
     <section id="sobre" ref={sectionRef} className="sobre-fernando">
       <div className="sobre-fernando__container">
         <div className="sobre-fernando__content">
-          <div ref={imageWrapperRef} className="sobre-fernando__image-wrapper">
-            <div ref={imageRef} className="sobre-fernando__image-inner">
-              <Image
-                src="/images/about.jpg"
-                alt="Fernando Quintero"
-                width={600}
-                height={800}
-                className="sobre-fernando__image"
-              />
-            </div>
+          {/* Left: Fernando's image */}
+          <div ref={leftImageRef} className="sobre-fernando__image-parallax">
+            <Image
+              src="/images/about.jpg"
+              alt="Fernando Quintero"
+              width={600}
+              height={800}
+              className="sobre-fernando__image sobre-fernando__image--left"
+            />
           </div>
           
-          <div ref={contentRef} className="sobre-fernando__text">
-            <h2 ref={titleRef} className="sobre-fernando__title">
-              Sobre Fernando
-            </h2>
+          {/* Center: Combined text */}
+          <div className="sobre-fernando__text">
             <p className="sobre-fernando__paragraph">
-              Con más de <strong>26 años de experiencia</strong> en astrología cuántica kabbalista, 
-              Fernando Quintero ha dedicado su vida a ayudar a las personas a reconectarse con su 
-              propósito más elevado y transformar sus realidades desde el plano cuántico.
+              Mi enfoque ha evolucionado desde lecturas astrológicas tradicionales hacia un
+              <strong>método profundo de reprogramación cuántica</strong>
+              que integra la sabiduría ancestral de la Kabbalah con principios de física cuántica, diseñado para quienes están listos para
+              <strong>liberar sus limitaciones kármicas y activar su máximo potencial.</strong>
             </p>
             <p className="sobre-fernando__paragraph">
-              Su método único de <strong>Reprogramación Cuántica del Destino</strong> combina 
-              conocimientos ancestrales de la Kabbalah con principios de física cuántica, 
-              creando un proceso transformador que libera limitaciones kármicas y activa 
-              el máximo potencial de cada persona.
-            </p>
-            <p className="sobre-fernando__paragraph">
-              Fernando guía a sus clientes a través de un viaje profundo de autoconocimiento, 
-              donde cada sesión es un paso hacia la liberación de patrones limitantes y 
-              la activación de una nueva frecuencia de conciencia.
+              Mi propósito es acompañarte para que puedas
+              <strong>reconectarte con tu propósito más elevado,</strong>
+              liberar los patrones que te limitan y transformar tu realidad desde el plano cuántico, creando una nueva frecuencia de conciencia que te permita vivir en plenitud y realización.
             </p>
           </div>
+          
         </div>
       </div>
     </section>

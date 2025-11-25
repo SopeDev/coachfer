@@ -1,4 +1,4 @@
-@import "../../styles/globals.scss";
+@import "../../styles/variables.scss";
 
 .navbar {
   position: fixed;
@@ -41,8 +41,8 @@
   }
 
   &--scrolled {
-    background: var(--color-indigo);
-    box-shadow: 0 4px 20px rgba(58, 24, 177, 0.3);
+    background: var(--color-indigo-dark);
+    box-shadow: 0 4px 20px rgba(42, 15, 125, 0.4);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
     .navbar__links {

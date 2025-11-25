@@ -1,4 +1,4 @@
-@import "../../styles/globals.scss";
+@import "../../styles/variables.scss";
 
 .hero {
   min-height: 100vh;
@@ -35,6 +35,9 @@
     background: rgba(255, 255, 255, 0.8);
     border-radius: 50%;
     box-shadow: 0 0 6px rgba(255, 255, 255, 0.8), 0 0 12px rgba(58, 24, 177, 0.4);
+    opacity: 0.3;
+    will-change: transform, opacity;
+    transform: translateZ(0); // Force hardware acceleration
     animation: starTwinkle ease-in-out infinite;
   }
 
@@ -127,7 +130,6 @@
     margin-left: auto;
     margin-right: auto;
     opacity: 0;
-    transform: translateY(30px);
 
     strong {
       font-weight: bold;
@@ -146,18 +148,15 @@
 
   &__cta {
     opacity: 0;
-    transform: translateY(30px);
   }
 }
 
 @keyframes starTwinkle {
   0%, 100% {
     opacity: 0.3;
-    transform: scale(1);
   }
   50% {
     opacity: 1;
-    transform: scale(1.2);
   }
 }
 

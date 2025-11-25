@@ -1,16 +1,16 @@
-@import "../../styles/globals.scss";
+@import "../../styles/variables.scss";
 
 .sobre-fernando {
   background: var(--color-white);
-  padding: 4rem 1rem;
+  padding: 0 1rem;
   position: relative;
 
   @media (min-width: $break-tablet) {
-    padding: 6rem 2rem;
+    padding: 0 2rem;
   }
 
   @media (min-width: $break-desktop) {
-    padding: 8rem 4rem;
+    padding: 0 4rem;
   }
 
   &__container {
@@ -20,26 +20,26 @@
   }
 
   &__content {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: start;
 
     @media (min-width: $break-tablet) {
-      flex-direction: row;
-      gap: 4rem;
-      align-items: flex-start;
+      grid-template-columns: 2fr 3fr;
+      gap: 2rem;
+      align-items: center;
     }
 
     @media (min-width: $break-desktop) {
-      gap: 5rem;
+      gap: 3rem;
     }
   }
 
   &__image-wrapper {
-    flex-shrink: 0;
     width: 100%;
-    max-width: 400px;
+    max-width: 300px;
+    margin: 0 auto;
     position: relative;
     overflow: hidden;
     border-radius: 8px;
@@ -47,72 +47,107 @@
     aspect-ratio: 3 / 4;
 
     @media (min-width: $break-tablet) {
-      max-width: 450px;
+      max-width: 350px;
+      margin: 0;
     }
 
     @media (min-width: $break-desktop) {
-      max-width: 500px;
+      max-width: 400px;
     }
   }
 
-  &__image-inner {
+  &__image-parallax {
     width: 100%;
-    height: 120%;
+    max-width: 300px;
+    margin: 0 auto;
     will-change: transform;
+
+    @media (min-width: $break-tablet) {
+      max-width: 350px;
+      margin: 0;
+    }
+
+    @media (min-width: $break-desktop) {
+      max-width: 400px;
+    }
   }
 
   &__image {
     width: 100%;
-    height: 100%;
+    height: auto;
     display: block;
     object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   }
 
   &__text {
-    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-  }
-
-  &__title {
-    font-family: var(--font-cormorant), "Cormorant Garamond", serif;
-    font-size: 2rem;
-    font-weight: 500;
-    color: var(--color-indigo);
-    text-align: left;
-    margin-bottom: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-
-    @media (min-width: $break-tablet) {
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-    }
-
-    @media (min-width: $break-desktop) {
-      font-size: 3rem;
-      margin-bottom: 2.5rem;
-    }
+    justify-content: center;
+    text-align: center;
   }
 
   &__paragraph {
-    font-size: 1rem;
-    line-height: 1.8;
+    font-size: 0.9375rem;
+    line-height: 1.7;
     color: #2a2a2a;
     margin: 0;
+    text-align: center;
 
     strong {
       color: var(--color-indigo);
       font-weight: bold;
+      display: block;
+      margin: 0.5rem 0;
+      font-size: 1rem;
+
+      @media (min-width: $break-tablet) {
+        font-size: 1.125rem;
+      }
+
+      @media (min-width: $break-desktop) {
+        font-size: 1.25rem;
+      }
     }
 
     @media (min-width: $break-tablet) {
-      font-size: 1.125rem;
+      font-size: 1rem;
     }
 
     @media (min-width: $break-desktop) {
-      gap: 2rem;
+      font-size: 1.0625rem;
+    }
+  }
+
+  &__image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(58, 24, 177, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    border-radius: 8px;
+    border: 2px dashed rgba(58, 24, 177, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    &::after {
+      content: "Image Placeholder";
+      color: rgba(58, 24, 177, 0.4);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+  }
+
+  &__image-wrapper--placeholder {
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+
+    &:hover {
+      border-color: rgba(58, 24, 177, 0.5);
     }
   }
 }
