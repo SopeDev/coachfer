@@ -75,7 +75,7 @@ Rules:
 ## ⚙️ Framework & Languages
 - **Next.js (latest)**
 - **JavaScript only (NO TypeScript)**
-- **GSAP** for animations
+- **GSAP** for animations (with `@gsap/react` - `useGSAP()` hook)
 - **Custom SASS (SCSS)**
 - NO Tailwind
 - NO external UI libraries
@@ -225,6 +225,221 @@ Rules:
 - Hero animations should feel cosmic and elegant, never cheesy
 - Keep durations slow (2-4 seconds for background elements)
 
+### GSAP Best Practices & Patterns
+
+**CRITICAL: Always use the `useGSAP()` hook from `@gsap/react` for all GSAP animations. This hook automatically handles cleanup using `gsap.context()` and is the recommended way to use GSAP in React.**
+
+#### ✅ DO: Use useGSAP() hook (REQUIRED)
+```javascript
+import { useRef } from "react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { useGSAP } from "@gsap/react"
+
+gsap.registerPlugin(ScrollTrigger, useGSAP)
+
+export default function Component() {
+  const sectionRef = useRef(null)
+  
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 80%",
+        end: "top 20%",
+        scrub: 1
+      }
+    })
+    
+    tl.to(sectionRef.current, {
+      opacity: 1,
+      y: 0,
+      ease: "none"
+    })
+  }, { scope: sectionRef })
+  
+  return <section ref={sectionRef}>...</section>
+}
+```
+
+#### ❌ DON'T: Use useLayoutEffect + gsap.context() manually
+```javascript
+// BAD - Don't manually use useLayoutEffect + gsap.context()
+useLayoutEffect(() => {
+  const ctx = gsap.context(() => {
+    // animations...
+  }, scopeRef)
+  return () => ctx.revert()
+}, [])
+
+// GOOD - Use useGSAP() hook instead
+useGSAP(() => {
+  // animations... (automatic cleanup)
+}, { scope: scopeRef })
+```
+
+#### ❌ DON'T: Use onUpdate callbacks for animations
+```javascript
+// BAD - Avoid custom progress calculations
+ScrollTrigger.create({
+  onUpdate: (self) => {
+    const progress = self.progress
+    // Manual calculations...
+  }
+})
+
+// GOOD - Use timeline instead
+gsap.timeline({
+  scrollTrigger: { ... }
+}).to(element, { ... })
+```
+
+#### ✅ DO: Register useGSAP plugin
+- Always register `useGSAP` with `gsap.registerPlugin(useGSAP)` (or `gsap.registerPlugin(ScrollTrigger, useGSAP)` if using ScrollTrigger)
+- Import from `@gsap/react`: `import { useGSAP } from "@gsap/react"`
+- The hook automatically handles cleanup via `gsap.context()` internally
+
+#### ✅ DO: Use scope parameter for selector scoping
+- Pass `{ scope: sectionRef }` as second parameter to `useGSAP()`
+- This scopes all GSAP selectors to that element
+- All animations, ScrollTriggers, and SplitText instances created inside are automatically cleaned up
+
+#### ✅ DO: Use stagger for sequential animations
+```javascript
+useGSAP(() => {
+  const chars = splitTextRef.current.chars
+  tl.to(chars, {
+    opacity: 1,
+    stagger: {
+      each: 0.02, // or 1 / chars.length for even distribution
+      from: "start"
+    }
+  })
+}, { scope: sectionRef })
+```
+
+#### ✅ DO: Use GSAP plugins properly
+- **ScrollTrigger**: Use with timelines, not standalone with onUpdate
+- **SplitText**: Use for text splitting, automatically cleaned up by useGSAP
+- **gsap.utils**: Use `interpolate`, `mapRange`, `snap` instead of manual calculations
+
+#### ✅ DO: Use ease: "none" for scrubbed animations
+- When using `scrub: true` or `scrub: 1`, use `ease: "none"` for smooth scroll-linked animations
+
+#### Common Patterns:
+
+**Pattern 1: Scroll-triggered fade-in**
+```javascript
+import { useRef } from "react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { useGSAP } from "@gsap/react"
+
+gsap.registerPlugin(ScrollTrigger, useGSAP)
+
+export default function Component() {
+  const sectionRef = useRef(null)
+  
+  useGSAP(() => {
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 80%"
+      }
+    })
+    .from(sectionRef.current, {
+      opacity: 0,
+      y: 30,
+      duration: 1
+    })
+  }, { scope: sectionRef })
+  
+  return <section ref={sectionRef}>...</section>
+}
+```
+
+**Pattern 2: Scroll-scrubbed color change**
+```javascript
+import { useRef } from "react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { SplitText } from "gsap/all"
+import { useGSAP } from "@gsap/react"
+
+gsap.registerPlugin(ScrollTrigger, useGSAP)
+
+export default function Component() {
+  const sectionRef = useRef(null)
+  const textRef = useRef(null)
+  const splitTextRef = useRef(null)
+  
+  useGSAP(() => {
+    document.fonts.ready.then(() => {
+      splitTextRef.current = new SplitText(textRef.current, {
+        type: "chars,words"
+      })
+      const chars = splitTextRef.current.chars
+      
+      gsap.set(chars, { color: "#b0b0b0" })
+      
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 60%",
+          end: "top top",
+          scrub: 1
+        }
+      })
+      .to(chars, {
+        color: "#2a0f7d",
+        ease: "none",
+        stagger: {
+          each: 1 / chars.length
+        }
+      })
+    })
+  }, { scope: sectionRef })
+  
+  return (
+    <section ref={sectionRef}>
+      <p ref={textRef}>...</p>
+    </section>
+  )
+}
+```
+
+**Pattern 3: Continuous animation (stars, rotation)**
+```javascript
+import { useRef } from "react"
+import gsap from "gsap"
+import { useGSAP } from "@gsap/react"
+
+gsap.registerPlugin(useGSAP)
+
+export default function Component() {
+  const starRef = useRef(null)
+  
+  useGSAP(() => {
+    gsap.to(starRef.current, {
+      rotation: 360,
+      duration: 20,
+      repeat: -1,
+      ease: "none"
+    })
+  }, { scope: starRef })
+  
+  return <div ref={starRef}>...</div>
+}
+```
+
+#### Key Principles:
+1. **ALWAYS use `useGSAP()` hook** - Never use `useLayoutEffect` + `gsap.context()` manually
+2. **Prefer timelines over individual tweens** - Easier to manage and sequence
+3. **Use native GSAP methods** - Don't reinvent what GSAP already does
+4. **Let GSAP handle progress** - Don't manually calculate progress in onUpdate
+5. **Automatic cleanup** - `useGSAP()` handles all cleanup automatically via `gsap.context()`
+6. **Keep it simple** - If you're writing complex custom logic, GSAP probably has a simpler way
+
 ---
 
 # ============================================================
@@ -321,6 +536,18 @@ Avoid:
 - Do NOT make it look "woo woo" or illegitimate
 - Do NOT add heavy textures or busy backgrounds
 - Do NOT use aggressive or bouncy animations
+
+## GSAP Anti-Patterns (DO NOT DO):
+- Do NOT use `useLayoutEffect` + `gsap.context()` manually - ALWAYS use `useGSAP()` hook instead
+- Do NOT use `useEffect` for GSAP animations - use `useGSAP()` hook
+- Do NOT forget to register `useGSAP` plugin - always call `gsap.registerPlugin(useGSAP)` (or include it with other plugins)
+- Do NOT use `onUpdate` callbacks for animations - use timelines instead
+- Do NOT manually calculate progress in ScrollTrigger callbacks - let GSAP handle it
+- Do NOT create ScrollTrigger without timelines when animating - prefer `gsap.timeline({ scrollTrigger: {...} })`
+- Do NOT use manual `gsap.set()` in loops for animated values - use `gsap.to()` or `gsap.from()` with stagger
+- Do NOT write custom interpolation functions - use `gsap.utils.interpolate()` or let GSAP handle it
+- Do NOT create multiple ScrollTriggers when one timeline can handle multiple animations
+- Do NOT manually return cleanup functions - `useGSAP()` handles cleanup automatically
 
 ---
 

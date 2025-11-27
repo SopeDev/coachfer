@@ -1,18 +1,19 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { useGSAP } from "@gsap/react"
 import Button from "../Button/Button"
 import "./Navbar.scss"
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 export default function Navbar() {
   const navbarRef = useRef(null)
   const [isScrolled, setIsScrolled] = useState(false)
 
-  useEffect(() => {
+  useGSAP(() => {
     const heroContent = document.querySelector('.hero__content')
     if (!heroContent || !navbarRef.current) return
 
@@ -30,7 +31,7 @@ export default function Navbar() {
     requestAnimationFrame(checkOverlap)
 
     // Create ScrollTrigger that updates on scroll
-    const scrollTrigger = ScrollTrigger.create({
+    ScrollTrigger.create({
       trigger: heroContent,
       start: `top -${navbarHeight}px`,
       onEnter: () => setIsScrolled(true),
@@ -46,11 +47,10 @@ export default function Navbar() {
     window.addEventListener('resize', handleScroll, { passive: true })
 
     return () => {
-      scrollTrigger.kill()
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('resize', handleScroll)
     }
-  }, [])
+  }, { scope: navbarRef })
 
   return (
     <nav ref={navbarRef} className={`navbar ${isScrolled ? "navbar--scrolled" : ""}`}>

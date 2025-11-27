@@ -1,8 +1,11 @@
 "use client"
 
-import { useRef, useMemo, useEffect } from "react"
+import { useRef, useMemo } from "react"
 import { TetrahedronGeometry, EdgesGeometry, LineBasicMaterial } from "three"
 import { gsap } from "gsap"
+import { useGSAP } from "@gsap/react"
+
+gsap.registerPlugin(useGSAP)
 
 export default function Merkabah() {
   const pyramidRef = useRef(null)
@@ -35,7 +38,7 @@ export default function Merkabah() {
   }, [])
 
   // Set initial rotation and GSAP animations
-  useEffect(() => {
+  useGSAP(() => {
     if (!pyramidRef.current) return
 
     // Smooth continuous horizontal rotation (left to right)
@@ -45,7 +48,7 @@ export default function Merkabah() {
       ease: "none",
       repeat: -1
     })
-  }, [])
+  }, { scope: pyramidRef })
 
   return (
     <group ref={pyramidRef}>

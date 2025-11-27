@@ -2,15 +2,18 @@
 
 .sobre-fernando {
   background: var(--color-white);
-  padding: 0 1rem;
+  padding: 0 1rem 2rem;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10rem;
 
   @media (min-width: $break-tablet) {
-    padding: 0 2rem;
+    padding: 0 2rem 3rem;
   }
 
   @media (min-width: $break-desktop) {
-    padding: 0 4rem;
+    padding: 0 4rem 4rem;
   }
 
   &__container {
@@ -19,16 +22,18 @@
     width: 100%;
   }
 
+  // MAIN ROW: 2 columns
   &__content {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
-    align-items: start;
+    gap: 4rem;
+    align-items: flex-start;
 
     @media (min-width: $break-tablet) {
-      grid-template-columns: 2fr 3fr;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
       gap: 2rem;
-      align-items: center;
+      align-items: flex-start;
+      justify-items: center;
     }
 
     @media (min-width: $break-desktop) {
@@ -36,70 +41,109 @@
     }
   }
 
+  /* LEFT COLUMN – images stacked */
+
+  &__images {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10rem;
+    align-items: center;
+
+    @media (min-width: $break-tablet) {
+      align-items: flex-start;
+    }
+  }
+
   &__image-wrapper {
     width: 100%;
     max-width: 300px;
+    height: 400px; // Explicit height: 3:4 aspect ratio (300 * 4/3 = 400)
     margin: 0 auto;
     position: relative;
     overflow: hidden;
     border-radius: 8px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    aspect-ratio: 3 / 4;
 
     @media (min-width: $break-tablet) {
       max-width: 350px;
+      height: 467px; // Explicit height: 3:4 aspect ratio (350 * 4/3 = 466.67 ≈ 467)
       margin: 0;
     }
 
     @media (min-width: $break-desktop) {
       max-width: 400px;
-    }
-  }
-
-  &__image-parallax {
-    width: 100%;
-    max-width: 300px;
-    margin: 0 auto;
-    will-change: transform;
-
-    @media (min-width: $break-tablet) {
-      max-width: 350px;
-      margin: 0;
-    }
-
-    @media (min-width: $break-desktop) {
-      max-width: 400px;
+      height: 533px; // Explicit height: 3:4 aspect ratio (400 * 4/3 = 533.33 ≈ 533)
     }
   }
 
   &__image {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     object-fit: cover;
     border-radius: 8px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  /* RIGHT COLUMN – sticky text */
+
+  &__texts {
+    position: sticky;
+    // top is calculated dynamically in JS to center texts-inner in viewport
+    align-self: flex-start;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  // Container with same explicit height as image-wrapper (so text aligns vertically with images)
+  &__texts-inner {
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+    height: 400px; // Explicit height: matches image-wrapper height exactly
+    margin: 0 auto;
+
+    @media (min-width: $break-tablet) {
+      max-width: 425px;
+      height: 467px; // Explicit height: matches image-wrapper height exactly
+      margin: 0;
+    }
+
+    @media (min-width: $break-desktop) {
+      max-width: 500px;
+      height: 533px; // Explicit height: matches image-wrapper height exactly
+    }
   }
 
   &__text {
+    position: absolute;
+    inset: 0;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     justify-content: center;
-    text-align: center;
+    text-align: justify;
+  }
+
+  &__text--primary {
+    opacity: 1; // first text visible by default
+  }
+
+  &__text--secondary {
+    opacity: 0; // second text hidden, we fade it in with GSAP
   }
 
   &__paragraph {
-    font-size: 0.9375rem;
+    font-size: 1rem;
     line-height: 1.7;
     color: #2a2a2a;
     margin: 0;
-    text-align: center;
+    text-align: justify;
 
     strong {
       color: var(--color-indigo);
       font-weight: bold;
-      display: block;
       margin: 0.5rem 0;
       font-size: 1rem;
 
@@ -113,18 +157,22 @@
     }
 
     @media (min-width: $break-tablet) {
-      font-size: 1rem;
+      font-size: 1.125rem;
     }
 
     @media (min-width: $break-desktop) {
-      font-size: 1.0625rem;
+      font-size: 1.25rem;
     }
   }
 
   &__image-placeholder {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(58, 24, 177, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(58, 24, 177, 0.1) 0%,
+      rgba(139, 92, 246, 0.1) 100%
+    );
     border-radius: 8px;
     border: 2px dashed rgba(58, 24, 177, 0.3);
     display: flex;
@@ -151,4 +199,3 @@
     }
   }
 }
-

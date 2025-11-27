@@ -1,11 +1,12 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { useGSAP } from "@gsap/react"
 import "./Metodo.scss"
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 export default function Metodo() {
   const sectionRef = useRef(null)
@@ -31,7 +32,7 @@ export default function Metodo() {
     }
   ]
 
-  useEffect(() => {
+  useGSAP(() => {
     if (!sectionRef.current || !titleRef.current || !subtitleRef.current) return
 
     gsap.set([titleRef.current, subtitleRef.current, ...sessionsRef.current], {
@@ -66,21 +67,14 @@ export default function Metodo() {
       ease: "power3.out",
       stagger: 0.2
     }, "-=0.5")
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.vars.trigger === sectionRef.current) {
-          trigger.kill()
-        }
-      })
-    }
-  }, [])
+  }, { scope: sectionRef })
 
   return (
     <section id="metodo" ref={sectionRef} className="metodo">
       <div className="metodo__container">
         <h2 ref={titleRef} className="metodo__title">
-          La <span className="metodo__title-accent">Reprogramación Cuántica del Destino</span>
+          <span className="metodo__title-indigo">AstroHacking:</span>{" "}
+          <span className="metodo__title-accent">Reprogramación del Software Astrológico</span>
         </h2>
         <p ref={subtitleRef} className="metodo__subtitle">
           Un proceso de <strong>3 sesiones profundas</strong> que diseñé para reconectarte con tu plan del alma, 

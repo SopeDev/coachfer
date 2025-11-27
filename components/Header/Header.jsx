@@ -1,14 +1,17 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import { gsap } from "gsap"
+import { useGSAP } from "@gsap/react"
 import Image from "next/image"
 import "./Header.scss"
+
+gsap.registerPlugin(useGSAP)
 
 export default function Header() {
   const headerRef = useRef(null)
 
-  useEffect(() => {
+  useGSAP(() => {
     if (!headerRef.current) return
 
     gsap.set(headerRef.current, { opacity: 0, y: -20 })
@@ -19,7 +22,7 @@ export default function Header() {
       duration: 1,
       ease: "power2.out"
     })
-  }, [])
+  }, { scope: headerRef })
 
   return (
     <header ref={headerRef} className="header">

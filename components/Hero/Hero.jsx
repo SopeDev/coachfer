@@ -1,12 +1,13 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { useGSAP } from "@gsap/react"
 import Button from "../Button/Button"
 import "./Hero.scss"
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 export default function Hero() {
   const heroRef = useRef(null)
@@ -15,13 +16,12 @@ export default function Hero() {
   const starsRef = useRef(null)
   const starsArrayRef = useRef([])
 
-  useEffect(() => {
+  useGSAP(() => {
     // Create dynamic stars and apply parallax
     if (starsRef.current && heroRef.current) {
       const starsContainer = starsRef.current
       const starCount = 100
       const stars = []
-      const scrollTriggers = []
 
       // Create stars
       for (let i = 0; i < starCount; i++) {
@@ -77,7 +77,7 @@ export default function Hero() {
           const movementY = heroHeight * 0.4 * parallaxSpeed
           
           // Parallax animation with ScrollTrigger - using force3D for hardware acceleration
-          const animation = gsap.to(star, {
+          gsap.to(star, {
             y: -movementY, // Move up as user scrolls down, back as scroll up
             ease: "none",
             force3D: true, // Force hardware acceleration
@@ -89,23 +89,10 @@ export default function Hero() {
               invalidateOnRefresh: true
             }
           })
-
-          scrollTriggers.push(animation.scrollTrigger)
         })
       })
-
-      return () => {
-        // Cleanup all ScrollTriggers
-        scrollTriggers.forEach(trigger => {
-          if (trigger) trigger.kill()
-        })
-        // Clear stars array
-        starsArrayRef.current = []
-      }
     }
-  }, [])
 
-  useEffect(() => {
     const description = document.querySelector('.hero__description')
     if (!titleRef.current || !ctaRef.current || !description) return
 
@@ -113,7 +100,7 @@ export default function Hero() {
       opacity: 0,
       y: 30
     })
-    
+
     gsap.set([description, ctaRef.current], {
       opacity: 0
     })
@@ -133,7 +120,7 @@ export default function Hero() {
       duration: 1.2,
       ease: "power3.out"
     }, "-=0.5") // Start simultaneously 0.5s before title ends
-  }, [])
+  }, { scope: heroRef })
 
   return (
     <section id="inicio" ref={heroRef} className="hero">
@@ -147,7 +134,7 @@ export default function Hero() {
           </h1>
           <p className="hero__description">
             ¿Sientes que repites los mismos patrones? ¿Que algo te impide vivir tu verdadero propósito? 
-            Mi método de <strong>Reprogramación Cuántica del Destino</strong> es un proceso único de 3 sesiones que libera 
+            Mi método de <strong>AstroHacking: Reprogramación del Software Astrológico</strong> es un proceso único de 3 sesiones que libera 
             las limitaciones kármicas, sana las heridas del alma y activa tu máximo potencial. 
             Te ayudo a transformar tu realidad desde el plano cuántico.
           </p>
