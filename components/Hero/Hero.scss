@@ -121,33 +121,116 @@
     }
   }
 
+  &__content-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
   &__description {
     font-size: 1rem;
     color: rgba(255, 255, 255, 0.85);
     line-height: 1.8;
-    margin-bottom: 2.5rem;
-    max-width: 800px;
+    margin-bottom: 2rem;
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-    opacity: 0;
-
-    strong {
-      font-weight: bold;
-    }
 
     @media (min-width: $break-tablet) {
       font-size: 1.125rem;
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
+      max-width: 800px;
     }
 
     @media (min-width: $break-desktop) {
       font-size: 1.25rem;
+      margin-bottom: 3rem;
+      max-width: 1000px;
+    }
+  }
+
+  &__video {
+    margin-bottom: 2.5rem;
+    max-width: 100%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (min-width: $break-tablet) {
+      margin-bottom: 3rem;
+      max-width: 500px;
+    }
+
+    @media (min-width: $break-desktop) {
       margin-bottom: 3.5rem;
+      max-width: 600px;
+    }
+  }
+
+  &__video-placeholder {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: rgba(58, 24, 177, 0.2);
+    border-radius: 12px;
+    border: 2px solid rgba(58, 24, 177, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+
+    &:hover {
+      background: rgba(58, 24, 177, 0.3);
+      border-color: rgba(58, 24, 177, 0.5);
+      transform: scale(1.02);
+    }
+  }
+
+  &__video-play-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--color-indigo);
+    margin-left: 8px; // Offset to center the play triangle visually
+    box-shadow: 0 4px 20px rgba(58, 24, 177, 0.4);
+    transition: all 0.3s ease;
+
+    @media (min-width: $break-tablet) {
+      width: 100px;
+      height: 100px;
+      font-size: 2.5rem;
+    }
+
+    @media (min-width: $break-desktop) {
+      width: 120px;
+      height: 120px;
+      font-size: 3rem;
+    }
+  }
+
+  &__video-text {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+
+    @media (min-width: $break-tablet) {
+      font-size: 1rem;
     }
   }
 
   &__cta {
-    opacity: 0;
   }
 }
 

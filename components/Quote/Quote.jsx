@@ -27,7 +27,7 @@ export default function Quote() {
       const chars = splitTextRef.current.chars
 
       // Start all letters as light gray
-      gsap.set(chars, { color: "#b0b0b0" })
+      gsap.set(chars, { color: "#eeeeee" })
 
       const tl = gsap.timeline({
         scrollTrigger: {

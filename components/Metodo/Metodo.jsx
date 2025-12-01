@@ -17,18 +17,21 @@ export default function Metodo() {
   const sessions = [
     {
       number: "01",
-      title: "El Programa del Alma",
-      description: "En esta sesión, realizo una Lectura Cuántica de tu Carta Natal donde te muestro el mapa de tu encarnación: tus misiones, contratos, desafíos y talentos. Comprenderás por qué elegiste esta vida, qué pactos hiciste antes de nacer y qué aprendizajes trae tu alma. Es el recuerdo del propósito original."
+      title: "Diagnóstico Cuántico",
+      description: "En nuestra primera sesión juntos, realizo una Interpretación Cuántica de tu Carta Astral donde te muestro el mapa completo de tu encarnación. Identifico tus heridas raíz, contratos kármicos, patrones familiares que se repiten y bloqueos de propósito. A nivel cuántico, te muestro cómo vibran tus memorias y qué camino estás ejecutando en automático. Comprenderás por qué elegiste esta vida y qué aprendizajes trae tu alma.",
+      image: "/images/session1.png"
     },
     {
       number: "02",
-      title: "Reprogramación Kármica y Sanación de Linaje",
-      description: "A través del poder de las letras hebreas de la Kabbalah, conectadas con los planetas y los signos, trabajamos juntos las memorias kármicas, las heridas de la infancia, las creencias de carencia y los programas ancestrales. Cada letra es una inteligencia creadora: al vibrarla, visualizarla y sentirla contigo, reprogramamos el código cuántico que sostiene la distorsión en tu realidad. Liberamos el pasado y restauramos el equilibrio del alma."
+      title: "Reprogramación Lunar y Kármica",
+      description: "En nuestra segunda sesión, trabajamos juntos el programa de tu alma a través de tus Nodos Lunares y Ejes Kármicos. Te muestro tu nodo sur (lo que vienes a corregir) y tu nodo norte (tu misión evolutiva). A través del poder de las letras hebreas de la Kabbalah, reprogramamos juntos el código cuántico que sostiene la distorsión en tu realidad. Cortamos contratos, limpiamos memorias ancestrales y desactivamos traumas.",
+      image: "/images/session-02.jpg"
     },
     {
       number: "03",
-      title: "Activación del Propósito y del Yo del Futuro",
-      description: "Desde tu nueva frecuencia, abrimos juntos el portal de tu destino superior, conectando con tu Yo Ascendido en la quinta dimensión: esa versión tuya que ya logró su propósito, que vive en abundancia, salud, amor y realización plena. Anclamos su energía en el presente, expandiendo tu campo cuántico hacia una nueva línea de realidad."
+      title: "Activación y Recodificación Hebrea",
+      description: "En nuestra tercera sesión, desde tu nueva frecuencia, abrimos juntos el portal de tu destino superior. Cada signo, planeta y sefirá del Árbol de la Vida tiene una letra hebrea asociada que corregimos distorsiones y limpiamos memorias. Conectamos con tu Yo Ascendido en la quinta dimensión: esa versión tuya que ya logró su propósito. Anclamos su energía en el presente, recodificando tu sistema energético hacia una nueva línea de realidad.",
+      image: "/images/session-03.jpg"
     }
   ]
 
@@ -73,12 +76,12 @@ export default function Metodo() {
     <section id="metodo" ref={sectionRef} className="metodo">
       <div className="metodo__container">
         <h2 ref={titleRef} className="metodo__title">
-          <span className="metodo__title-indigo">AstroHacking:</span>{" "}
-          <span className="metodo__title-accent">Reprogramación del Software Astrológico</span>
+          <span className="metodo__title-indigo">AstroHacking</span>: <span className="metodo__title-accent">Reprogramación del Software Astrológico</span>
         </h2>
         <p ref={subtitleRef} className="metodo__subtitle">
-          Un proceso de <strong>3 sesiones profundas</strong> que diseñé para reconectarte con tu plan del alma, 
-          liberar las limitaciones y activar tu máximo potencial de destino.
+          He diseñado un proceso de <strong>3 sesiones</strong> que no solo te muestra por qué repites patrones, sino que los reprograma desde el plano cuántico. 
+          Este es el puente entre donde estás ahora y donde quieres estar: 
+          liberar lo que te amarra al pasado, reprogramar lo que te condiciona, activar lo que te pertenece.
         </p>
 
         <div className="metodo__sessions">
@@ -92,6 +95,13 @@ export default function Metodo() {
               <div className="metodo__session-content">
                 <h3 className="metodo__session-title">{session.title}</h3>
                 <p className="metodo__session-description">{session.description}</p>
+              </div>
+              <div className="metodo__session-image">
+                <img 
+                  src={session.image} 
+                  alt={session.title}
+                  className="metodo__session-img"
+                />
               </div>
             </div>
           ))}

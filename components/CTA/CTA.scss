@@ -1,0 +1,74 @@
+@import "../../styles/variables.scss";
+
+.cta {
+  background: var(--color-white);
+  padding: 4rem 1rem;
+  position: relative;
+
+  @media (min-width: $break-tablet) {
+    padding: 6rem 2rem;
+  }
+
+  @media (min-width: $break-desktop) {
+    padding: 8rem 4rem;
+  }
+
+  &__container {
+    max-width: $break-desktop;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  &__content {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  &__title {
+    font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--color-indigo);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+
+    @media (min-width: $break-tablet) {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: $break-desktop) {
+      font-size: 3rem;
+      margin-bottom: 2.5rem;
+    }
+  }
+
+  &__subtitle {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--color-gray);
+    margin-bottom: 2.5rem;
+
+    @media (min-width: $break-tablet) {
+      font-size: 1.125rem;
+      margin-bottom: 3rem;
+    }
+
+    @media (min-width: $break-desktop) {
+      font-size: 1.25rem;
+      margin-bottom: 3.5rem;
+    }
+  }
+
+  &__button-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__button {
+    // Button styles are handled by Button component
+  }
+}
+

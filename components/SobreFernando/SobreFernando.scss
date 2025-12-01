@@ -2,18 +2,18 @@
 
 .sobre-fernando {
   background: var(--color-white);
-  padding: 0 1rem 2rem;
+  padding: 4rem 1rem 2rem;
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 10rem;
 
   @media (min-width: $break-tablet) {
-    padding: 0 2rem 3rem;
+    padding: 6rem 2rem 3rem;
   }
 
   @media (min-width: $break-desktop) {
-    padding: 0 4rem 4rem;
+    padding: 8rem 4rem 4rem;
   }
 
   &__container {
@@ -135,7 +135,7 @@
   }
 
   &__paragraph {
-    font-size: 1rem;
+    font-size: 0.9375rem;
     line-height: 1.7;
     color: #2a2a2a;
     margin: 0;
@@ -157,11 +157,11 @@
     }
 
     @media (min-width: $break-tablet) {
-      font-size: 1.125rem;
+      font-size: 1rem;
     }
 
     @media (min-width: $break-desktop) {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
     }
   }
 

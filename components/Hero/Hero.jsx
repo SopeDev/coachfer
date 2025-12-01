@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP)
 export default function Hero() {
   const heroRef = useRef(null)
   const titleRef = useRef(null)
-  const ctaRef = useRef(null)
+  const contentGroupRef = useRef(null)
   const starsRef = useRef(null)
   const starsArrayRef = useRef([])
 
@@ -93,15 +93,14 @@ export default function Hero() {
       })
     }
 
-    const description = document.querySelector('.hero__description')
-    if (!titleRef.current || !ctaRef.current || !description) return
+    if (!titleRef.current || !contentGroupRef.current) return
 
     gsap.set(titleRef.current, {
       opacity: 0,
       y: 30
     })
 
-    gsap.set([description, ctaRef.current], {
+    gsap.set(contentGroupRef.current, {
       opacity: 0
     })
 
@@ -115,11 +114,11 @@ export default function Hero() {
       duration: 1.5,
       ease: "power3.out"
     })
-    .to([description, ctaRef.current], {
+    .to(contentGroupRef.current, {
       opacity: 1,
       duration: 1.2,
       ease: "power3.out"
-    }, "-=0.5") // Start simultaneously 0.5s before title ends
+    }, "-=0.5")
   }, { scope: heroRef })
 
   return (
@@ -132,20 +131,25 @@ export default function Hero() {
           <h1 ref={titleRef} className="hero__title">
             Renace en tu Propósito
           </h1>
-          <p className="hero__description">
-            ¿Sientes que repites los mismos patrones? ¿Que algo te impide vivir tu verdadero propósito? 
-            Mi método de <strong>AstroHacking: Reprogramación del Software Astrológico</strong> es un proceso único de 3 sesiones que libera 
-            las limitaciones kármicas, sana las heridas del alma y activa tu máximo potencial. 
-            Te ayudo a transformar tu realidad desde el plano cuántico.
-          </p>
-          <Button 
-            ref={ctaRef}
-            type="primary"
-            href="#agendar"
-            className="hero__cta"
-          >
-            Agenda tu proceso
-          </Button>
+          <div ref={contentGroupRef} className="hero__content-group">
+            <p className="hero__description">
+              No es terapia. No es coaching. Es reprogramación cuántica: libera las memorias kármicas que te mantienen atrapado en ciclos repetitivos y activa el código de tu verdadero propósito.
+            </p>
+            <div className="hero__video">
+              {/* Video placeholder - replace with actual video embed */}
+              <div className="hero__video-placeholder">
+                <div className="hero__video-play-icon">▶</div>
+                <p className="hero__video-text">Video placeholder</p>
+              </div>
+            </div>
+            <Button 
+              type="primary"
+              href="#agendar"
+              className="hero__cta"
+            >
+              Agenda tu proceso
+            </Button>
+          </div>
         </div>
       </div>
     </section>
