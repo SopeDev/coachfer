@@ -17,27 +17,28 @@ export default function PainPoints() {
   const painPoints = [
     {
       number: "01",
-      text: "Inviertes tiempo y dinero en terapia, coaching y trabajo personal, pero los mismos patrones de relación, trabajo o autosabotaje siguen apareciendo"
+      title: "Inseguridad y Bloqueos Emocionales",
+      text: "Falta de seguridad y estabilidad en tu vida, como si el suelo se moviera bajo tus pies. Arrastras patrones repetitivos en tus relaciones que reconoces pero no puedes transformar, atrapado en ciclos que se repiten una y otra vez."
     },
     {
       number: "02",
-      text: "Arrastras heridas emocionales que parecen no cerrarse nunca, sin importar cuánto trabajo interno haces"
+      title: "Falta de Poder Personal",
+      text: "Inviertes tiempo y dinero en terapia, coaching y trabajo personal, pero sigues sintiéndote sin poder personal, sin la capacidad de tomar decisiones que realmente cambien tu vida."
     },
     {
       number: "03",
-      text: "Sientes que algo te bloquea de vivir tu verdadero propósito o de tener relaciones que realmente funcionan"
+      title: "Heridas Que no Sanan",
+      text: "Arrastras heridas que parecen no cerrarse nunca, sin importar cuánto trabajo interno haces. Algo te impide abrirte completamente al amor y la conexión profunda que deseas."
     },
     {
       number: "04",
-      text: "Vives ciclos repetitivos que reconoces pero no puedes romper, como si estuvieras atrapado en un loop kármico"
+      title: "Incapacidad de Expresar tu Verdad",
+      text: "No puedes expresar tu verdad ni comunicar lo que realmente sientes. Algo te silencia desde adentro y te impide hablar con autenticidad."
     },
     {
       number: "05",
-      text: "Tienes la intuición profunda de que vienes de vidas pasadas con carga que está afectando tu presente"
-    },
-    {
-      number: "06",
-      text: "Buscas alinear tu destino con tu mejor versión, pero sientes que algo invisible te lo impide"
+      title: "Bloqueado de tu Propósito",
+      text: "Sientes que algo te bloquea de vivir tu verdadero propósito. Tienes la intuición profunda de que vienes de vidas pasadas con carga que afecta tu presente, pero no puedes ver el camino para alinear tu destino con tu mejor versión."
     }
   ]
 
@@ -100,7 +101,7 @@ export default function PainPoints() {
           Has intentado todo, pero los mismos patrones siguen apareciendo
         </h2>
         <p ref={subtitleRef} className="pain-points__subtitle">
-          Si reconoces alguna de estas señales, significa que estás listo para un cambio que va más allá de la terapia tradicional o el trabajo personal superficial:
+          Si reconoces alguna de estas señales, significa que estás listo para un cambio que va más allá de la terapia tradicional:
         </p>
 
         <div className="pain-points__grid">
@@ -113,6 +114,7 @@ export default function PainPoints() {
               <div className="pain-points__card-bg"></div>
               <div className="pain-points__card-number">{point.number}</div>
               <div className="pain-points__card-content">
+                <h3 className="pain-points__card-title">{point.title}</h3>
                 <p className="pain-points__card-text">{point.text}</p>
               </div>
               <div className="pain-points__card-accent"></div>

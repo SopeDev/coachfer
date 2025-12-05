@@ -95,7 +95,7 @@ export default function Quote() {
     <section ref={sectionRef} className="quote">
       <div className="quote__container">
         <p ref={textRef} className="quote__text">
-          Después de más de 26 años acompañando a miles de personas en su proceso de transformación...
+          "Después de más de 26 años acompañando a miles de personas, desarrollé un método que va más allá de entender tu carta astral..."
         </p>
       </div>
     </section>

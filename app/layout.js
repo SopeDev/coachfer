@@ -10,7 +10,7 @@ const cormorantGaramond = Cormorant_Garamond({
 
 export const metadata = {
   title: "Fernando Quintero - Astrología Cuántica Kabbalista",
-  description: "AstroHacking: Reprogramación del Software Astrológico - Un proceso de 3 sesiones para reconectarte con tu propósito más elevado",
+  description: "AstroHacking: Reprogramación del Software Astrológico - Un método de reprogramación cuántica para reconectarte con tu propósito más elevado",
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",

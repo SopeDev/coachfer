@@ -82,6 +82,14 @@ export default function SobreFernando() {
   return (
     <section id="sobre" className="sobre-fernando" ref={sectionRef}>
       <div className="sobre-fernando__container">
+        <div className="sobre-fernando__cta">
+          <p className="sobre-fernando__cta-text">Conoce al creador del método</p>
+          <div className="sobre-fernando__scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 10L12 15L17 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
         <div className="sobre-fernando__content">
           {/* LEFT COLUMN: two images stacked */}
           <div className="sobre-fernando__images">
@@ -110,8 +118,15 @@ export default function SobreFernando() {
                 ref={text1Ref}
               >
                 <p className="sobre-fernando__paragraph">
-                  Mi enfoque ha evolucionado desde lecturas astrológicas tradicionales hacia un <strong>método profundo de reprogramación cuántica</strong> que integra la sabiduría ancestral de la Kabbalah con principios de física cuántica, diseñado para quienes están listos para <strong>liberar sus limitaciones kármicas y activar su máximo potencial.</strong>
+                  Mi enfoque ha evolucionado desde lecturas astrológicas tradicionales hacia un <strong> método profundo de reprogramación cuántica</strong>. Diseñado para quienes están listos para <strong>liberar sus limitaciones kármicas 
+                  y activar su máximo potencial</strong>, mi método integra:
                 </p>
+                <ul className="sobre-fernando__features">
+                  <li>✓ La sabiduría ancestral de la Kabbalah</li>
+                  <li>✓ Principios de física cuántica</li>
+                  <li>✓ Reprogramación de memorias kármicas</li>
+                  <li>✓ Activación del ADN divino</li>
+                </ul>
               </div>
 
               <div

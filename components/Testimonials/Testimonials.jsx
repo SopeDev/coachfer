@@ -20,7 +20,7 @@ export default function Testimonials() {
       author: "Cliente testimonial"
     },
     {
-      text: "Después de las 3 sesiones, siento que tengo un código nuevo instalado. Mi vida cambió de dirección y ahora vivo con mucha más claridad y propósito.",
+      text: "Después de trabajar con el método, siento que tengo un código nuevo instalado. Mi vida cambió de dirección y ahora vivo con mucha más claridad y propósito.",
       author: "Cliente testimonial"
     },
     {

@@ -16,13 +16,27 @@ export default function Benefits() {
   const resultsRef = useRef(null)
 
   const benefits = [
-    "Identificar tu herida raíz que gobierna tu vida",
-    "Transformar traumas kármicos y memorias de vidas pasadas",
-    "Reprogramar patrones ancestrales y creencias limitantes",
-    "Cortar contratos energéticos y nudos repetitivos",
-    "Activar propósito, claridad y poder personal",
-    "Alinear tu destino con tu versión más elevada",
-    "Recodificar tu alma con vibraciones de letras hebreas"
+    {
+      text: <><strong>Identificar tu herida raíz</strong> que gobierna tu vida desde el inconsciente</>
+    },
+    {
+      text: <><strong>Transformar traumas kármicos</strong> y memorias de vidas pasadas que te limitan</>
+    },
+    {
+      text: <><strong>Reprogramar patrones ancestrales</strong> heredados de tu línea familiar</>
+    },
+    {
+      text: <><strong>Cortar contratos energéticos</strong> que te mantienen en ciclos repetitivos</>
+    },
+    {
+      text: <><strong>Activar tu propósito superior</strong> y recuperar tu poder personal</>
+    },
+    {
+      text: <><strong>Alinear tus 7 chakras</strong> con tu destino más elevado</>
+    },
+    {
+      text: <><strong>Recodificar tu alma</strong> con las vibraciones de las letras hebreas</>
+    }
   ]
 
   const finalResults = [
@@ -94,7 +108,7 @@ export default function Benefits() {
               className="benefits__item"
             >
               <div className="benefits__check">✓</div>
-              <p className="benefits__text">{benefit}</p>
+              <p className="benefits__text">{benefit.text}</p>
             </div>
           ))}
         </div>

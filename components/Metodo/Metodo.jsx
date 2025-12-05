@@ -14,23 +14,26 @@ export default function Metodo() {
   const subtitleRef = useRef(null)
   const sessionsRef = useRef([])
 
-  const sessions = [
+  const phases = [
     {
       number: "01",
-      title: "Diagnóstico Cuántico",
-      description: "En nuestra primera sesión juntos, realizo una Interpretación Cuántica de tu Carta Astral donde te muestro el mapa completo de tu encarnación. Identifico tus heridas raíz, contratos kármicos, patrones familiares que se repiten y bloqueos de propósito. A nivel cuántico, te muestro cómo vibran tus memorias y qué camino estás ejecutando en automático. Comprenderás por qué elegiste esta vida y qué aprendizajes trae tu alma.",
-      image: "/images/session1.png"
+      title: "Interpretación Cuántica de la Carta Astrológica",
+      subtitle: "Aquí identificamos la raíz, no el síntoma.",
+      description: "En esta fase, realizo una interpretación cuántica de tu carta astral donde identifico la raíz de tus patrones. Detecto tus heridas raíz del alma (Tikun), ejes nodales y contratos kármicos, patrones inconscientes del linaje, y el mapa de tu destino encarnacional. Te muestro el 'código fuente' de cada planeta, signo y casa, y el lugar exacto donde perdiste tu poder. A nivel cuántico, comprendes cómo vibran tus memorias y qué camino estás ejecutando en automático.",
+      image: "/images/session-01.png"
     },
     {
       number: "02",
-      title: "Reprogramación Lunar y Kármica",
-      description: "En nuestra segunda sesión, trabajamos juntos el programa de tu alma a través de tus Nodos Lunares y Ejes Kármicos. Te muestro tu nodo sur (lo que vienes a corregir) y tu nodo norte (tu misión evolutiva). A través del poder de las letras hebreas de la Kabbalah, reprogramamos juntos el código cuántico que sostiene la distorsión en tu realidad. Cortamos contratos, limpiamos memorias ancestrales y desactivamos traumas.",
-      image: "/images/session-02.jpg"
+      title: "Programación y Desprogramación de Patrones",
+      subtitle: "Aquí quemamos los viejos programas.",
+      description: "En esta fase, trabajamos juntos para reprogramar y desprogramar los patrones que te limitan. Reprogramamos traumas subconscientes, renegociamos contratos kármicos y votos inconscientes, y limpiamos memorias celulares. Utilizamos técnicas de sustitución con mantras, respiración consciente (4-4-8/12), visualización y activación de chakras. Aplicamos el método del Cristo (redención a través del dolor iluminado) y el método del Buda (disolver patrones desde la conciencia testigo).",
+      image: "/images/session-02.png"
     },
     {
       number: "03",
-      title: "Activación y Recodificación Hebrea",
-      description: "En nuestra tercera sesión, desde tu nueva frecuencia, abrimos juntos el portal de tu destino superior. Cada signo, planeta y sefirá del Árbol de la Vida tiene una letra hebrea asociada que corregimos distorsiones y limpiamos memorias. Conectamos con tu Yo Ascendido en la quinta dimensión: esa versión tuya que ya logró su propósito. Anclamos su energía en el presente, recodificando tu sistema energético hacia una nueva línea de realidad.",
+      title: "Recodificación con Letras Hebreas y Geometría Sagrada",
+      subtitle: "Aquí nace el nuevo Yo.",
+      description: "En esta fase final, desde tu nueva frecuencia, activamos tu destino superior. Reconozco tus Dones potenciales y activo el programa de Destino Superior. Diseño y desarrollo una meditación personalizada a través de la activación de las 22 Letras Sagradas hebreas. Anclamos tu nueva identidad cuántica, conectando con tu Yo Ascendido en la quinta dimensión: esa versión tuya que ya logró su propósito. Recodificamos tu sistema energético hacia una nueva línea de realidad.",
       image: "/images/session-03.jpg"
     }
   ]
@@ -79,27 +82,29 @@ export default function Metodo() {
           <span className="metodo__title-indigo">AstroHacking</span>: <span className="metodo__title-accent">Reprogramación del Software Astrológico</span>
         </h2>
         <p ref={subtitleRef} className="metodo__subtitle">
-          He diseñado un proceso de <strong>3 sesiones</strong> que no solo te muestra por qué repites patrones, sino que los reprograma desde el plano cuántico. 
-          Este es el puente entre donde estás ahora y donde quieres estar: 
+          He diseñado un <strong>método de reprogramación cuántica</strong> que integra astrología cabalística, técnicas de respiración consciente, cristianismo místico, budismo, chakras, mantras y letras hebreas. 
+          Este método no solo te muestra por qué repites patrones, sino que los reprograma desde el plano cuántico. 
+          Es el puente entre donde estás ahora y donde quieres estar: 
           liberar lo que te amarra al pasado, reprogramar lo que te condiciona, activar lo que te pertenece.
         </p>
 
         <div className="metodo__sessions">
-          {sessions.map((session, index) => (
+          {phases.map((phase, index) => (
             <div
               key={index}
               ref={el => sessionsRef.current[index] = el}
               className="metodo__session"
             >
-              <div className="metodo__session-number">{session.number}</div>
+              <div className="metodo__session-number">{phase.number}</div>
               <div className="metodo__session-content">
-                <h3 className="metodo__session-title">{session.title}</h3>
-                <p className="metodo__session-description">{session.description}</p>
+                <h3 className="metodo__session-title">{phase.title}</h3>
+                <p className="metodo__session-subtitle">"{phase.subtitle}"</p>
+                <p className="metodo__session-description">{phase.description}</p>
               </div>
               <div className="metodo__session-image">
                 <img 
-                  src={session.image} 
-                  alt={session.title}
+                  src={phase.image} 
+                  alt={phase.title}
                   className="metodo__session-img"
                 />
               </div>

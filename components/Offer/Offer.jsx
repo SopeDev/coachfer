@@ -15,55 +15,7 @@ export default function Offer() {
   const subtitleRef = useRef(null)
   const packagesRef = useRef([])
 
-  const packages = [
-    {
-      name: "RECODE LITE",
-      tagline: "Para quien quiere iniciar",
-      features: [
-        "Interpretación profunda de Carta Cuántica Kabalista",
-        "Identificación de 6 heridas centrales",
-        "3 reprogramaciones con letras",
-        "Plan de Tikún de 21 días"
-      ],
-      duration: "2 sesiones",
-      price: "$4,400 – $6,600 MXN",
-      popular: false
-    },
-    {
-      name: "RECODE MAESTRO",
-      tagline: "Transformación real — tu programa estrella",
-      badge: "Más vendido",
-      features: [
-        "Lectura total del software del alma",
-        "Revisión nodos, tikún, linaje, contratos kármicos",
-        "Reprogramación de 7 heridas",
-        "7 audios personalizados de letras hebreas",
-        "Plan de 40 días",
-        "Acompañamiento WhatsApp",
-        "Ritual de cierre y activación del destino superior"
-      ],
-      duration: "4–6 sesiones",
-      price: "$9,900 – $16,500 MXN",
-      popular: true
-    },
-    {
-      name: "RECODE ÉLITE",
-      tagline: "Certificación interna de su alma",
-      features: [
-        "Todo lo de Maestro",
-        "12 sesiones (una por planeta + nodos)",
-        "Audio completo de su \"Código Kabalista Personal\"",
-        "Sesión de Árbol de la Vida con colocación planetaria",
-        "Liberación profunda de linaje",
-        "Lectura anual + seguimiento trimestral",
-        "Prioridad y acceso directo",
-        "Ritual de misión del alma 1 a 1"
-      ],
-      duration: "3 meses",
-      price: "$22,200 – $33,000 MXN",
-      popular: false
-    }
-  ]
+  // Packages are now hardcoded in JSX below
 
   useGSAP(() => {
     if (!sectionRef.current || !titleRef.current || !subtitleRef.current) return
@@ -112,44 +64,222 @@ export default function Offer() {
           Cada paquete está diseñado para un nivel diferente de compromiso y profundidad. Elige el que resuene con dónde estás ahora y hacia dónde quieres ir.
         </p>
 
+        {/* THREE PACKAGES - 3 COLUMN GRID */}
         <div className="offer__packages">
-          {packages.map((pkg, index) => (
-            <div
-              key={index}
-              ref={el => packagesRef.current[index] = el}
-              className={`offer__package ${pkg.popular ? 'offer__package--popular' : ''}`}
-            >
-              {pkg.badge && (
-                <div className="offer__badge">{pkg.badge}</div>
-              )}
-              <h3 className="offer__package-name">{pkg.name}</h3>
-              <p className="offer__package-tagline">{pkg.tagline}</p>
-              
-              <div className="offer__package-features">
-                <p className="offer__features-title">Incluye:</p>
-                <ul className="offer__features-list">
-                  {pkg.features.map((feature, idx) => (
-                    <li key={idx} className="offer__feature-item">
-                      <span className="offer__feature-icon">✓</span>
-                      <span className="offer__feature-text">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          {/* PACKAGE 1: Versión Básica */}
+          <div ref={el => packagesRef.current[1] = el} className="offer__package offer__package--basic">
+            <div className="offer__package-header">
+              <h3 className="offer__package-name">Iniciación</h3>
+              <p className="offer__package-tagline">"Reprograma tu Mapa"</p>
+            </div>
+            
+            <div className="offer__package-duration">
+              <span className="offer__duration-label">Duración</span>
+              <span className="offer__duration-value">3 sesiones (4.5 horas total)</span>
+            </div>
 
-              <div className="offer__package-footer">
-                <p className="offer__duration">Duración: <strong>{pkg.duration}</strong></p>
-                <p className="offer__price">{pkg.price}</p>
+            <div className="offer__package-price-section">
+              <p className="offer__price">$278 USD</p>
+              <p className="offer__price-detail">$93 por sesión</p>
+            </div>
+
+            <div className="offer__package-features">
+              <p className="offer__features-title">Incluye:</p>
+              <ul className="offer__features-list">
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Interpretación cuántica de la carta</span>
+                </li>
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Identificación de heridas y contratos kármicos</span>
+                </li>
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Rutina personalizada de respiración, mantras y chakras</span>
+                </li>
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Mini-protocolo de reprogramación</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="offer__package-ideal">
+              <p className="offer__ideal-text">
+                <strong>Ideal para:</strong> Quien quiere adentrarse al poder de la reprogramación cuántica
+              </p>
+            </div>
+
+            <div className="offer__package-footer">
+              <Button 
+                type="secondary"
+                href="#agendar"
+                className="offer__package-cta"
+              >
+                Reservar Iniciación
+              </Button>
+            </div>
+          </div>
+
+          {/* PACKAGE 3: Versión Integral */}
+          <div ref={el => packagesRef.current[2] = el} className="offer__package offer__package--popular">
+            <div className="offer__badge">Más Vendido</div>
+            <div className="offer__package-header">
+              <h3 className="offer__package-name">Transformación Completa</h3>
+              <p className="offer__package-tagline">"Recode de Alma"</p>
+            </div>
+            
+            <div className="offer__package-duration">
+              <span className="offer__duration-label">Duración</span>
+              <span className="offer__duration-value">6 sesiones (9 horas total)</span>
+            </div>
+
+            <div className="offer__package-price-section">
+              <p className="offer__price">$444 USD</p>
+              <p className="offer__price-detail">$74 por sesión</p>
+              <p className="offer__savings">Ahorras $111 vs. sesiones individuales</p>
+            </div>
+
+            <div className="offer__package-features">
+              <p className="offer__features-title">Todo lo de Básica, más:</p>
+              <ul className="offer__features-list">
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Mayor profundidad de interpretación en 2 sesiones adicionales</span>
+                </li>
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Reprogramación de los planetas kármicos</span>
+                </li>
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Reprogramación personalizada de heridas de la infancia</span>
+                </li>
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Meditación de activación del Destino Superior desde la Astrología Kabbalista</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="offer__package-ideal">
+              <p className="offer__ideal-text">
+                <strong>Ideal para:</strong> Quien busca una transformación profunda y duradera
+              </p>
+            </div>
+
+            <div className="offer__package-footer">
+              <Button 
+                type="secondary"
+                href="#agendar"
+                className="offer__package-cta"
+              >
+                Agendar Transformación
+              </Button>
+            </div>
+          </div>
+
+          {/* PACKAGE 4: Versión Premium */}
+          <div ref={el => packagesRef.current[3] = el} className="offer__package">
+            <div className="offer__package-header">
+              <h3 className="offer__package-name">Maestría Total</h3>
+              <p className="offer__package-tagline">"AstroHacking 360"</p>
+            </div>
+            
+            <div className="offer__package-duration">
+              <span className="offer__duration-label">Duración</span>
+              <span className="offer__duration-value">12 sesiones (18 horas total)</span>
+            </div>
+
+            <div className="offer__package-price-section">
+              <p className="offer__price">$667 USD</p>
+              <p className="offer__price-detail">$56 por sesión</p>
+              <p className="offer__savings">Ahorras $333 vs. sesiones individuales</p>
+            </div>
+
+            <div className="offer__package-features">
+              <p className="offer__features-title">Todo lo de Integral, más:</p>
+              <ul className="offer__features-list">
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Reprogramación de las 12 casas (todas las áreas de vida)</span>
+                </li>
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Meditación de reprogramación de cada aspecto planetario</span>
+                </li>
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Trabajo profundo de activación de ADN Divino</span>
+                </li>
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Entrenamiento en el manejo de Reprogramación Cuántica</span>
+                </li>
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Acompañamiento en el manejo y uso de los Dones Potenciales</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="offer__package-ideal">
+              <p className="offer__ideal-text">
+                <strong>Ideal para:</strong> Quien busca la transformación total y dominar la reprogramación cuántica
+              </p>
+            </div>
+
+            <div className="offer__package-footer">
+              <Button 
+                type="secondary"
+                href="#agendar"
+                className="offer__package-cta"
+              >
+                Solicitar Maestría
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* SINGLE SESSION - ENTRY POINT */}
+        <div className="offer__single-session-section">
+          <h3 className="offer__single-session-title">
+            ¿Prefieres empezar con una sesión única?
+          </h3>
+          <p className="offer__single-session-subtitle">
+            Si aún no estás seguro de comprometerte con un paquete completo, puedes comenzar con una sesión individual para conocer tu programa y experimentar el método.
+          </p>
+          
+          <div ref={el => packagesRef.current[0] = el} className="offer__single-session">
+            <div className="offer__single-session-content">
+              <div className="offer__single-session-header">
+                <h3 className="offer__single-session-name">Sesión Única</h3>
+                <p className="offer__single-session-tagline">"Conoce tu programa"</p>
+              </div>
+              <div className="offer__single-session-duration">
+                <span className="offer__single-session-duration-label">Duración:</span>
+                <span className="offer__single-session-duration-value">1 sesión (90 minutos)</span>
+              </div>
+              <div className="offer__single-session-price">$111 USD</div>
+              <div className="offer__single-session-features">
+                <span>Interpretación inicial de tu carta natal</span>
+                <span>•</span>
+                <span>Identificación de tu herida raíz principal</span>
+                <span>•</span>
+                <span>Mapa básico de tus contratos kármicos</span>
+              </div>
+              <div className="offer__single-session-footer">
                 <Button 
-                  type={pkg.popular ? "primary" : "secondary"}
+                  type="secondary"
                   href="#agendar"
-                  className="offer__package-cta"
+                  className="offer__single-session-cta"
                 >
-                  Agenda tu proceso
+                  Reservar Sesión
                 </Button>
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>

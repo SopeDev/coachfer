@@ -133,7 +133,8 @@ export default function Hero() {
           </h1>
           <div ref={contentGroupRef} className="hero__content-group">
             <p className="hero__description">
-              No es terapia. No es coaching. Es reprogramación cuántica: libera las memorias kármicas que te mantienen atrapado en ciclos repetitivos y activa el código de tu verdadero propósito.
+              Libera las memorias kármicas que te mantienen atrapado en ciclos repetitivos. 
+              <strong> A través de un método de reprogramación cuántica, transformamos el código de tu destino desde el plano astrológico y energético.</strong>
             </p>
             <div className="hero__video">
               {/* Video placeholder - replace with actual video embed */}

@@ -122,6 +122,11 @@
     margin: 0;
     flex: 1;
 
+    strong {
+      color: var(--color-indigo);
+      font-weight: 700;
+    }
+
     @media (min-width: $break-tablet) {
       font-size: 1.125rem;
     }
