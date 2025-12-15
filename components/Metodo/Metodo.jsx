@@ -17,24 +17,35 @@ export default function Metodo() {
   const phases = [
     {
       number: "01",
-      title: "Interpretación Cuántica de la Carta Astrológica",
-      subtitle: "Aquí identificamos la raíz, no el síntoma.",
-      description: "En esta fase, realizo una interpretación cuántica de tu carta astral donde identifico la raíz de tus patrones. Detecto tus heridas raíz del alma (Tikun), ejes nodales y contratos kármicos, patrones inconscientes del linaje, y el mapa de tu destino encarnacional. Te muestro el 'código fuente' de cada planeta, signo y casa, y el lugar exacto donde perdiste tu poder. A nivel cuántico, comprendes cómo vibran tus memorias y qué camino estás ejecutando en automático.",
-      image: "/images/session-01.png"
+      title: "Pilar Espiritual",
+      subtitle: "Propósito, legado y diseño divino",
+      description: "Aquí trabajamos tu propósito del alma (Sol, Casa 9, Nodo Norte, tikun), tu misión encarnacional y legado (Medio Cielo), y tu conexión con el 'Cristo Interno'. Reconoces el juego espiritual desde tu alma observadora. Transformamos tus creencias metafísicas limitantes y activamos tu sentido de vida desde niveles superiores de consciencia. Utilizamos letras hebreas del tikun del alma, meditaciones cabalísticas, técnicas de observador budista y respiración que activa coronilla–corazón.",
+      result: "Entiendes para qué viniste, qué viniste a corregir y qué estás llamada a manifestar como legado.",
+      image: "/images/pilar-espiritual.png"
     },
     {
       number: "02",
-      title: "Programación y Desprogramación de Patrones",
-      subtitle: "Aquí quemamos los viejos programas.",
-      description: "En esta fase, trabajamos juntos para reprogramar y desprogramar los patrones que te limitan. Reprogramamos traumas subconscientes, renegociamos contratos kármicos y votos inconscientes, y limpiamos memorias celulares. Utilizamos técnicas de sustitución con mantras, respiración consciente (4-4-8/12), visualización y activación de chakras. Aplicamos el método del Cristo (redención a través del dolor iluminado) y el método del Buda (disolver patrones desde la conciencia testigo).",
-      image: "/images/session-02.png"
+      title: "Pilar Mental",
+      subtitle: "Programaciones, contratos y patrones heredados",
+      description: "Aquí hackeamos tus programas subconscientes (Mercurio), patrones kármicos repetitivos, sistema de creencias heredado (Luna y Casa 4), ego y máscaras del personaje ficticio (Ascendente). Transformamos tu mente reactiva en mente consciente, liberamos contratos de vidas pasadas (Nodo Sur) y reescribimos tu narrativa interna. Aplicamos técnicas de reprogramación cuántica (4-4-8/12), hackeo del ego, sanación de patrones transgeneracionales y ejercicios de reescritura de identidad.",
+      result: "Dejas de operar desde el karma mental y aprendes a operar desde un estado consciente y autorregulado.",
+      image: "/images/pilar-mental.png"
     },
     {
       number: "03",
-      title: "Recodificación con Letras Hebreas y Geometría Sagrada",
-      subtitle: "Aquí nace el nuevo Yo.",
-      description: "En esta fase final, desde tu nueva frecuencia, activamos tu destino superior. Reconozco tus Dones potenciales y activo el programa de Destino Superior. Diseño y desarrollo una meditación personalizada a través de la activación de las 22 Letras Sagradas hebreas. Anclamos tu nueva identidad cuántica, conectando con tu Yo Ascendido en la quinta dimensión: esa versión tuya que ya logró su propósito. Recodificamos tu sistema energético hacia una nueva línea de realidad.",
-      image: "/images/session-03.jpg"
+      title: "Pilar Emocional",
+      subtitle: "Heridas, memorias celulares y patrones emocionales",
+      description: "Aquí transformamos las heridas de infancia (Luna), heridas del alma (aspectos Plutón–Quirón), memorias celulares y traumas. Liberamos apegos, dependencia, abandono y rechazo. Rompemos la repetición por resonancia emocional e integramos duelos no procesados. Trabajamos con respiración emocional para soltar densidad, activación de chakras inferiores, Venus, Luna y Casa 8. Aplicamos procesos de compasión cristiana y observación emocional budista sin juicio.",
+      result: "Aprendes a sentir sin colapsar, soltar lo que no es tuyo y liberar el dolor acumulado en el cuerpo emocional.",
+      image: "/images/pilar-emocional.png"
+    },
+    {
+      number: "04",
+      title: "Pilar Físico",
+      subtitle: "Cuerpo, hábitos y manifestación en la tierra",
+      description: "Aquí trabajamos tu anclaje en la realidad (Casa 2 y 6), rutinas, hábitos y disciplina. Cuidamos tu cuerpo como vehículo del alma. Transformamos adicciones, impulsos y compulsiones. Materializamos tu propósito (Saturno) y activamos tu fuerza vital y energía sexual (Marte). Fortalecemos tu relación con la tierra y tu poder de acción. Utilizamos respiración para activar el sistema parasimpático, detox energético, rituales de anclaje, microhábitos de alineación diaria y trabajo somático.",
+      result: "Te vuelves capaz de manifestar, sostener energía, tener disciplina y llevar tu misión espiritual a la materia.",
+      image: "/images/pilar-fisico.png"
     }
   ]
 
@@ -54,13 +65,13 @@ export default function Metodo() {
       }
     })
 
-    tl.to(titleRef.current, {
+    tl.to(subtitleRef.current, {
       opacity: 1,
       y: 0,
       duration: 1,
       ease: "power3.out"
     })
-    .to(subtitleRef.current, {
+    .to(titleRef.current, {
       opacity: 1,
       y: 0,
       duration: 1,
@@ -78,15 +89,14 @@ export default function Metodo() {
   return (
     <section id="metodo" ref={sectionRef} className="metodo">
       <div className="metodo__container">
+        <p ref={subtitleRef} className="metodo__subtitle">
+          Para lograr mi propósito, he diseñado una <strong>metodología multidimensional basado en los 4 Pilares de la Ascensión</strong> que integra astrología cabalística, respiración consciente, reprogramación cuántica, psicología espiritual, cristianismo místico, budismo, chakras, mantras y letras hebreas. 
+          Cada sesión trabaja simultáneamente las capas astrológica, subconsciente, energética, espiritual y física de tu ser. 
+          Este método no solo te muestra por qué repites patrones, sino que los reprograma desde el plano cuántico: donde reescribes tu programación astrológica desde la consciencia superior y transformas tu carta natal en su versión más alta.
+        </p>
         <h2 ref={titleRef} className="metodo__title">
           <span className="metodo__title-indigo">AstroHacking</span>: <span className="metodo__title-accent">Reprogramación del Software Astrológico</span>
         </h2>
-        <p ref={subtitleRef} className="metodo__subtitle">
-          He diseñado un <strong>método de reprogramación cuántica</strong> que integra astrología cabalística, técnicas de respiración consciente, cristianismo místico, budismo, chakras, mantras y letras hebreas. 
-          Este método no solo te muestra por qué repites patrones, sino que los reprograma desde el plano cuántico. 
-          Es el puente entre donde estás ahora y donde quieres estar: 
-          liberar lo que te amarra al pasado, reprogramar lo que te condiciona, activar lo que te pertenece.
-        </p>
 
         <div className="metodo__sessions">
           {phases.map((phase, index) => (
@@ -95,11 +105,16 @@ export default function Metodo() {
               ref={el => sessionsRef.current[index] = el}
               className="metodo__session"
             >
-              <div className="metodo__session-number">{phase.number}</div>
+              <div className="metodo__session-number">
+                {phase.number}
+              </div>
               <div className="metodo__session-content">
                 <h3 className="metodo__session-title">{phase.title}</h3>
                 <p className="metodo__session-subtitle">"{phase.subtitle}"</p>
                 <p className="metodo__session-description">{phase.description}</p>
+                <p className="metodo__session-result">
+                  <strong>Resultado:</strong> {phase.result}
+                </p>
               </div>
               <div className="metodo__session-image">
                 <img 
@@ -115,4 +130,3 @@ export default function Metodo() {
     </section>
   )
 }
-

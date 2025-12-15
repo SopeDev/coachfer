@@ -8,7 +8,6 @@ import Benefits from "../components/Benefits/Benefits"
 import Testimonials from "../components/Testimonials/Testimonials"
 import Offer from "../components/Offer/Offer"
 import CTA from "../components/CTA/CTA"
-import Agendar from "../components/Agendar/Agendar"
 import Footer from "../components/Footer/Footer"
 
 export default function Home() {
@@ -24,7 +23,6 @@ export default function Home() {
       <Testimonials />
       <Offer />
       <CTA />
-      <Agendar />
       <Footer />
     </main>
   )

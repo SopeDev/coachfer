@@ -211,7 +211,7 @@ export default function Navbar() {
             <li>
               <Button
                 type="secondary"
-                href="#agendar"
+                href="/agendar"
                 className="navbar__cta-button"
               >
                 Agendar
@@ -249,15 +249,9 @@ export default function Navbar() {
             <li className="navbar__mobile-cta-wrapper">
               <Button
                 type="secondary"
+                href="/agendar"
                 className="navbar__mobile-cta-button"
-                onClick={() => {
-                  closeMobileMenu()
-                  // Scroll to agendar section
-                  const agendarSection = document.querySelector('#agendar')
-                  if (agendarSection) {
-                    agendarSection.scrollIntoView({ behavior: 'smooth' })
-                  }
-                }}
+                onClick={closeMobileMenu}
               >
                 Agendar
               </Button>

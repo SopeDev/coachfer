@@ -129,13 +129,17 @@ export default function Hero() {
       <div className="hero__container">
         <div className="hero__content">
           <h1 ref={titleRef} className="hero__title">
-            Renace en tu Propósito
+            <span className="hero__title-phrase">Recuerda tu Origen</span>
+            <span className="hero__title-separator"> • </span>
+            <span className="hero__title-phrase">Renace en tu Propósito</span>
+            <span className="hero__title-separator"> • </span>
+            <span className="hero__title-phrase">Reprograma tu Destino</span>
           </h1>
           <div ref={contentGroupRef} className="hero__content-group">
-            <p className="hero__description">
+            {/* <p className="hero__description">
               Libera las memorias kármicas que te mantienen atrapado en ciclos repetitivos. 
               <strong> A través de un método de reprogramación cuántica, transformamos el código de tu destino desde el plano astrológico y energético.</strong>
-            </p>
+            </p> */}
             <div className="hero__video">
               {/* Video placeholder - replace with actual video embed */}
               <div className="hero__video-placeholder">
@@ -145,7 +149,7 @@ export default function Hero() {
             </div>
             <Button 
               type="primary"
-              href="#agendar"
+              href="/agendar"
               className="hero__cta"
             >
               Agenda tu proceso

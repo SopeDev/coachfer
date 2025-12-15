@@ -11,28 +11,27 @@ gsap.registerPlugin(ScrollTrigger, useGSAP)
 export default function PainPoints() {
   const sectionRef = useRef(null)
   const titleRef = useRef(null)
-  const subtitleRef = useRef(null)
   const pointsRef = useRef([])
 
   const painPoints = [
     {
       number: "01",
-      title: "Inseguridad y Bloqueos Emocionales",
-      text: "Falta de seguridad y estabilidad en tu vida, como si el suelo se moviera bajo tus pies. Arrastras patrones repetitivos en tus relaciones que reconoces pero no puedes transformar, atrapado en ciclos que se repiten una y otra vez."
-    },
-    {
-      number: "02",
-      title: "Falta de Poder Personal",
-      text: "Inviertes tiempo y dinero en terapia, coaching y trabajo personal, pero sigues sintiéndote sin poder personal, sin la capacidad de tomar decisiones que realmente cambien tu vida."
-    },
-    {
-      number: "03",
       title: "Heridas Que no Sanan",
       text: "Arrastras heridas que parecen no cerrarse nunca, sin importar cuánto trabajo interno haces. Algo te impide abrirte completamente al amor y la conexión profunda que deseas."
     },
     {
+      number: "02",
+      title: "Bloqueos y Patrones Repetitivos",
+      text: "Falta de seguridad y estabilidad en tu vida, como si el suelo se moviera bajo tus pies. Arrastras patrones repetitivos en tus relaciones que reconoces pero no puedes transformar, atrapado en ciclos que se repiten una y otra vez."
+    },
+    {
+      number: "03",
+      title: "Falta de Vitalidad y Poder Personal",
+      text: "Inviertes tiempo y dinero en terapia, coaching y trabajo personal, pero sigues sintiéndote sin poder personal, sin la capacidad de tomar decisiones que realmente cambien tu vida."
+    },
+    {
       number: "04",
-      title: "Incapacidad de Expresar tu Verdad",
+      title: "Incapacidad de Expresar tu Verdadero Ser",
       text: "No puedes expresar tu verdad ni comunicar lo que realmente sientes. Algo te silencia desde adentro y te impide hablar con autenticidad."
     },
     {
@@ -43,11 +42,11 @@ export default function PainPoints() {
   ]
 
   useGSAP(() => {
-    if (!sectionRef.current || !titleRef.current || !subtitleRef.current) return
+    if (!sectionRef.current || !titleRef.current) return
 
     const cards = pointsRef.current.filter(Boolean)
 
-    gsap.set([titleRef.current, subtitleRef.current], {
+    gsap.set(titleRef.current, {
       opacity: 0,
       y: 50
     })
@@ -56,7 +55,7 @@ export default function PainPoints() {
       opacity: 0
     })
 
-    // Title and subtitle animation
+    // Title animation
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
@@ -71,12 +70,6 @@ export default function PainPoints() {
       duration: 1,
       ease: "power3.out"
     })
-    .to(subtitleRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power3.out"
-    }, "-=0.7")
 
     // Animate each card individually based on its position relative to viewport center
     // Cards at the same height will animate simultaneously, cards at different heights will animate in sequence
@@ -98,11 +91,8 @@ export default function PainPoints() {
     <section id="pain-points" ref={sectionRef} className="pain-points">
       <div className="pain-points__container">
         <h2 ref={titleRef} className="pain-points__title">
-          Has intentado todo, pero los mismos patrones siguen apareciendo
+          Has intentado todo, pero los mismos patrones siguen apareciendo...
         </h2>
-        <p ref={subtitleRef} className="pain-points__subtitle">
-          Si reconoces alguna de estas señales, significa que estás listo para un cambio que va más allá de la terapia tradicional:
-        </p>
 
         <div className="pain-points__grid">
           {painPoints.map((point, index) => (

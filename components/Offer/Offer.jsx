@@ -114,7 +114,7 @@ export default function Offer() {
             <div className="offer__package-footer">
               <Button 
                 type="secondary"
-                href="#agendar"
+                href="/agendar"
                 className="offer__package-cta"
               >
                 Reservar Iniciación
@@ -172,7 +172,7 @@ export default function Offer() {
             <div className="offer__package-footer">
               <Button 
                 type="secondary"
-                href="#agendar"
+                href="/agendar"
                 className="offer__package-cta"
               >
                 Agendar Transformación
@@ -233,7 +233,7 @@ export default function Offer() {
             <div className="offer__package-footer">
               <Button 
                 type="secondary"
-                href="#agendar"
+                href="/agendar"
                 className="offer__package-cta"
               >
                 Solicitar Maestría
@@ -272,7 +272,7 @@ export default function Offer() {
               <div className="offer__single-session-footer">
                 <Button 
                   type="secondary"
-                  href="#agendar"
+                  href="/agendar"
                   className="offer__single-session-cta"
                 >
                   Reservar Sesión

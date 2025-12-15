@@ -4,6 +4,7 @@ import { useRef, useEffect } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useGSAP } from "@gsap/react"
+import { trackCalendlyEvent } from "../../lib/analytics"
 import "./Agendar.scss"
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
@@ -18,16 +19,20 @@ export default function Agendar() {
   const processBoxRef = useRef(null)
   const calendlyRef = useRef(null)
 
-  // Load Calendly inline widget script
+  // Load Calendly inline widget script and set up event tracking
   useEffect(() => {
     // Check if script is already loaded
     if (window.Calendly) {
+      setupCalendlyTracking()
       return
     }
 
     const script = document.createElement("script")
     script.src = "https://assets.calendly.com/assets/external/widget.js"
     script.async = true
+    script.onload = () => {
+      setupCalendlyTracking()
+    }
     document.body.appendChild(script)
 
     return () => {
@@ -35,6 +40,36 @@ export default function Agendar() {
       // Calendly handles its own cleanup
     }
   }, [])
+
+  // Set up Calendly event listeners for tracking
+  const setupCalendlyTracking = () => {
+    if (typeof window === "undefined" || !window.Calendly) {
+      return
+    }
+
+    // Track when user views the calendar
+    window.addEventListener("message", (e) => {
+      if (e.data.event && e.data.event.indexOf("calendly") === 0) {
+        const eventName = e.data.event
+
+        // Track different Calendly events
+        if (eventName === "calendly.event_type_viewed") {
+          trackCalendlyEvent("event_type_viewed", {
+            eventType: e.data.payload?.event_type?.name || "Unknown",
+          })
+        } else if (eventName === "calendly.date_and_time_selected") {
+          trackCalendlyEvent("date_and_time_selected", {
+            eventType: e.data.payload?.event_type?.name || "Unknown",
+          })
+        } else if (eventName === "calendly.event_scheduled") {
+          trackCalendlyEvent("event_scheduled", {
+            eventType: e.data.payload?.event_type?.name || "Unknown",
+            value: 1,
+          })
+        }
+      }
+    })
+  }
 
   useGSAP(() => {
     if (!sectionRef.current || !titleRef.current || !subtitleRef.current || !processBoxRef.current) return
@@ -44,13 +79,8 @@ export default function Agendar() {
       y: 50
     })
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%",
-        toggleActions: "play none none none"
-      }
-    })
+    // Since this is now a full page, animate on mount instead of scroll
+    const tl = gsap.timeline({ delay: 0.3 })
 
     tl.to(titleRef.current, {
       opacity: 1,
