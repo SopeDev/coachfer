@@ -1,0 +1,99 @@
+@import "../../styles/variables.scss";
+
+.metrics-banner {
+  background: var(--color-white);
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: relative;
+
+  @media (min-width: $break-tablet) {
+    padding-top: 5.5rem;
+    padding-bottom: 5.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  @media (min-width: $break-desktop) {
+    padding-top: 6.5rem;
+    padding-bottom: 6.5rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  &__container {
+    max-width: $break-desktop;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+
+    @media (min-width: $break-tablet) {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      flex-wrap: nowrap;
+    }
+  }
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+    justify-content: center;
+    max-width: 100%;
+
+    @media (min-width: $break-tablet) {
+      flex: 0 1 auto;
+      max-width: none;
+    }
+  }
+
+  &__metric {
+    font-family: var(--font-primary);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-indigo);
+    text-align: center;
+    line-height: 1.4;
+
+    @media (min-width: $break-tablet) {
+      font-size: 1.25rem;
+      max-width: 280px;
+    }
+
+    @media (min-width: $break-desktop) {
+      font-size: 1.5rem;
+      max-width: 320px;
+    }
+  }
+
+  &__divider {
+    display: none;
+    color: rgba(58, 24, 177, 0.3);
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin: 0 1.5rem;
+    align-self: center;
+    flex-shrink: 0;
+
+    @media (min-width: $break-tablet) {
+      display: inline-block;
+      font-size: 1.75rem;
+      align-self: center;
+    }
+
+    @media (min-width: $break-desktop) {
+      margin: 0 2rem;
+      font-size: 2rem;
+    }
+  }
+}
+
+

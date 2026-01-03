@@ -12,45 +12,36 @@ export default function Benefits() {
   const sectionRef = useRef(null)
   const titleRef = useRef(null)
   const subtitleRef = useRef(null)
-  const benefitsRef = useRef([])
-  const resultsRef = useRef(null)
+  const cardsRef = useRef([])
+  const closingTextRef = useRef(null)
 
-  const benefits = [
+  const transformations = [
     {
-      text: <><strong>Identificar tu herida raíz</strong> que gobierna tu vida desde el inconsciente</>
+      from: "Atrapado en patrones repetitivos que reconoces pero no puedes romper",
+      to: "Libre para crear nuevas posibilidades desde la consciencia superior"
     },
     {
-      text: <><strong>Transformar traumas kármicos</strong> y memorias de vidas pasadas que te limitan</>
+      from: "Desconectado de tu propósito, sintiendo que algo falta",
+      to: "Alineado con tu misión de alma y tu diseño divino"
     },
     {
-      text: <><strong>Reprogramar patrones ancestrales</strong> heredados de tu línea familiar</>
+      from: "Cargando heridas del pasado y memorias kármicas",
+      to: "Sanado energéticamente y activado en tu frecuencia más alta"
     },
     {
-      text: <><strong>Cortar contratos energéticos</strong> que te mantienen en ciclos repetitivos</>
+      from: "Sin claridad sobre tu camino y bloqueado de tu destino",
+      to: "Con un mapa claro de tu propósito y tu legado"
     },
     {
-      text: <><strong>Activar tu propósito superior</strong> y recuperar tu poder personal</>
-    },
-    {
-      text: <><strong>Alinear tus 7 chakras</strong> con tu destino más elevado</>
-    },
-    {
-      text: <><strong>Recodificar tu alma</strong> con las vibraciones de las letras hebreas</>
+      from: "Viviendo desde el karma y programaciones heredadas",
+      to: "Creando desde la consciencia, con poder personal restaurado"
     }
-  ]
-
-  const finalResults = [
-    "Un código nuevo instalado",
-    "Una herida desactivada",
-    "Un rumbo despejado",
-    "Una activación energética real",
-    "Una versión de ti que vibra más alto, más claro y más libre"
   ]
 
   useGSAP(() => {
     if (!sectionRef.current || !titleRef.current || !subtitleRef.current) return
 
-    gsap.set([titleRef.current, subtitleRef.current, ...benefitsRef.current, resultsRef.current], {
+    gsap.set([titleRef.current, subtitleRef.current, ...cardsRef.current, closingTextRef.current], {
       opacity: 0,
       y: 50
     })
@@ -75,14 +66,14 @@ export default function Benefits() {
       duration: 1,
       ease: "power3.out"
     }, "-=0.7")
-    .to(benefitsRef.current, {
+    .to(cardsRef.current, {
       opacity: 1,
       y: 0,
       duration: 1,
       ease: "power3.out",
-      stagger: 0.1
+      stagger: 0.15
     }, "-=0.5")
-    .to(resultsRef.current, {
+    .to(closingTextRef.current, {
       opacity: 1,
       y: 0,
       duration: 1,
@@ -94,41 +85,45 @@ export default function Benefits() {
     <section id="benefits" ref={sectionRef} className="benefits">
       <div className="benefits__container">
         <h2 ref={titleRef} className="benefits__title">
-          Lo que cambia cuando trabajamos desde el plano cuántico
+          La Transformación Que Experimentarás
         </h2>
         <p ref={subtitleRef} className="benefits__subtitle">
-          A diferencia de otros métodos que solo trabajan en la superficie, AstroHacking reprograma el código energético que determina tu destino. Esto es lo que lograrás:
+          Imagina despertar cada día con claridad absoluta sobre quién eres y para qué viniste. Sin dudas. Sin patrones. Solo propósito.
         </p>
 
-        <div className="benefits__list">
-          {benefits.map((benefit, index) => (
+        <div className="benefits__transformations">
+          {transformations.map((transformation, index) => (
             <div
               key={index}
-              ref={el => benefitsRef.current[index] = el}
-              className="benefits__item"
+              ref={el => cardsRef.current[index] = el}
+              className="benefits__card"
             >
-              <div className="benefits__check">✓</div>
-              <p className="benefits__text">{benefit.text}</p>
+              <div className="benefits__card-bg"></div>
+              <div className="benefits__card-content">
+                <div className="benefits__card-from">
+                  <span className="benefits__card-icon">❌</span>
+                  <p className="benefits__card-text benefits__card-text--from">
+                    {transformation.from}
+                  </p>
+                </div>
+                <div className="benefits__card-arrow">
+                  →
+                </div>
+                <div className="benefits__card-to">
+                  <span className="benefits__card-icon">✨</span>
+                  <p className="benefits__card-text benefits__card-text--to">
+                    {transformation.to}
+                  </p>
+                </div>
+              </div>
             </div>
           ))}
         </div>
 
-        <div ref={resultsRef} className="benefits__results">
-          <h3 className="benefits__results-title">Cuando sales de nuestras sesiones</h3>
-          <p className="benefits__results-subtitle">
-            No es teoría. No es motivación temporal. Es una transformación real que llevas contigo:
-          </p>
-          <div className="benefits__results-list">
-            {finalResults.map((result, index) => (
-              <div key={index} className="benefits__result-item">
-                <span className="benefits__result-icon">✨</span>
-                <span className="benefits__result-text">{result}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <p ref={closingTextRef} className="benefits__closing">
+          Esta transformación no es teoría. Es el resultado que cientos de personas ya experimentaron.
+        </p>
       </div>
     </section>
   )
 }
-

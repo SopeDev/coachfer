@@ -11,7 +11,6 @@ gsap.registerPlugin(ScrollTrigger, useGSAP)
 export default function Metodo() {
   const sectionRef = useRef(null)
   const titleRef = useRef(null)
-  const subtitleRef = useRef(null)
   const sessionsRef = useRef([])
 
   const phases = [
@@ -46,9 +45,9 @@ export default function Metodo() {
   ]
 
   useGSAP(() => {
-    if (!sectionRef.current || !titleRef.current || !subtitleRef.current) return
+    if (!sectionRef.current || !titleRef.current) return
 
-    gsap.set([titleRef.current, subtitleRef.current, ...sessionsRef.current], {
+    gsap.set([titleRef.current, ...sessionsRef.current], {
       opacity: 0,
       y: 50
     })
@@ -61,18 +60,12 @@ export default function Metodo() {
       }
     })
 
-    tl.to(subtitleRef.current, {
+    tl.to(titleRef.current, {
       opacity: 1,
       y: 0,
       duration: 1,
       ease: "power3.out"
     })
-    .to(titleRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power3.out"
-    }, "-=0.7")
     .to(sessionsRef.current, {
       opacity: 1,
       y: 0,
@@ -82,14 +75,9 @@ export default function Metodo() {
     }, "-=0.5")
   }, { scope: sectionRef })
 
-  return (
+  return (  
     <section id="metodo" ref={sectionRef} className="metodo">
       <div className="metodo__container">
-        <p ref={subtitleRef} className="metodo__subtitle">
-          Para lograr mi propósito, he diseñado una <strong>metodología multidimensional basado en los 4 Pilares de la Ascensión</strong> que integra astrología cabalística, respiración consciente, reprogramación cuántica, psicología espiritual, cristianismo místico, budismo, chakras, mantras y letras hebreas. 
-          Cada sesión trabaja simultáneamente las capas astrológica, subconsciente, energética, espiritual y física de tu ser. 
-          Este método no solo te muestra por qué repites patrones, sino que los reprograma desde el plano cuántico: donde reescribes tu programación astrológica desde la consciencia superior y transformas tu carta natal en su versión más alta.
-        </p>
         <h2 ref={titleRef} className="metodo__title">
           <span className="metodo__title-indigo">AstroHacking</span>: <span className="metodo__title-accent">Reprogramación del Software Astrológico</span>
         </h2>

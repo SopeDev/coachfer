@@ -1,11 +1,12 @@
 import Navbar from "../components/Navbar/Navbar"
 import Hero from "../components/Hero/Hero"
+import MetricsBanner from "../components/MetricsBanner/MetricsBanner"
+import Testimonials from "../components/Testimonials/Testimonials"
 import PainPoints from "../components/PainPoints/PainPoints"
 import Quote from "../components/Quote/Quote"
-import SobreFernando from "../components/SobreFernando/SobreFernando"
-import Metodo from "../components/Metodo/Metodo"
 import Benefits from "../components/Benefits/Benefits"
-import Testimonials from "../components/Testimonials/Testimonials"
+import Metodo from "../components/Metodo/Metodo"
+import SobreFernando from "../components/SobreFernando/SobreFernando"
 import Offer from "../components/Offer/Offer"
 import CTA from "../components/CTA/CTA"
 import Footer from "../components/Footer/Footer"
@@ -15,12 +16,13 @@ export default function Home() {
     <main>
       <Navbar />
       <Hero />
+      <MetricsBanner />
+      <Testimonials />
       <PainPoints />
       <Quote />
-      <SobreFernando />
-      <Metodo />
       <Benefits />
-      <Testimonials />
+      <Metodo />
+      <SobreFernando />
       <Offer />
       <CTA />
       <Footer />

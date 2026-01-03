@@ -95,10 +95,12 @@ export default function Quote() {
     <section ref={sectionRef} className="quote">
       <div className="quote__container">
         <p ref={textRef} className="quote__text">
-          "Después de más de 26 años acompañando a miles de personas, desarrollé un método que va más allá de entender tu carta astral..."
+          Estos patrones no son tu culpa. <br/> Son programación. Y lo que fue programado... puede ser reprogramado.
         </p>
       </div>
     </section>
   )
 }
+
+
 
