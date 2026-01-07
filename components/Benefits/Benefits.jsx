@@ -17,24 +17,16 @@ export default function Benefits() {
 
   const transformations = [
     {
-      from: "Atrapado en patrones repetitivos que reconoces pero no puedes romper",
-      to: "Libre para crear nuevas posibilidades desde la consciencia superior"
+      from: "Desconectado de tu propósito, atrapado en patrones que reconoces pero no puedes romper",
+      to: "Alineado con tu misión de alma, libre para crear nuevas posibilidades desde la consciencia superior"
     },
     {
-      from: "Desconectado de tu propósito, sintiendo que algo falta",
-      to: "Alineado con tu misión de alma y tu diseño divino"
+      from: "Cargando heridas del pasado, memorias kármicas y programaciones heredadas",
+      to: "Sanado energéticamente, liberado del karma y activado en tu frecuencia más alta"
     },
     {
-      from: "Cargando heridas del pasado y memorias kármicas",
-      to: "Sanado energéticamente y activado en tu frecuencia más alta"
-    },
-    {
-      from: "Sin claridad sobre tu camino y bloqueado de tu destino",
-      to: "Con un mapa claro de tu propósito y tu legado"
-    },
-    {
-      from: "Viviendo desde el karma y programaciones heredadas",
-      to: "Creando desde la consciencia, con poder personal restaurado"
+      from: "Sin claridad sobre tu camino, viviendo desde limitaciones inconscientes",
+      to: "Con un mapa claro de tu propósito y poder personal restaurado para crear tu destino"
     }
   ]
 

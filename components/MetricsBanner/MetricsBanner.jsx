@@ -12,7 +12,7 @@ export default function MetricsBanner() {
   const metricsRef = useRef([])
 
   const metrics = [
-    "+2,000 vidas transformadas",
+    "+10,000 horas de consulta",
     "26+ años de experiencia",
     "Método integrado de 4 Pilares",
     "Sesiones personalizadas"
@@ -56,5 +56,6 @@ export default function MetricsBanner() {
     </section>
   )
 }
+
 
 

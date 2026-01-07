@@ -2,15 +2,15 @@
 
 .quote {
   background: var(--color-white);
-  padding: 4rem 1rem;
+  padding: 6rem 1rem;
   position: relative;
 
   @media (min-width: $break-tablet) {
-    padding: 6rem 2rem;
+    padding: 8rem 2rem;
   }
 
   @media (min-width: $break-desktop) {
-    padding: 8rem 4rem;
+    padding: 10rem 4rem;
   }
 
   &__container {
@@ -49,6 +49,7 @@
   }
 
 }
+
 
 
 
