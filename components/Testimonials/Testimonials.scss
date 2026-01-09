@@ -1,4 +1,4 @@
-@import "../../styles/variables.scss";
+@import "../../styles/variables";
 
 .testimonials {
   background: var(--color-soft-gray);
@@ -40,41 +40,118 @@
     }
   }
 
-  &__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
+  &__carousel {
+    position: relative;
+    width: 100%;
+  }
+
+  &__carousel-wrapper {
+    position: relative;
+    min-height: 400px;
+    margin-bottom: 3rem;
 
     @media (min-width: $break-tablet) {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2.5rem;
+      min-height: 450px;
+      margin-bottom: 4rem;
     }
 
     @media (min-width: $break-desktop) {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3rem;
+      min-height: 500px;
     }
   }
 
   &__item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+
+    &--active {
+      position: relative;
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  &__content {
     background: var(--color-white);
     padding: 2rem;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    border: 1px solid rgba(58, 24, 177, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin: 0 auto;
+
+    @media (min-width: $break-tablet) {
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 3rem;
+      gap: 3rem;
+    }
+
+    @media (min-width: $break-desktop) {
+      padding: 4rem;
+      gap: 4rem;
+    }
+  }
+
+  &__photo-wrapper {
+    flex-shrink: 0;
+    width: 150px;
+    aspect-ratio: 3 / 4;
     border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid rgba(58, 24, 177, 0.15);
+    box-shadow: 0 4px 15px rgba(58, 24, 177, 0.1);
+    position: relative;
+
+    @media (min-width: $break-tablet) {
+      width: 180px;
+      border-radius: 14px;
+    }
+
+    @media (min-width: $break-desktop) {
+      width: 210px;
+      border-radius: 16px;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: inherit;
+      background: linear-gradient(to bottom, rgba(139, 92, 246, 0.05), transparent 50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+
+  &__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__text-wrapper {
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    border: 1px solid rgba(58, 24, 177, 0.1);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    text-align: center;
 
-    @media (min-width: $break-desktop) {
-      padding: 2.5rem;
-      
-      &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 10px 40px rgba(58, 24, 177, 0.12);
-        border-color: var(--color-indigo);
-      }
+    @media (min-width: $break-tablet) {
+      text-align: left;
+      gap: 2rem;
     }
   }
 
@@ -87,10 +164,12 @@
 
     @media (min-width: $break-tablet) {
       font-size: 1.125rem;
+      line-height: 1.9;
     }
 
     @media (min-width: $break-desktop) {
       font-size: 1.25rem;
+      line-height: 2;
     }
   }
 
@@ -100,10 +179,64 @@
     color: var(--color-gray);
     margin: 0;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
 
     @media (min-width: $break-tablet) {
       font-size: 1rem;
+      text-align: right;
+    }
+  }
+
+  &__dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 0;
+  }
+
+  &__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(58, 24, 177, 0.2);
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--color-indigo);
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    &:hover {
+      background: rgba(58, 24, 177, 0.4);
+      transform: scale(1.1);
+    }
+
+    &--active {
+      background: var(--color-indigo);
+      width: 32px;
+      border-radius: 6px;
+
+      &::before {
+        opacity: 0;
+      }
+
+      &:hover {
+        transform: scale(1);
+      }
     }
   }
 }

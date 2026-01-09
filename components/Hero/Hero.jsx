@@ -149,7 +149,7 @@ export default function Hero() {
             </div>
             <Button 
               type="primary"
-              href="/agendar"
+              href="#offer"
               className="hero__cta"
             >
               Agenda tu proceso

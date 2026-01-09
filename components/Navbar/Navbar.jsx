@@ -211,7 +211,7 @@ export default function Navbar() {
             <li>
               <Button
                 type="secondary"
-                href="/agendar"
+                href="#offer"
                 className="navbar__cta-button"
               >
                 Agendar
@@ -249,7 +249,7 @@ export default function Navbar() {
             <li className="navbar__mobile-cta-wrapper">
               <Button
                 type="secondary"
-                href="/agendar"
+                href="#offer"
                 className="navbar__mobile-cta-button"
                 onClick={closeMobileMenu}
               >

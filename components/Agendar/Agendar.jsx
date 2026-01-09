@@ -4,72 +4,72 @@ import { useRef, useEffect } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useGSAP } from "@gsap/react"
-import { trackCalendlyEvent } from "../../lib/analytics"
+// import { trackCalendlyEvent } from "../../lib/analytics"
 import "./Agendar.scss"
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
-// Calendly URL
-const CALENDLY_URL = "https://calendly.com/coachferquintero"
+// Calendly URL - COMMENTED OUT (replaced with WhatsApp)
+// const CALENDLY_URL = "https://calendly.com/coachferquintero"
 
 export default function Agendar() {
   const sectionRef = useRef(null)
   const titleRef = useRef(null)
   const subtitleRef = useRef(null)
   const processBoxRef = useRef(null)
-  const calendlyRef = useRef(null)
+  // const calendlyRef = useRef(null)
 
-  // Load Calendly inline widget script and set up event tracking
-  useEffect(() => {
-    // Check if script is already loaded
-    if (window.Calendly) {
-      setupCalendlyTracking()
-      return
-    }
+  // Load Calendly inline widget script and set up event tracking - COMMENTED OUT
+  // useEffect(() => {
+  //   // Check if script is already loaded
+  //   if (window.Calendly) {
+  //     setupCalendlyTracking()
+  //     return
+  //   }
 
-    const script = document.createElement("script")
-    script.src = "https://assets.calendly.com/assets/external/widget.js"
-    script.async = true
-    script.onload = () => {
-      setupCalendlyTracking()
-    }
-    document.body.appendChild(script)
+  //   const script = document.createElement("script")
+  //   script.src = "https://assets.calendly.com/assets/external/widget.js"
+  //   script.async = true
+  //   script.onload = () => {
+  //     setupCalendlyTracking()
+  //   }
+  //   document.body.appendChild(script)
 
-    return () => {
-      // Note: We don't remove the script on unmount as it may be used elsewhere
-      // Calendly handles its own cleanup
-    }
-  }, [])
+  //   return () => {
+  //     // Note: We don't remove the script on unmount as it may be used elsewhere
+  //     // Calendly handles its own cleanup
+  //   }
+  // }, [])
 
-  // Set up Calendly event listeners for tracking
-  const setupCalendlyTracking = () => {
-    if (typeof window === "undefined" || !window.Calendly) {
-      return
-    }
+  // Set up Calendly event listeners for tracking - COMMENTED OUT
+  // const setupCalendlyTracking = () => {
+  //   if (typeof window === "undefined" || !window.Calendly) {
+  //     return
+  //   }
 
-    // Track when user views the calendar
-    window.addEventListener("message", (e) => {
-      if (e.data.event && e.data.event.indexOf("calendly") === 0) {
-        const eventName = e.data.event
+  //   // Track when user views the calendar
+  //   window.addEventListener("message", (e) => {
+  //     if (e.data.event && e.data.event.indexOf("calendly") === 0) {
+  //       const eventName = e.data.event
 
-        // Track different Calendly events
-        if (eventName === "calendly.event_type_viewed") {
-          trackCalendlyEvent("event_type_viewed", {
-            eventType: e.data.payload?.event_type?.name || "Unknown",
-          })
-        } else if (eventName === "calendly.date_and_time_selected") {
-          trackCalendlyEvent("date_and_time_selected", {
-            eventType: e.data.payload?.event_type?.name || "Unknown",
-          })
-        } else if (eventName === "calendly.event_scheduled") {
-          trackCalendlyEvent("event_scheduled", {
-            eventType: e.data.payload?.event_type?.name || "Unknown",
-            value: 1,
-          })
-        }
-      }
-    })
-  }
+  //       // Track different Calendly events
+  //       if (eventName === "calendly.event_type_viewed") {
+  //         trackCalendlyEvent("event_type_viewed", {
+  //           eventType: e.data.payload?.event_type?.name || "Unknown",
+  //         })
+  //       } else if (eventName === "calendly.date_and_time_selected") {
+  //         trackCalendlyEvent("date_and_time_selected", {
+  //           eventType: e.data.payload?.event_type?.name || "Unknown",
+  //         })
+  //       } else if (eventName === "calendly.event_scheduled") {
+  //         trackCalendlyEvent("event_scheduled", {
+  //           eventType: e.data.payload?.event_type?.name || "Unknown",
+  //           value: 1,
+  //         })
+  //       }
+  //     }
+  //   })
+  // }
 
   useGSAP(() => {
     if (!sectionRef.current || !titleRef.current || !subtitleRef.current || !processBoxRef.current) return
@@ -139,15 +139,15 @@ export default function Agendar() {
             </ol>
           </div>
 
-          {/* Calendly Inline Widget */}
-          <div className="agendar__calendly-wrapper">
+          {/* Calendly Inline Widget - COMMENTED OUT (replaced with WhatsApp) */}
+          {/* <div className="agendar__calendly-wrapper">
             <div 
               ref={calendlyRef}
               className="calendly-inline-widget" 
               data-url={CALENDLY_URL}
               style={{ minWidth: "320px", height: "700px" }}
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

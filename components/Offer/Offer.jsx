@@ -114,8 +114,10 @@ export default function Offer() {
             <div className="offer__package-footer">
               <Button 
                 type="secondary"
-                href="/agendar"
+                href="https://wa.me/529982230431?text=Hola,%20estoy%20interesado%20en%20el%20paquete%20Iniciación"
                 className="offer__package-cta"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Reservar Iniciación
               </Button>
@@ -172,8 +174,10 @@ export default function Offer() {
             <div className="offer__package-footer">
               <Button 
                 type="secondary"
-                href="/agendar"
+                href="https://wa.me/529982230431?text=Hola,%20estoy%20interesado%20en%20el%20paquete%20Transformación%20Completa"
                 className="offer__package-cta"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Agendar Transformación
               </Button>
@@ -233,8 +237,10 @@ export default function Offer() {
             <div className="offer__package-footer">
               <Button 
                 type="secondary"
-                href="/agendar"
+                href="https://wa.me/529982230431?text=Hola,%20estoy%20interesado%20en%20el%20paquete%20Maestría%20Total"
                 className="offer__package-cta"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Solicitar Maestría
               </Button>
@@ -272,8 +278,10 @@ export default function Offer() {
               <div className="offer__single-session-footer">
                 <Button 
                   type="secondary"
-                  href="/agendar"
+                  href="https://wa.me/529982230431?text=Hola,%20estoy%20interesado%20en%20el%20paquete%20Sesión%20Única"
                   className="offer__single-session-cta"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Reservar Sesión
                 </Button>

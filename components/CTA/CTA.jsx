@@ -67,7 +67,7 @@ export default function CTA() {
           <div ref={ctaRef} className="cta__button-wrapper">
             <Button 
               type="primary"
-              href="/agendar"
+              href="#offer"
               className="cta__button"
             >
               Agenda tu proceso ahora

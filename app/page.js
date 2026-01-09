@@ -10,6 +10,7 @@ import SobreFernando from "../components/SobreFernando/SobreFernando"
 import Offer from "../components/Offer/Offer"
 import CTA from "../components/CTA/CTA"
 import Footer from "../components/Footer/Footer"
+import FloatingWhatsApp from "../components/FloatingWhatsApp/FloatingWhatsApp"
 
 export default function Home() {
   return (
@@ -19,13 +20,14 @@ export default function Home() {
       <MetricsBanner />
       <Testimonials />
       <PainPoints />
-      <Quote />
+      {/* <Quote /> */}
       <Benefits />
       <Metodo />
       <SobreFernando />
       <Offer />
       <CTA />
       <Footer />
+      <FloatingWhatsApp />
     </main>
   )
 }

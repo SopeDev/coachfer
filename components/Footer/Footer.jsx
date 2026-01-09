@@ -109,7 +109,7 @@ export default function Footer() {
             <h4 className="footer__contact-title">Contacto</h4>
             <ul className="footer__contact-list">
               <li>
-                <a href="/agendar" className="footer__cta-link">
+                <a href="#offer" className="footer__cta-link">
                   Agenda tu proceso
                 </a>
               </li>
