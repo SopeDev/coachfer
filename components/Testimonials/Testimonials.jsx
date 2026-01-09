@@ -49,25 +49,36 @@ export default function Testimonials() {
       resetAutoTransition()
     }
 
-    // Animate out current testimonial
+    // Immediately hide and position previous testimonial
     if (testimonialRefs.current[prevIndex]) {
-      gsap.to(testimonialRefs.current[prevIndex], {
+      const prevElement = testimonialRefs.current[prevIndex]
+      prevElement.style.position = "absolute"
+      prevElement.style.zIndex = "1"
+      
+      gsap.to(prevElement, {
         opacity: 0,
+        visibility: "hidden",
         y: -20,
         duration: 0.4,
         ease: "power2.in"
       })
     }
 
-    // Animate in new testimonial
+    // Position new testimonial relatively and animate in
     if (testimonialRefs.current[index]) {
-      gsap.fromTo(testimonialRefs.current[index], 
+      const newElement = testimonialRefs.current[index]
+      newElement.style.position = "relative"
+      newElement.style.zIndex = "2"
+      
+      gsap.fromTo(newElement, 
         {
           opacity: 0,
+          visibility: "hidden",
           y: 20
         },
         {
           opacity: 1,
+          visibility: "visible",
           y: 0,
           duration: 0.6,
           ease: "power3.out",
@@ -90,7 +101,7 @@ export default function Testimonials() {
       if (!isPausedRef.current) {
         goToNext()
       }
-    }, 4000)
+    }, 5000)
   }
 
   const pauseAutoTransition = () => {
@@ -100,6 +111,26 @@ export default function Testimonials() {
   const resumeAutoTransition = () => {
     isPausedRef.current = false
   }
+
+  // Set up initial state immediately on mount - hide everything first
+  useEffect(() => {
+    // Force hide all testimonials immediately, before GSAP runs
+    testimonialRefs.current.forEach((ref, index) => {
+      if (ref) {
+        ref.style.opacity = "0"
+        ref.style.visibility = "hidden"
+        if (index === 0) {
+          ref.style.position = "relative"
+          ref.style.zIndex = "2"
+        } else {
+          ref.style.position = "absolute"
+          ref.style.zIndex = "1"
+          ref.style.top = "0"
+          ref.style.left = "0"
+        }
+      }
+    })
+  }, [])
 
   useEffect(() => {
     // Set up auto-transition interval
@@ -121,13 +152,34 @@ export default function Testimonials() {
       y: 50
     })
 
-    // Set initial state for testimonials
+    // Set initial state for testimonials - all start hidden
     testimonialRefs.current.forEach((ref, index) => {
       if (ref) {
-        gsap.set(ref, {
-          opacity: index === 0 ? 1 : 0,
-          y: index === 0 ? 0 : 20
-        })
+        if (index === 0) {
+          // First testimonial - position relatively but start hidden
+          ref.style.position = "relative"
+          ref.style.zIndex = "2"
+          ref.style.opacity = "0"
+          ref.style.visibility = "hidden"
+          gsap.set(ref, {
+            opacity: 0,
+            visibility: "hidden",
+            y: 20
+          })
+        } else {
+          // Other testimonials - keep hidden and absolutely positioned
+          ref.style.position = "absolute"
+          ref.style.zIndex = "1"
+          ref.style.top = "0"
+          ref.style.left = "0"
+          ref.style.opacity = "0"
+          ref.style.visibility = "hidden"
+          gsap.set(ref, {
+            opacity: 0,
+            visibility: "hidden",
+            y: 20
+          })
+        }
       }
     })
 
@@ -146,10 +198,11 @@ export default function Testimonials() {
       ease: "power3.out"
     })
 
-    // Animate first testimonial
+    // Animate first testimonial in
     if (testimonialRefs.current[0]) {
       tl.to(testimonialRefs.current[0], {
         opacity: 1,
+        visibility: "visible",
         y: 0,
         duration: 1,
         ease: "power3.out"
@@ -169,7 +222,23 @@ export default function Testimonials() {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                ref={el => testimonialRefs.current[index] = el}
+                ref={el => {
+                  testimonialRefs.current[index] = el
+                  // Immediately set initial state when ref is set
+                  if (el) {
+                    el.style.opacity = "0"
+                    el.style.visibility = "hidden"
+                    if (index === 0) {
+                      el.style.position = "relative"
+                      el.style.zIndex = "2"
+                    } else {
+                      el.style.position = "absolute"
+                      el.style.zIndex = "1"
+                      el.style.top = "0"
+                      el.style.left = "0"
+                    }
+                  }
+                }}
                 className={`testimonials__item ${index === currentIndex ? 'testimonials__item--active' : ''}`}
               >
                 <div 
