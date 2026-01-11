@@ -49,6 +49,8 @@ export default function Footer() {
       // Apply parallax effect to ALL stars
       // Wait a frame to ensure DOM is ready
       requestAnimationFrame(() => {
+        if (!footerRef.current) return // Safety check
+        
         const footerHeight = footerRef.current.offsetHeight || 400
 
         stars.forEach((star) => {

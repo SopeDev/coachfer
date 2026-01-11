@@ -20,7 +20,7 @@ export default function Home() {
       <MetricsBanner />
       <Testimonials />
       <PainPoints />
-      {/* <Quote /> */}
+      <Quote />
       <Benefits />
       <Metodo />
       <SobreFernando />

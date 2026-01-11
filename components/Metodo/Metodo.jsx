@@ -17,26 +17,26 @@ export default function Metodo() {
     {
       title: "Pilar Espiritual",
       subtitle: "Propósito, legado y diseño divino",
-      description: "Trabajamos tu propósito del alma, misión encarnacional y conexión con el 'Cristo Interno'. Transformamos creencias metafísicas limitantes y activamos tu sentido de vida desde niveles superiores de consciencia.",
-      result: "Entiendes para qué viniste y qué estás llamada a manifestar como legado."
+      description: "Trabajamos con tu misión encarnacional, tu programa de destino superior y la reconexión con la consciencia de unidad, que trasciende la dualidad. Transformamos creencias antiguas, elevando tu visión y el sentido de propósito.",
+      result: "Recuerdas quién realmente eres y a qué viniste a esta vida."
     },
     {
       title: "Pilar Mental",
       subtitle: "Programaciones, contratos y patrones heredados",
-      description: "Hackeamos programas subconscientes, patrones kármicos y sistema de creencias heredado. Transformamos tu mente reactiva en mente consciente y reescribimos tu narrativa interna.",
-      result: "Dejas de operar desde el karma mental y aprendes a operar desde un estado consciente."
+      description: "Hackeamos programas subconscientes, patrones kármicos y tu sistema de creencias heredado. Transformamos tu nivel de percepción desde la mente racional hacia la conciencia superior.",
+      result: "Dejas de operar desde el programa inferior y modificas tu diálogo interno para que sirva a la manifestación de tu propósito."
     },
     {
       title: "Pilar Emocional",
       subtitle: "Heridas, memorias celulares y patrones emocionales",
-      description: "Transformamos heridas de infancia, heridas del alma y memorias celulares. Liberamos apegos, dependencia y rechazo. Integramos duelos no procesados y trabajamos con respiración emocional.",
-      result: "Aprendes a sentir sin colapsar y liberar el dolor acumulado en el cuerpo emocional."
+      description: "Transformamos heridas de infancia, heridas del alma y memorias celulares. Convertimos el dolor emocional en poder personal, liberando apegos e integrando duelos no procesados.",
+      result: "Aprendes a reconocer el verdadero poder de las emociones como un tesoro de tu alma para tu ascensión."
     },
     {
       title: "Pilar Físico",
-      subtitle: "Cuerpo, hábitos y manifestación en la tierra",
-      description: "Trabajamos tu anclaje en la realidad, rutinas y disciplina. Transformamos adicciones e impulsos. Materializamos tu propósito y activamos tu fuerza vital y energía sexual.",
-      result: "Te vuelves capaz de manifestar, sostener energía y llevar tu misión espiritual a la materia."
+      subtitle: "Cuerpo, hábitos y manifestación en la materia",
+      description: "Trabajamos tu anclaje en la realidad, reprogramando hábitos y adicciones nocivas. Transformamos y recuperamos tu energía vital hacia la materialización de tu propósito.",
+      result: "Reconoces tu cuerpo como un templo del espíritu y aprendes a cultivar y canalizar tu energía sexual de forma elevada."
     }
   ]
 

@@ -20,7 +20,7 @@
   &__horizontal-container {
     display: flex;
     flex-direction: row;
-    width: 500vw; // 5 panels × 100vw each (1 quote + 4 content)
+    width: 300vw; // 3 panels × 100vw each
     height: 100vh;
     will-change: transform;
     transform: translateZ(0); // Force GPU acceleration
@@ -107,30 +107,6 @@
     margin: 0 auto;
   }
 
-  // ===== QUOTE PANEL STYLES =====
-  &__quote-panel {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    .quote {
-      width: 100%;
-      height: 100%;
-      padding: 0;
-      
-      &__container {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-      }
-    }
-  }
-
-
   &__panel-eyebrow {
     display: block;
     font-size: 0.875rem;
@@ -166,36 +142,6 @@
     }
   }
 
-
-  // ===== TRANSITION PANEL STYLES =====
-  &__panel-transition {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-white);
-    padding: 0 2rem;
-  }
-
-  &__panel-transition-text {
-    text-align: center;
-    max-width: 900px;
-    width: 100%;
-    font-size: 1.125rem;
-    font-style: italic;
-    color: var(--color-indigo);
-    line-height: 1.8;
-    margin: 0;
-
-    @media (min-width: $break-tablet) {
-      font-size: 1.25rem;
-    }
-
-    @media (min-width: $break-desktop) {
-      font-size: 1.5rem;
-    }
-  }
 
   // ===== MOBILE RESPONSIVE OVERRIDES =====
   @media (max-width: $break-tablet) {

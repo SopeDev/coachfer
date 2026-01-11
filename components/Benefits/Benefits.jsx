@@ -4,7 +4,6 @@ import { useRef, useEffect, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useGSAP } from "@gsap/react"
-import Quote from "../Quote/Quote"
 import "./Benefits.scss"
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
@@ -15,13 +14,9 @@ export default function Benefits() {
   const horizontalContainerRef = useRef(null)
   const panelsRef = useRef([])
   const horizontalScrollRef = useRef(null)
-  const [containerAnimation, setContainerAnimation] = useState(null)
 
   // Full-width panels with background images and centered text overlays
   const panels = [
-    {
-      type: "quote"
-    },
     {
       type: "content",
       backgroundImage: "/images/panel-1.png",
@@ -42,10 +37,6 @@ export default function Benefits() {
       eyebrow: "Activando Tu Diseño Original",
       // text: "Tu mente reactiva se convierte en mente consciente. Tu poder personal se restaura. Los mismos patrones que te limitaban se transforman en pilares de tu ascensión. Por primera vez, operas desde tu frecuencia original—tu verdadero diseño, finalmente libre."
       text: "Tu poder personal se restaura, haciendo que los mismos patrones que te limitaban se transformen en tus pilares de ascención, al anclar la frecuencia de tu ser superior."
-    },
-    {
-      type: "transition",
-      text: "Esta transformación no es teoría. Es el resultado que cientos de personas ya experimentaron el proceso..."
     }
   ]
 
@@ -85,22 +76,21 @@ export default function Benefits() {
           }
         })
 
-        // Update containerAnimation state so Quote component can use it
-        setContainerAnimation(horizontalScrollRef.current)
-
         // Fade in/out animations for content panels as they enter/leave viewport
+        const totalPanels = panelsRef.current.length
         panelsRef.current.forEach((panel, index) => {
-          if (!panel || index === 0) return // Skip quote panel (index 0)
-          
-          // Skip transition panel (last panel) - it doesn't need fade animation
-          if (index === panelsRef.current.length - 1) return
+          if (!panel) return
 
           const content = panel.querySelector(".benefits__panel-content")
           if (!content) return
 
+          const isFirstPanel = index === 0
+          const isLastPanel = index === totalPanels - 1
+
           // Set initial state
+          // First panel starts visible, others start invisible
           gsap.set(content, {
-            opacity: 0
+            opacity: isFirstPanel ? 1 : 0
           })
 
           // Use ScrollTrigger with onUpdate to control opacity based on scroll progress
@@ -114,17 +104,42 @@ export default function Benefits() {
               const progress = self.progress // 0 to 1
               let opacity = 0
 
-              // Fade in: 0% to 30% of scroll progress
-              if (progress <= 0.3) {
-                opacity = progress / 0.3 // 0 to 1
+              // First panel: no fade in, only fade out
+              if (isFirstPanel) {
+                // Stay visible: 0% to 70% of scroll progress
+                if (progress <= 0.7) {
+                  opacity = 1
+                }
+                // Fade out: 70% to 100% of scroll progress
+                else {
+                  opacity = 1 - ((progress - 0.7) / 0.3) // 1 to 0
+                }
               }
-              // Stay visible: 30% to 70% of scroll progress
-              else if (progress <= 0.7) {
-                opacity = 1
+              // Last panel: fade in, no fade out
+              else if (isLastPanel) {
+                // Fade in: 0% to 30% of scroll progress
+                if (progress <= 0.3) {
+                  opacity = progress / 0.3 // 0 to 1
+                }
+                // Stay visible: 30% to 100% of scroll progress
+                else {
+                  opacity = 1
+                }
               }
-              // Fade out: 70% to 100% of scroll progress
+              // Middle panels: normal fade in/out
               else {
-                opacity = 1 - ((progress - 0.7) / 0.3) // 1 to 0
+                // Fade in: 0% to 30% of scroll progress
+                if (progress <= 0.3) {
+                  opacity = progress / 0.3 // 0 to 1
+                }
+                // Stay visible: 30% to 70% of scroll progress
+                else if (progress <= 0.7) {
+                  opacity = 1
+                }
+                // Fade out: 70% to 100% of scroll progress
+                else {
+                  opacity = 1 - ((progress - 0.7) / 0.3) // 1 to 0
+                }
               }
 
               gsap.set(content, { opacity: opacity })
@@ -162,32 +177,21 @@ export default function Benefits() {
               className={`benefits__panel benefits__panel--${panel.type}`}
               data-panel={index + 1}
             >
-              {panel.type === "quote" ? (
-                <Quote 
-                  containerAnimation={containerAnimation}
-                  className="benefits__quote-panel"
-                />
-              ) : panel.type === "transition" ? (
-                <div className="benefits__panel-transition">
-                  <p className="benefits__panel-transition-text">{panel.text}</p>
+              <div 
+                className="benefits__panel-bg"
+                style={{
+                  backgroundImage: panel.backgroundImage ? `url(${panel.backgroundImage})` : 'none'
+                }}
+              >
+                <div className="benefits__panel-content">
+                  {panel.eyebrow && (
+                    <span className="benefits__panel-eyebrow">{panel.eyebrow}</span>
+                  )}
+                  {panel.text && (
+                    <p className="benefits__panel-paragraph">{panel.text}</p>
+                  )}
                 </div>
-              ) : (
-                <div 
-                  className="benefits__panel-bg"
-                  style={{
-                    backgroundImage: panel.backgroundImage ? `url(${panel.backgroundImage})` : 'none'
-                  }}
-                >
-                  <div className="benefits__panel-content">
-                    {panel.eyebrow && (
-                      <span className="benefits__panel-eyebrow">{panel.eyebrow}</span>
-                    )}
-                    {panel.text && (
-                      <p className="benefits__panel-paragraph">{panel.text}</p>
-                    )}
-                  </div>
-                </div>
-              )}
+              </div>
             </div>
           ))}
         </div>

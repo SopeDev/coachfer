@@ -118,14 +118,16 @@ export default function SobreFernando() {
                 ref={text1Ref}
               >
                 <p className="sobre-fernando__paragraph">
-                  Mi enfoque ha evolucionado desde lecturas astrológicas tradicionales hacia un <strong> método profundo de reprogramación cuántica</strong>. Diseñado para quienes están listos para <strong>liberar sus limitaciones kármicas 
-                  y activar su máximo potencial</strong>, mi método integra:
+                  Mi camino comenzó al cuestionar los fundamentos de la existencia: <strong>quiénes somos y para qué estamos aquí</strong>.
+                  Esa búsqueda de autoconocimiento me llevó a recorrer y estudiar distintas disciplinas que, al integrarse, dieron forma a un <strong>método profundo enfocado en el despertar, la expansión y la reprogramación de la conciencia</strong>, integrando:
                 </p>
                 <ul className="sobre-fernando__features">
-                  <li>✓ La sabiduría ancestral de la Kabbalah</li>
-                  <li>✓ Principios de física cuántica</li>
-                  <li>✓ Reprogramación de memorias kármicas</li>
-                  <li>✓ Activación del ADN divino</li>
+                  <li>✓ La astrología psicológica</li>
+                  <li>✓ la sabiduría ancestral de la kábbala</li>
+                  <li>✓ Principios de la física cuántica</li>
+                  <li>✓ Hipnosis y reprogramación subconsciente</li>
+                  <li>✓ Regresiones prenatales y a otras vidas</li>
+                  <li>✓ Activación de los cuerpos de luz</li>
                 </ul>
               </div>
 
@@ -134,7 +136,7 @@ export default function SobreFernando() {
                 ref={text2Ref}
               >
                 <p className="sobre-fernando__paragraph">
-                  Mi propósito es acompañarte para que puedas <strong>reconectarte con tu propósito más elevado,</strong> liberar los patrones que te limitan y transformar tu realidad desde el plano cuántico, creando una nueva frecuencia de conciencia que te permita <strong>vivir en plenitud y realización.</strong>
+                  Mi misión en esta vida es guiar y acompañar a quienes sienten el llamado a <strong>reconectarse con su propósito más elevado</strong>, liberando patrones limitantes y transformando el tesoro de toda su experiencia acumulada, integrando la historia y sanando la carga emocional para convertirla en un <strong>camino de ascensión consciente y de autorrealización</strong>.
                 </p>
               </div>
             </div>

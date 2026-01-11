@@ -70,7 +70,6 @@ export default function Offer() {
           <div ref={el => packagesRef.current[1] = el} className="offer__package offer__package--basic">
             <div className="offer__package-header">
               <h3 className="offer__package-name">Iniciación</h3>
-              <p className="offer__package-tagline">"Reprograma tu Mapa"</p>
             </div>
             
             <div className="offer__package-duration">
@@ -88,19 +87,27 @@ export default function Offer() {
               <ul className="offer__features-list">
                 <li className="offer__feature-item">
                   <span className="offer__feature-icon">✓</span>
-                  <span className="offer__feature-text">Interpretación cuántica de la carta</span>
+                  <span className="offer__feature-text">Interpretación cuántica completa de la carta natal</span>
                 </li>
                 <li className="offer__feature-item">
                   <span className="offer__feature-icon">✓</span>
-                  <span className="offer__feature-text">Identificación de heridas y contratos kármicos</span>
+                  <span className="offer__feature-text">Identificación de heridas raíz y contratos kármicos</span>
                 </li>
                 <li className="offer__feature-item">
                   <span className="offer__feature-icon">✓</span>
-                  <span className="offer__feature-text">Rutina personalizada de respiración, mantras y chakras</span>
+                  <span className="offer__feature-text">Reprogramación del principal aspecto kármico</span>
                 </li>
                 <li className="offer__feature-item">
                   <span className="offer__feature-icon">✓</span>
-                  <span className="offer__feature-text">Mini-protocolo de reprogramación</span>
+                  <span className="offer__feature-text">Reprogramación del eje de propósito superior</span>
+                </li>
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Rutina personalizada de respiración, afirmaciones y mantras</span>
+                </li>
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Mini-protocolo de reprogramación para uso personal</span>
                 </li>
               </ul>
             </div>
@@ -128,39 +135,46 @@ export default function Offer() {
           <div ref={el => packagesRef.current[2] = el} className="offer__package offer__package--popular">
             <div className="offer__badge">Más Vendido</div>
             <div className="offer__package-header">
-              <h3 className="offer__package-name">Transformación Completa</h3>
-              <p className="offer__package-tagline">"Recode de Alma"</p>
+              <h3 className="offer__package-name">Transformación Profunda</h3>
             </div>
             
             <div className="offer__package-duration">
               <span className="offer__duration-label">Duración</span>
-              <span className="offer__duration-value">6 sesiones (9 horas total)</span>
+              <span className="offer__duration-value">7 sesiones (10.5 horas total)</span>
             </div>
 
             <div className="offer__package-price-section">
               <p className="offer__price">$444 USD</p>
-              <p className="offer__price-detail">$74 por sesión</p>
-              <p className="offer__savings">Ahorras $111 vs. sesiones individuales</p>
+              <p className="offer__price-detail">$63 por sesión</p>
+              <p className="offer__savings">Ahorras $333 vs. sesiones individuales</p>
             </div>
 
             <div className="offer__package-features">
-              <p className="offer__features-title">Todo lo de Básica, más:</p>
+              <p className="offer__features-title">Incluye todo lo del Nivel I, más:</p>
               <ul className="offer__features-list">
                 <li className="offer__feature-item">
                   <span className="offer__feature-icon">✓</span>
-                  <span className="offer__feature-text">Mayor profundidad de interpretación en 2 sesiones adicionales</span>
+                  <span className="offer__feature-text">Profundización de la interpretación cuántica</span>
                 </li>
                 <li className="offer__feature-item">
                   <span className="offer__feature-icon">✓</span>
-                  <span className="offer__feature-text">Reprogramación de los planetas kármicos</span>
+                  <span className="offer__feature-text">2 sesiones adicionales de reprogramación de aspectos kármicos</span>
                 </li>
                 <li className="offer__feature-item">
                   <span className="offer__feature-icon">✓</span>
-                  <span className="offer__feature-text">Reprogramación personalizada de heridas de la infancia</span>
+                  <span className="offer__feature-text">2 sesiones de activación de dones, misión y propósito</span>
                 </li>
                 <li className="offer__feature-item">
                   <span className="offer__feature-icon">✓</span>
-                  <span className="offer__feature-text">Meditación de activación del Destino Superior desde la Astrología Kabbalista</span>
+                  <span className="offer__feature-text">Reprogramación de heridas de la infancia</span>
+                </li>
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Meditación personalizada de activación del Destino Superior</span>
+                </li>
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Integración práctica de los nuevos códigos de conciencia</span>
                 </li>
               </ul>
             </div>
@@ -187,43 +201,50 @@ export default function Offer() {
           {/* PACKAGE 4: Versión Premium */}
           <div ref={el => packagesRef.current[3] = el} className="offer__package">
             <div className="offer__package-header">
-              <h3 className="offer__package-name">Maestría Total</h3>
-              <p className="offer__package-tagline">"AstroHacking 360"</p>
+              <h3 className="offer__package-name">Maestría 360</h3>
             </div>
             
             <div className="offer__package-duration">
               <span className="offer__duration-label">Duración</span>
-              <span className="offer__duration-value">12 sesiones (18 horas total)</span>
+              <span className="offer__duration-value">13 sesiones (19.5 horas total)</span>
             </div>
 
             <div className="offer__package-price-section">
               <p className="offer__price">$667 USD</p>
-              <p className="offer__price-detail">$56 por sesión</p>
-              <p className="offer__savings">Ahorras $333 vs. sesiones individuales</p>
+              <p className="offer__price-detail">$51 por sesión</p>
+              <p className="offer__savings">Ahorras $776 vs. sesiones individuales</p>
             </div>
 
             <div className="offer__package-features">
-              <p className="offer__features-title">Todo lo de Integral, más:</p>
+              <p className="offer__features-title">Incluye todo lo del Nivel II, más:</p>
               <ul className="offer__features-list">
                 <li className="offer__feature-item">
                   <span className="offer__feature-icon">✓</span>
-                  <span className="offer__feature-text">Reprogramación de las 12 casas (todas las áreas de vida)</span>
+                  <span className="offer__feature-text">Reprogramación completa de las 12 casas astrológicas</span>
                 </li>
                 <li className="offer__feature-item">
                   <span className="offer__feature-icon">✓</span>
-                  <span className="offer__feature-text">Meditación de reprogramación de cada aspecto planetario</span>
+                  <span className="offer__feature-text">Reprogramación de planetas regentes y aspectos clave</span>
                 </li>
                 <li className="offer__feature-item">
                   <span className="offer__feature-icon">✓</span>
-                  <span className="offer__feature-text">Trabajo profundo de activación de ADN Divino</span>
+                  <span className="offer__feature-text">Meditaciones específicas para cada área de vida</span>
                 </li>
                 <li className="offer__feature-item">
                   <span className="offer__feature-icon">✓</span>
-                  <span className="offer__feature-text">Entrenamiento en el manejo de Reprogramación Cuántica</span>
+                  <span className="offer__feature-text">Trabajo profundo de activación del ADN espiritual</span>
                 </li>
                 <li className="offer__feature-item">
                   <span className="offer__feature-icon">✓</span>
-                  <span className="offer__feature-text">Acompañamiento en el manejo y uso de los Dones Potenciales</span>
+                  <span className="offer__feature-text">Entrenamiento en técnicas de Reprogramación Cuántica</span>
+                </li>
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Acompañamiento en el uso consciente de los Dones Potenciales</span>
+                </li>
+                <li className="offer__feature-item">
+                  <span className="offer__feature-icon">✓</span>
+                  <span className="offer__feature-text">Integración final del nuevo diseño de vida</span>
                 </li>
               </ul>
             </div>
