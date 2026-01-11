@@ -14,8 +14,7 @@ export default function MetricsBanner() {
   const metrics = [
     "+10,000 horas de consulta",
     "26+ años de experiencia",
-    "Método integrado de 4 Pilares",
-    "Sesiones personalizadas"
+    "Acompañamiento personalizado a tu medida"
   ]
 
   useGSAP(() => {

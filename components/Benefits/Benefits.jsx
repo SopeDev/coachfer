@@ -26,19 +26,22 @@ export default function Benefits() {
       type: "content",
       backgroundImage: "/images/panel-1.png",
       eyebrow: "Viendo lo Invisible",
-      text: "Cuando comprendes que estas lealtades no son tuyas, que estos patrones fueron heredados, comienzas a liberarte. Tu carta natal revela exactamente dónde están escritos estos contratos y cómo disolverlos."
+      // text: "Cuando comprendes que estas lealtades no son tuyas, que estos patrones fueron heredados, comienzas a liberarte. Tu carta natal revela exactamente dónde están escritos estos contratos y cómo disolverlos."
+      text: "Muchos de tus patrones no son tuyos. Son lealtades heredadas. Tu carta natal revela dónde se grabaron esos contratos y cómo liberarte de ellos."
     },
     {
       type: "content",
       backgroundImage: "/images/panel-2.png",
       eyebrow: "Sanando lo Heredado",
-      text: "Las heridas de infancia, las memorias celulares, el dolor acumulado en tu cuerpo emocional—todo encuentra su lugar cuando lo integras conscientemente. Aprendes a sentir sin colapsar. El karma ancestral se transmuta en sabiduría que te libera."
+      // text: "Las heridas de infancia, las memorias celulares, el dolor acumulado en tu cuerpo emocional—todo encuentra su lugar cuando lo integras conscientemente. Aprendes a sentir sin colapsar. El karma ancestral se transmuta en sabiduría que te libera."
+      text: "Las heridas de la infancia, la memoria celular y el dolor emocional heredado se transmutan y dejan de gobernar tu vida cuando son vistos con conciencia."
     },
     {
       type: "content",
       backgroundImage: "/images/panel-3.png",
       eyebrow: "Activando Tu Diseño Original",
-      text: "Tu mente reactiva se convierte en mente consciente. Tu poder personal se restaura. Los mismos patrones que te limitaban se transforman en pilares de tu ascensión. Por primera vez, operas desde tu frecuencia original—tu verdadero diseño, finalmente libre."
+      // text: "Tu mente reactiva se convierte en mente consciente. Tu poder personal se restaura. Los mismos patrones que te limitaban se transforman en pilares de tu ascensión. Por primera vez, operas desde tu frecuencia original—tu verdadero diseño, finalmente libre."
+      text: "Tu poder personal se restaura, haciendo que los mismos patrones que te limitaban se transformen en tus pilares de ascención, al anclar la frecuencia de tu ser superior."
     },
     {
       type: "transition",

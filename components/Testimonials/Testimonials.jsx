@@ -89,6 +89,12 @@ export default function Testimonials() {
   }
 
   const goToNext = () => {
+    // Only advance if we're not in the middle of initial setup
+    // Check if first testimonial is actually visible before advancing
+    if (testimonialRefs.current[0] && testimonialRefs.current[0].style.opacity === "0") {
+      // Still in initial setup, don't advance yet
+      return
+    }
     const nextIndex = (currentIndexRef.current + 1) % testimonials.length
     goToTestimonial(nextIndex)
   }
@@ -114,6 +120,10 @@ export default function Testimonials() {
 
   // Set up initial state immediately on mount - hide everything first
   useEffect(() => {
+    // Ensure state starts at 0
+    currentIndexRef.current = 0
+    setCurrentIndex(0)
+    
     // Force hide all testimonials immediately, before GSAP runs
     testimonialRefs.current.forEach((ref, index) => {
       if (ref) {
@@ -133,13 +143,47 @@ export default function Testimonials() {
   }, [])
 
   useEffect(() => {
-    // Set up auto-transition interval
-    resetAutoTransition()
+    // Delay starting the auto-transition to ensure initial state is set
+    // Wait a bit longer than GSAP animation to ensure first testimonial is shown
+    const startTimer = setTimeout(() => {
+      resetAutoTransition()
+    }, 2000) // Start after GSAP has had time to set initial state
 
     // Cleanup on unmount
     return () => {
+      clearTimeout(startTimer)
       if (intervalRef.current) {
         clearInterval(intervalRef.current)
+      }
+    }
+  }, [])
+
+  // Pause carousel when section is out of view
+  useEffect(() => {
+    if (!sectionRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Section is in view - resume carousel
+            isPausedRef.current = false
+          } else {
+            // Section is out of view - pause carousel
+            isPausedRef.current = true
+          }
+        })
+      },
+      {
+        threshold: 0.1 // Trigger when at least 10% of the section is visible
+      }
+    )
+
+    observer.observe(sectionRef.current)
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current)
       }
     }
   }, [])
@@ -205,7 +249,12 @@ export default function Testimonials() {
         visibility: "visible",
         y: 0,
         duration: 1,
-        ease: "power3.out"
+        ease: "power3.out",
+        onComplete: () => {
+          // Ensure state is synchronized after animation completes
+          currentIndexRef.current = 0
+          setCurrentIndex(0)
+        }
       }, "-=0.5")
     }
   }, { scope: sectionRef })

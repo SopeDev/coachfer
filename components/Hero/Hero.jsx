@@ -136,17 +136,16 @@ export default function Hero() {
             <span className="hero__title-phrase">Reprograma tu Destino</span>
           </h1>
           <div ref={contentGroupRef} className="hero__content-group">
-            {/* <p className="hero__description">
-              Libera las memorias kármicas que te mantienen atrapado en ciclos repetitivos. 
-              <strong> A través de un método de reprogramación cuántica, transformamos el código de tu destino desde el plano astrológico y energético.</strong>
-            </p> */}
-            <div className="hero__video">
-              {/* Video placeholder - replace with actual video embed */}
+            <p className="hero__description">
+              Bienvenido a este espacio diseñado para ayudarte a comprender tu historia, donde aprenderás a hackear tu programa de destino para acceder a tu línea de tiempo más elevada, integrando la Astrología Kabalista y la reprogramación cuántica, con el objetivo de anclar a tu ser superior… aquí y ahora.
+            </p>
+            {/* <div className="hero__video">
+              Video placeholder - replace with actual video embed
               <div className="hero__video-placeholder">
                 <div className="hero__video-play-icon">▶</div>
                 <p className="hero__video-text">Video placeholder</p>
               </div>
-            </div>
+            </div> */}
             <Button 
               type="primary"
               href="#offer"
