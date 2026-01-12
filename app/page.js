@@ -8,6 +8,7 @@ import Benefits from "../components/Benefits/Benefits"
 import Metodo from "../components/Metodo/Metodo"
 import SobreFernando from "../components/SobreFernando/SobreFernando"
 import Offer from "../components/Offer/Offer"
+import FAQ from "../components/FAQ/FAQ"
 import CTA from "../components/CTA/CTA"
 import Footer from "../components/Footer/Footer"
 import FloatingWhatsApp from "../components/FloatingWhatsApp/FloatingWhatsApp"
@@ -25,6 +26,7 @@ export default function Home() {
       <Metodo />
       <SobreFernando />
       <Offer />
+      <FAQ />
       <CTA />
       <Footer />
       <FloatingWhatsApp />

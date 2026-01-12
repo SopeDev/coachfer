@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useEffect, useState } from "react"
+import { useRef, useEffect } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useGSAP } from "@gsap/react"
@@ -10,191 +10,166 @@ gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 export default function Benefits() {
   const sectionRef = useRef(null)
-  const horizontalWrapperRef = useRef(null)
-  const horizontalContainerRef = useRef(null)
-  const panelsRef = useRef([])
-  const horizontalScrollRef = useRef(null)
+  const columnsWrapperRef = useRef(null)
+  const columnsRef = useRef([])
 
-  // Full-width panels with background images and centered text overlays
   const panels = [
     {
       type: "content",
       backgroundImage: "/images/panel-1.png",
       eyebrow: "Viendo lo Invisible",
-      // text: "Cuando comprendes que estas lealtades no son tuyas, que estos patrones fueron heredados, comienzas a liberarte. Tu carta natal revela exactamente dónde están escritos estos contratos y cómo disolverlos."
       text: "Muchos de tus patrones no son tuyos. Son lealtades heredadas. Tu carta natal revela dónde se grabaron esos contratos y cómo liberarte de ellos."
     },
     {
       type: "content",
       backgroundImage: "/images/panel-2.png",
       eyebrow: "Sanando lo Heredado",
-      // text: "Las heridas de infancia, las memorias celulares, el dolor acumulado en tu cuerpo emocional—todo encuentra su lugar cuando lo integras conscientemente. Aprendes a sentir sin colapsar. El karma ancestral se transmuta en sabiduría que te libera."
       text: "Las heridas de la infancia, la memoria celular y el dolor emocional heredado se transmutan y dejan de gobernar tu vida cuando son vistos con conciencia."
     },
     {
       type: "content",
       backgroundImage: "/images/panel-3.png",
       eyebrow: "Activando Tu Diseño Original",
-      // text: "Tu mente reactiva se convierte en mente consciente. Tu poder personal se restaura. Los mismos patrones que te limitaban se transforman en pilares de tu ascensión. Por primera vez, operas desde tu frecuencia original—tu verdadero diseño, finalmente libre."
       text: "Tu poder personal se restaura, haciendo que los mismos patrones que te limitaban se transformen en tus pilares de ascención, al anclar la frecuencia de tu ser superior."
     }
   ]
 
   useGSAP(() => {
-    if (!sectionRef.current || !horizontalWrapperRef.current) return
+    if (!sectionRef.current || !columnsWrapperRef.current) return
 
-
-    // ===== DESKTOP: HORIZONTAL SCROLL ANIMATION (PINNED, NO SNAPPING) =====
     ScrollTrigger.matchMedia({
       "(min-width: 769px)": () => {
-        if (!horizontalContainerRef.current || !horizontalWrapperRef.current) return
+        if (!columnsWrapperRef.current || columnsRef.current.length !== 3) return
 
-        // Ensure GSAP plugins are registered
-        gsap.registerPlugin(ScrollTrigger)
+        const [col1, col2, col3] = columnsRef.current
+        const viewportHeight = window.innerHeight
 
-        // Target panels using gsap.utils.toArray (following guide pattern)
-        const panels = gsap.utils.toArray(".benefits__panel")
+        // Set initial states - columns 2 and 3 start below viewport
+        gsap.set([col2, col3], { y: viewportHeight })
 
-        // Calculate scroll distance: (panels.length - 1) * viewport width
-        // This ensures we scroll exactly enough to show all panels, stopping at the last one
-        // panels.length includes all panels (quote + content + transition)
-        const scrollDistance = (panels.length - 1) * window.innerWidth
-
-        // Create the horizontal scrolling animation (following guide pattern exactly)
-        horizontalScrollRef.current = gsap.to(horizontalContainerRef.current, {
-          x: -scrollDistance, // Move exactly (panels.length - 1) viewport widths
-          ease: "none",
-          force3D: true, // Force hardware acceleration
+        // Create timeline for sequential column reveal
+        const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: horizontalWrapperRef.current,
-            pin: true,
-            anticipatePin: true,
-            scrub: true, // Smooth scrubbing (following guide)
+            trigger: sectionRef.current,
             start: "top top",
-            end: () => `+=${scrollDistance}`, // Scroll exactly the calculated distance
-            invalidateOnRefresh: true // Recalculate on resize
+            end: `+=${viewportHeight * 2}`, // Exactly 2 viewport heights for 2 columns to scroll up
+            pin: columnsWrapperRef.current,
+            pinSpacing: true,
+            anticipatePin: true,
+            scrub: true,
+            invalidateOnRefresh: true
           }
         })
 
-        // Fade in/out animations for content panels as they enter/leave viewport
-        const totalPanels = panelsRef.current.length
-        panelsRef.current.forEach((panel, index) => {
-          if (!panel) return
+        // Column 2 scrolls up (0% to 50% of scroll)
+        tl.to(col2, {
+          y: 0,
+          duration: 1,
+          ease: "none"
+        }, 0)
 
-          const content = panel.querySelector(".benefits__panel-content")
-          if (!content) return
-
-          const isFirstPanel = index === 0
-          const isLastPanel = index === totalPanels - 1
-
-          // Set initial state
-          // First panel starts visible, others start invisible
-          gsap.set(content, {
-            opacity: isFirstPanel ? 1 : 0
-          })
-
-          // Use ScrollTrigger with onUpdate to control opacity based on scroll progress
-          ScrollTrigger.create({
-            trigger: panel,
-            containerAnimation: horizontalScrollRef.current,
-            start: "center 100%", // Panel enters from right
-            end: "center 0%", // Panel exits to left
-            scrub: true,
-            onUpdate: (self) => {
-              const progress = self.progress // 0 to 1
-              let opacity = 0
-
-              // First panel: no fade in, only fade out
-              if (isFirstPanel) {
-                // Stay visible: 0% to 70% of scroll progress
-                if (progress <= 0.7) {
-                  opacity = 1
-                }
-                // Fade out: 70% to 100% of scroll progress
-                else {
-                  opacity = 1 - ((progress - 0.7) / 0.3) // 1 to 0
-                }
-              }
-              // Last panel: fade in, no fade out
-              else if (isLastPanel) {
-                // Fade in: 0% to 30% of scroll progress
-                if (progress <= 0.3) {
-                  opacity = progress / 0.3 // 0 to 1
-                }
-                // Stay visible: 30% to 100% of scroll progress
-                else {
-                  opacity = 1
-                }
-              }
-              // Middle panels: normal fade in/out
-              else {
-                // Fade in: 0% to 30% of scroll progress
-                if (progress <= 0.3) {
-                  opacity = progress / 0.3 // 0 to 1
-                }
-                // Stay visible: 30% to 70% of scroll progress
-                else if (progress <= 0.7) {
-                  opacity = 1
-                }
-                // Fade out: 70% to 100% of scroll progress
-                else {
-                  opacity = 1 - ((progress - 0.7) / 0.3) // 1 to 0
-                }
-              }
-
-              gsap.set(content, { opacity: opacity })
-            }
-          })
-        })
+        // Column 3 scrolls up (50% to 100% of scroll)
+        tl.to(col3, {
+          y: 0,
+          duration: 1,
+          ease: "none"
+        }, 1)
       },
 
-      // ===== MOBILE: VERTICAL SCROLL ANIMATIONS =====
       "(max-width: 768px)": () => {
-        // No animations on mobile for better performance
+        // Mobile: no animations, just stack vertically
+        columnsRef.current.forEach((col) => {
+          gsap.set(col, { y: 0 })
+        })
       }
     })
   }, { scope: sectionRef })
 
-  // Refresh ScrollTrigger after images load
   useEffect(() => {
     const handleLoad = () => {
       ScrollTrigger.refresh()
     }
-
     window.addEventListener("load", handleLoad)
     return () => window.removeEventListener("load", handleLoad)
   }, [])
 
   return (
     <section id="benefits" ref={sectionRef} className="benefits">
-      {/* Horizontal Scroll Container */}
-      <div ref={horizontalWrapperRef} className="benefits__horizontal-wrapper">
-        <div ref={horizontalContainerRef} className="benefits__horizontal-container">
-          {panels.map((panel, index) => (
-            <div
-              key={index}
-              ref={el => panelsRef.current[index] = el}
-              className={`benefits__panel benefits__panel--${panel.type}`}
-              data-panel={index + 1}
+      <div ref={columnsWrapperRef} className="benefits__columns-wrapper">
+        {panels.map((panel, index) => (
+          <div
+            key={index}
+            ref={el => columnsRef.current[index] = el}
+            className={`benefits__column benefits__column--${panel.type}`}
+          >
+            <div 
+              className="benefits__column-bg"
+              style={{
+                backgroundImage: panel.backgroundImage ? `url(${panel.backgroundImage})` : 'none'
+              }}
             >
-              <div 
-                className="benefits__panel-bg"
-                style={{
-                  backgroundImage: panel.backgroundImage ? `url(${panel.backgroundImage})` : 'none'
-                }}
-              >
-                <div className="benefits__panel-content">
-                  {panel.eyebrow && (
-                    <span className="benefits__panel-eyebrow">{panel.eyebrow}</span>
+              <div className="benefits__column-content">
+                <div className="benefits__column-icon">
+                  {index === 0 && (
+                    // Simplified birth chart - circle divided into 12 sections
+                    <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" className="benefits__column-icon-svg">
+                      <circle cx="60" cy="60" r="55" stroke="currentColor" strokeWidth="2" fill="none"/>
+                      <circle cx="60" cy="60" r="30" stroke="currentColor" strokeWidth="1" fill="none"/>
+                      {/* 12 house divisions */}
+                      {[...Array(12)].map((_, i) => {
+                        const angle = (i * 30 - 90) * (Math.PI / 180)
+                        const x1 = 60 + 30 * Math.cos(angle)
+                        const y1 = 60 + 30 * Math.sin(angle)
+                        const x2 = 60 + 55 * Math.cos(angle)
+                        const y2 = 60 + 55 * Math.sin(angle)
+                        return (
+                          <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="1"/>
+                        )
+                      })}
+                    </svg>
                   )}
-                  {panel.text && (
-                    <p className="benefits__panel-paragraph">{panel.text}</p>
+                  {index === 1 && (
+                    // Healing symbol - broken DNA/chain
+                    <svg viewBox="0 0 339.33 343.33" xmlns="http://www.w3.org/2000/svg" className="benefits__column-icon-svg benefits__column-icon-svg--small">
+                      <rect x="164.11" y="38.35" width="180.5" height="94.9" rx="45.59" ry="45.59" transform="translate(13.83 204.99) rotate(-45)" fill="none" stroke="currentColor" strokeWidth="5" strokeMiterlimit="10"/>
+                      <rect x="-7.6" y="210.06" width="180.5" height="94.9" rx="45.59" ry="45.59" transform="translate(-157.88 133.86) rotate(-45)" fill="none" stroke="currentColor" strokeWidth="5" strokeMiterlimit="10"/>
+                      <line x1="99.75" y1="241.06" x2="237.91" y2="104.22" stroke="currentColor" strokeWidth="5" strokeMiterlimit="10"/>
+                      <line x1="74" y1="124.63" x2="111.67" y2="136.33" stroke="currentColor" strokeWidth="5" strokeMiterlimit="10"/>
+                      <line x1="226.32" y1="209.59" x2="263.79" y2="221.89" stroke="currentColor" strokeWidth="5" strokeMiterlimit="10"/>
+                      <line x1="204.64" y1="230.43" x2="218.71" y2="267.28" stroke="currentColor" strokeWidth="5" strokeMiterlimit="10"/>
+                      <line x1="119.07" y1="79.95" x2="133.14" y2="116.8" stroke="currentColor" strokeWidth="5" strokeMiterlimit="10"/>
+                    </svg>
+                  )}
+                  {index === 2 && (
+                    // Activation symbol - radiating energy/light rays
+                    <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" className="benefits__column-icon-svg benefits__column-icon-svg--large">
+                      {/* Central circle */}
+                      <circle cx="60" cy="60" r="20" stroke="currentColor" strokeWidth="1.5" fill="none"/>
+                      <circle cx="60" cy="60" r="8" fill="currentColor"/>
+                      {/* Radiating rays */}
+                      {[...Array(8)].map((_, i) => {
+                        const angle = (i * 45 - 90) * (Math.PI / 180)
+                        const x1 = 60 + 20 * Math.cos(angle)
+                        const y1 = 60 + 20 * Math.sin(angle)
+                        const x2 = 60 + 35 * Math.cos(angle)
+                        const y2 = 60 + 35 * Math.sin(angle)
+                        return (
+                          <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                        )
+                      })}
+                    </svg>
                   )}
                 </div>
+                {panel.eyebrow && (
+                  <span className="benefits__column-eyebrow">{panel.eyebrow}</span>
+                )}
+                {panel.text && (
+                  <p className="benefits__column-paragraph">{panel.text}</p>
+                )}
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </section>
   )

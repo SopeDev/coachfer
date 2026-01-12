@@ -22,18 +22,13 @@ export default function Testimonials() {
   const testimonials = [
     {
       text: "Llegué a AstroHacking con el deseo de profundizar en mi misión de vida y encontrar herramientas para atravesar los retos y cambios que estamos viviendo como humanidad. Este proceso me ayudó a reafirmar que soy la creadora de mi realidad, a vivir con mayor paz interior y a desarrollar una mirada más alegre, consciente y compasiva. A través del enfoque cabalístico que aprendí con Fernando, hoy puedo ver los desafíos diarios no como problemas, sino como invitaciones a transformar el miedo y la ansiedad en fortaleza interior. Es un trabajo constante, pero la conciencia que se despierta hace toda la diferencia.",
-      author: "Cliente testimonial",
+      author: "Verónica Martinez",
       photo: "/images/testimonial-1.jpg"
     },
     {
-      text: "Después de trabajar con el método, siento que tengo un código nuevo instalado. Mi vida cambió de dirección y ahora vivo con mucha más claridad y propósito. La reprogramación cuántica me permitió entender patrones que llevaba años repitiendo sin darme cuenta. Fernando tiene una capacidad única para guiarte hacia tu verdadero potencial.",
-      author: "Cliente testimonial",
+      text: "Cuando llegué con Fernando me sentía desubicado, sin propósito, y sin entender mi rol en este mundo. Gracias al trabajo que he hecho con él, he logrado conectar conmigo mismo y mi propósito, y sobre todo tener mucha más claridad y certeza en cada decisión que tomo independientemente de las circunstancias externas. Gracias a lo que he aprendido hoy puedo decir que camino con mucha más seguridad. Entender el por qué y para qué de lo que pasa en mi vida me ha ayudado a soltar mis patrones de control y a disfrutar y fluir con confianza y alegría, creando mi vida desde una mentalidad más consciente",
+      author: "Jorge Carlos",
       photo: "/images/testimonial-2.jpg"
-    },
-    {
-      text: "Fernando tiene un don especial para conectar con las memorias kármicas y ayudarte a reprogramarlas. Este método es realmente poderoso. A través de las sesiones, pude liberar bloqueos que tenía desde hace años y reconectar con mi misión de alma. La transformación ha sido profunda y duradera.",
-      author: "Cliente testimonial",
-      photo: "/images/testimonial-3.jpg"
     }
   ]
 

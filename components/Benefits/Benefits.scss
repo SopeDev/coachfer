@@ -4,78 +4,51 @@
   position: relative;
   background: var(--color-white);
   overflow-x: hidden;
+  padding: 3rem 1rem;
 
-  // ===== HORIZONTAL SCROLL SECTION =====
-  &__horizontal-wrapper {
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
-    will-change: transform;
-    transform: translateZ(0); // Force GPU acceleration
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
+  @media (min-width: $break-tablet) {
+    padding: 4rem 2rem;
   }
 
-  &__horizontal-container {
-    display: flex;
-    flex-direction: row;
-    width: 300vw; // 3 panels × 100vw each
-    height: 100vh;
-    will-change: transform;
-    transform: translateZ(0); // Force GPU acceleration
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
+  @media (min-width: $break-desktop) {
+    padding: 5rem 4rem;
+  }
+
+  &__columns-wrapper {
+    width: 100%;
+    position: relative;
+    min-height: 100vh;
+
+    @media (min-width: 769px) {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
 
     @media (max-width: $break-tablet) {
+      display: flex;
       flex-direction: column;
-      width: 100vw;
-      height: auto;
     }
   }
 
-  &__panel {
-    width: 100vw; // Full width panels
-    height: 100vh;
+  &__column {
+    width: 100%;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
     position: relative;
     transform: translateZ(0); // Force GPU acceleration
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-
-    @media (max-width: $break-tablet) {
-      width: 100vw;
-      height: auto;
-      min-height: 100vh;
-    }
+    will-change: transform;
 
     &--content {
       position: relative;
     }
-
-    &--quote {
-      width: 100vw; // Quote panel stays at 100vw
-      background: var(--color-white);
-      padding: 6rem 1rem;
-
-      @media (min-width: $break-tablet) {
-        padding: 8rem 2rem;
-      }
-
-      @media (min-width: $break-desktop) {
-        padding: 10rem 4rem;
-      }
-
-      @media (max-width: $break-tablet) {
-        padding: 4rem 1.5rem;
-      }
-    }
   }
 
-  &__panel-bg {
+  &__column-bg {
     position: absolute;
     top: 0;
     left: 0;
@@ -90,24 +63,91 @@
     justify-content: center;
   }
 
-  &__panel-content {
+  &__column-content {
     position: relative;
     z-index: 2;
-    max-width: 900px;
+    max-width: 90%;
     width: 100%;
-    height: 100%;
-    padding: 0 2rem;
+    padding: 4rem 2rem;
     text-align: center;
-    will-change: opacity;
     color: var(--color-gray);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+    
+    // Clean pillar styling - subtle vertical lines
+    border-left: 1px solid rgba(58, 24, 177, 0.15);
+    border-right: 1px solid rgba(58, 24, 177, 0.15);
+
+    @media (min-width: $break-tablet) {
+      max-width: 85%;
+      padding: 5rem 2.5rem;
+      border-left-width: 2px;
+      border-right-width: 2px;
+    }
+
+    @media (min-width: $break-desktop) {
+      max-width: 80%;
+      padding: 6rem 3rem;
+      border-left-width: 2px;
+      border-right-width: 2px;
+    }
   }
 
-  &__panel-eyebrow {
+  &__column-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 2rem;
+    color: var(--color-indigo);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (min-width: $break-tablet) {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (min-width: $break-desktop) {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 3rem;
+    }
+  }
+
+  &__column-icon-svg {
+    width: 100%;
+    height: 100%;
+
+    &--small {
+      transform: scale(0.75);
+
+      @media (min-width: $break-tablet) {
+        transform: scale(0.8);
+      }
+
+      @media (min-width: $break-desktop) {
+        transform: scale(0.85);
+      }
+    }
+
+    &--large {
+      transform: scale(1.25);
+
+      @media (min-width: $break-tablet) {
+        transform: scale(1.35);
+      }
+
+      @media (min-width: $break-desktop) {
+        transform: scale(1.5);
+      }
+    }
+  }
+
+  &__column-eyebrow {
     display: block;
     font-size: 0.875rem;
     text-transform: uppercase;
@@ -127,7 +167,7 @@
     }
   }
 
-  &__panel-paragraph {
+  &__column-paragraph {
     font-size: 1rem;
     line-height: 1.8;
     color: var(--color-gray);
@@ -142,18 +182,13 @@
     }
   }
 
-
   // ===== MOBILE RESPONSIVE OVERRIDES =====
   @media (max-width: $break-tablet) {
-    &__horizontal-container {
-      flex-direction: column;
-      width: 100vw;
-      height: auto;
+    &__columns-wrapper {
+      grid-template-columns: 1fr;
     }
 
-    &__panel {
-      width: 100vw;
-      height: auto;
+    &__column {
       min-height: 100vh;
     }
   }

@@ -2,25 +2,69 @@
 
 .cta {
   background: var(--color-white);
-  padding: 4rem 1rem;
+  padding: 6rem 2rem 10rem;
   position: relative;
+  overflow: hidden;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media (min-width: $break-tablet) {
-    padding: 6rem 2rem;
+    padding: 8rem 3rem 12rem;
+    min-height: 600px;
   }
 
   @media (min-width: $break-desktop) {
-    padding: 8rem 4rem;
+    padding: 10rem 4rem 14rem;
+    min-height: 700px;
   }
+
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--color-white);
+    z-index: 0;
+  }
+
+  &__arc {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    max-width: 600px;
+    height: 375px;
+    z-index: 1;
+    opacity: 0.15;
+    filter: drop-shadow(0 0 20px rgba(58, 24, 177, 0.1));
+    transform-origin: center center;
+    pointer-events: none;
+
+    @media (min-width: $break-tablet) {
+      max-width: 800px;
+      height: 500px;
+    }
+
+    @media (min-width: $break-desktop) {
+      max-width: 1000px;
+      height: 625px;
+    }
+  }
+
 
   &__container {
     max-width: $break-desktop;
     margin: 0 auto;
     width: 100%;
+    position: relative;
+    z-index: 3;
   }
 
   &__content {
-    max-width: 700px;
+    max-width: 800px;
     margin: 0 auto;
     text-align: center;
   }
@@ -28,47 +72,65 @@
   &__title {
     font-family: var(--font-cormorant), "Cormorant Garamond", serif;
     font-size: 2rem;
-    font-weight: 500;
-    color: var(--color-indigo);
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.02em;
-    line-height: 1.2;
+    font-weight: 600;
+    color: var(--color-indigo-dark);
+    line-height: 1.3;
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
 
     @media (min-width: $break-tablet) {
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
+      font-size: 2.75rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.2;
     }
 
     @media (min-width: $break-desktop) {
-      font-size: 3rem;
-      margin-bottom: 2.5rem;
+      font-size: 3.5rem;
+      margin-bottom: 3rem;
     }
   }
 
-  &__subtitle {
+  &__text {
     font-size: 1rem;
     line-height: 1.8;
     color: var(--color-gray);
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
+    font-weight: 400;
 
     @media (min-width: $break-tablet) {
       font-size: 1.125rem;
-      margin-bottom: 3rem;
+      margin-bottom: 3.5rem;
     }
 
     @media (min-width: $break-desktop) {
       font-size: 1.25rem;
-      margin-bottom: 3.5rem;
+      margin-bottom: 4rem;
     }
   }
 
   &__button-wrapper {
     display: flex;
     justify-content: center;
+    align-items: center;
   }
 
   &__button {
-    // Button styles are handled by Button component
+    font-size: 1rem;
+    padding: 1.25rem 3rem;
+    letter-spacing: 0.1em;
+    box-shadow: 0 0 20px rgba(58, 24, 177, 0.2);
+    transition: all 0.4s ease;
+
+    @media (min-width: $break-tablet) {
+      font-size: 1.125rem;
+      padding: 1.5rem 4rem;
+    }
+
+    @media (min-width: $break-desktop) {
+      font-size: 1.25rem;
+      padding: 1.75rem 5rem;
+    }
   }
 }
 
