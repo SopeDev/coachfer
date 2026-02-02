@@ -1,5 +1,6 @@
 import "../styles/globals.scss"
 import { Cormorant_Garamond } from "next/font/google"
+import { Suspense } from "react"
 import Script from "next/script"
 import GoogleAnalytics from "../components/Analytics/GoogleAnalytics"
 
@@ -42,7 +43,9 @@ export default function RootLayout({ children }) {
             `,
           }}
         />
-        <GoogleAnalytics />
+        <Suspense fallback={null}>
+          <GoogleAnalytics />
+        </Suspense>
         {children}
       </body>
     </html>
