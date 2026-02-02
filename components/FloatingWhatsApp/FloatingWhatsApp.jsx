@@ -1,12 +1,17 @@
 "use client"
 
 import "./FloatingWhatsApp.scss"
+import { trackWhatsAppClick } from "../../lib/analytics"
 
 const WHATSAPP_NUMBER = "529982230431"
 const WHATSAPP_MESSAGE = "Hola, me gustaría obtener más información"
 
 export default function FloatingWhatsApp() {
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
+
+  const handleClick = () => {
+    trackWhatsAppClick("floating_button")
+  }
 
   return (
     <a
@@ -15,6 +20,7 @@ export default function FloatingWhatsApp() {
       rel="noopener noreferrer"
       className="floating-whatsapp"
       aria-label="Contactar por WhatsApp"
+      onClick={handleClick}
     >
       <svg
         className="floating-whatsapp__icon"

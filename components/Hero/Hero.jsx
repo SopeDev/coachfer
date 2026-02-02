@@ -1,10 +1,11 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useGSAP } from "@gsap/react"
 import Button from "../Button/Button"
+import { event as trackEvent } from "../../lib/analytics"
 import "./Hero.scss"
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
@@ -15,6 +16,9 @@ export default function Hero() {
   const contentGroupRef = useRef(null)
   const starsRef = useRef(null)
   const starsArrayRef = useRef([])
+  const playerRef = useRef(null)
+  const backgroundRef = useRef(null)
+  const [isPlaying, setIsPlaying] = useState(false)
 
   useGSAP(() => {
     // Create dynamic stars and apply parallax
@@ -139,16 +143,64 @@ export default function Hero() {
             <p className="hero__description">
               Bienvenido a este espacio diseñado para ayudarte a comprender tu historia, donde aprenderás a hackear tu programa de destino para acceder a tu línea de tiempo más elevada, integrando la Astrología Kabalista y la reprogramación cuántica, con el objetivo de anclar a tu ser superior… aquí y ahora.
             </p>
-            {/* <div className="hero__video">
-              Video placeholder - replace with actual video embed
-              <div className="hero__video-placeholder">
-                <div className="hero__video-play-icon">▶</div>
-                <p className="hero__video-text">Video placeholder</p>
+            <div className="hero__video">
+              <div
+                className={`hero__video-placeholder${isPlaying ? " hero__video-placeholder--playing" : ""}`}
+              >
+                <video
+                  ref={backgroundRef}
+                  className="hero__video-bg"
+                  src="/video/video.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                />
+                <video
+                  ref={playerRef}
+                  className="hero__video-player"
+                  src="/video/video.mp4"
+                  playsInline
+                  controls
+                  controlsList="nofullscreen noplaybackrate nodownload"
+                  disablePictureInPicture
+                  preload="metadata"
+                  onEnded={() => {
+                    trackEvent({
+                      action: "video_complete",
+                      category: "Video",
+                      label: "Hero"
+                    })
+                    setIsPlaying(false)
+                  }}
+                />
+                <button
+                  type="button"
+                  className="hero__video-overlay"
+                  aria-label="Reproducir video"
+                  onClick={() => {
+                    if (!playerRef.current) return
+                    trackEvent({
+                      action: "video_start",
+                      category: "Video",
+                      label: "Hero"
+                    })
+                    backgroundRef.current?.pause()
+                    playerRef.current.currentTime = 0
+                    playerRef.current.muted = false
+                    playerRef.current.play()
+                    setIsPlaying(true)
+                  }}
+                >
+                  <div className="hero__video-play-icon">▶</div>
+                  <p className="hero__video-text">Ver video</p>
+                </button>
               </div>
-            </div> */}
+            </div>
             <Button 
               type="primary"
-              href="#offer"
+              href="https://wa.me/529982230431?text=Hola,%20me%20gustar%C3%ADa%20desarrollar%20mi%20plan%20personalizado."
               className="hero__cta"
             >
               Agenda tu proceso

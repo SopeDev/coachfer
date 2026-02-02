@@ -19,6 +19,7 @@ const Button = forwardRef(function Button({
         ref={ref}
         href={href} 
         className={buttonClasses}
+        onClick={onClick}
         {...props}
       >
         {children}

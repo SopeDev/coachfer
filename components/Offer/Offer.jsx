@@ -5,6 +5,7 @@ import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useGSAP } from "@gsap/react"
 import Button from "../Button/Button"
+import { trackWhatsAppClick } from "../../lib/analytics"
 import "./Offer.scss"
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
@@ -125,6 +126,7 @@ export default function Offer() {
                 className="offer__package-cta"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick("package_iniciacion")}
               >
                 Reservar Iniciación
               </Button>
@@ -192,6 +194,7 @@ export default function Offer() {
                 className="offer__package-cta"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick("package_transformacion_completa")}
               >
                 Agendar Transformación
               </Button>
@@ -262,6 +265,7 @@ export default function Offer() {
                 className="offer__package-cta"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick("package_maestria_total")}
               >
                 Solicitar Maestría
               </Button>
@@ -303,6 +307,7 @@ export default function Offer() {
                   className="offer__single-session-cta"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppClick("package_sesion_unica")}
                 >
                   Reservar Sesión
                 </Button>

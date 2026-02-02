@@ -5,6 +5,7 @@ import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useGSAP } from "@gsap/react"
 import Button from "../Button/Button"
+import { trackWhatsAppClick } from "../../lib/analytics"
 import "./CTA.scss"
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
@@ -170,6 +171,7 @@ export default function CTA() {
               className="cta__button"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackWhatsAppClick("cta_section")}
             >
               ⟶ AGENDAR MI PROCESO
             </Button>
