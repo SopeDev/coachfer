@@ -186,6 +186,10 @@
       transition: color 0.3s ease;
       position: relative;
 
+      &.navbar__link--active::after {
+        width: 100%;
+      }
+
       &::after {
         content: "";
         position: absolute;

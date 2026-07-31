@@ -10,7 +10,12 @@ import "./Hero.scss"
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
-export default function Hero() {
+export default function Hero({
+  primaryCtaLabel = 'Agenda tu proceso',
+  primaryCtaHref = 'https://wa.me/529982230431?text=Hola,%20me%20gustar%C3%ADa%20desarrollar%20mi%20plan%20personalizado.',
+  secondaryCtaLabel,
+  secondaryCtaHref
+}) {
   const heroRef = useRef(null)
   const titleRef = useRef(null)
   const contentGroupRef = useRef(null)
@@ -198,13 +203,24 @@ export default function Hero() {
                 </button>
               </div>
             </div>
-            <Button 
-              type="primary"
-              href="https://wa.me/529982230431?text=Hola,%20me%20gustar%C3%ADa%20desarrollar%20mi%20plan%20personalizado."
-              className="hero__cta"
-            >
-              Agenda tu proceso
-            </Button>
+            <div className="hero__actions">
+              <Button
+                type="primary"
+                href={primaryCtaHref}
+                className="hero__cta"
+              >
+                {primaryCtaLabel}
+              </Button>
+              {secondaryCtaLabel && secondaryCtaHref && (
+                <Button
+                  type="secondary"
+                  href={secondaryCtaHref}
+                  className="hero__cta-secondary"
+                >
+                  {secondaryCtaLabel}
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ import "./MetricsBanner.scss"
 
 gsap.registerPlugin(useGSAP)
 
-export default function MetricsBanner() {
+export default function MetricsBanner({ tone = 'white' }) {
   const sectionRef = useRef(null)
   const metricsRef = useRef([])
 
@@ -36,7 +36,10 @@ export default function MetricsBanner() {
   }, { scope: sectionRef })
 
   return (
-    <section ref={sectionRef} className="metrics-banner">
+    <section
+      ref={sectionRef}
+      className={`metrics-banner${tone === 'soft' ? ' metrics-banner--soft' : ''}`}
+    >
       <div className="metrics-banner__container">
         {metrics.map((metric, index) => (
           <div key={index} className="metrics-banner__wrapper">

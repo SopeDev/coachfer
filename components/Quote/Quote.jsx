@@ -107,7 +107,7 @@ export default function Quote({ containerAnimation = null, className = "" }) {
     <section ref={sectionRef} className={`quote ${className}`}>
       <div className="quote__container">
         <p ref={textRef} className="quote__text">
-        Estos patrones son tus contratos, lealtades y programaciones kármicas de vidas pasadas... <br/><br/> y tu misión es reconocerlos, integrarlos y reprogramarlos para convertirlos en tus pilares de ascensión
+        Estos patrones son tus contratos, lealtades y programaciones kármicas de vidas pasadas... <br/><br/> y tu misión es reconocerlos, integrarlos y reprogramarlos para convertirlos en impulso de tu ascensión
         </p>
       </div>
     </section>

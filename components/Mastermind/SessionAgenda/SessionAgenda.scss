@@ -1,0 +1,133 @@
+@import "../../../styles/variables.scss";
+
+.session-agenda {
+  background: var(--color-white);
+  padding: 4rem 1.25rem;
+  position: relative;
+
+  @media (min-width: $break-tablet) {
+    padding: 6rem 2rem;
+  }
+
+  @media (min-width: $break-desktop) {
+    padding: 8rem 4rem;
+  }
+
+  &__container {
+    max-width: $break-desktop;
+    margin: 0 auto;
+  }
+
+  &__title {
+    @include section-title;
+    margin-bottom: 0.75rem;
+    opacity: 0;
+    transform: translateY(36px);
+  }
+
+  &__subtitle {
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-gray);
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 2.5rem;
+    opacity: 0;
+    transform: translateY(36px);
+
+    @media (min-width: $break-tablet) {
+      font-size: 1.05rem;
+      margin-bottom: 3.5rem;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    gap: 1.25rem;
+
+    @media (min-width: $break-tablet) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  &__card {
+    background: var(--color-soft-gray);
+    border: 1px solid rgba(58, 24, 177, 0.1);
+    border-top: 3px solid var(--color-indigo);
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+    opacity: 0;
+    transform: translateY(36px);
+
+    &:nth-child(2) {
+      border-top-color: #6366F1;
+    }
+
+    &:nth-child(3) {
+      border-top-color: #8B5CF6;
+    }
+
+    &:nth-child(4) {
+      border-top-color: var(--color-golden);
+    }
+
+    @media (min-width: $break-tablet) {
+      padding: 2rem 1.75rem;
+    }
+  }
+
+  &__phase {
+    display: block;
+    font-family: var(--font-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-golden);
+    margin-bottom: 0.75rem;
+  }
+
+  &__card-title {
+    font-family: var(--font-primary);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-indigo);
+    margin: 0 0 1rem;
+    line-height: 1.3;
+
+    @media (min-width: $break-tablet) {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__bullets {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    li {
+      position: relative;
+      padding-left: 1.15rem;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--color-gray);
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.65em;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--color-indigo);
+        opacity: 0.45;
+      }
+    }
+  }
+}

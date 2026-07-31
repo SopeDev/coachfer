@@ -83,7 +83,7 @@ export default function SobreFernando() {
     <section id="sobre" className="sobre-fernando" ref={sectionRef}>
       <div className="sobre-fernando__container">
         <div className="sobre-fernando__cta">
-          <p className="sobre-fernando__cta-text">Conoce al creador del método</p>
+          <h2 className="sobre-fernando__cta-text">Conoce al creador del método</h2>
           <div className="sobre-fernando__scroll-indicator">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M7 10L12 15L17 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

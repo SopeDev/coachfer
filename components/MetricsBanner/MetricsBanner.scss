@@ -8,6 +8,10 @@
   padding-right: 1rem;
   position: relative;
 
+  &--soft {
+    background: var(--color-soft-gray);
+  }
+
   @media (min-width: $break-tablet) {
     padding-top: 5.5rem;
     padding-bottom: 5.5rem;
@@ -62,6 +66,8 @@
     color: var(--color-indigo);
     text-align: center;
     line-height: 1.4;
+    opacity: 0;
+    transform: translateY(20px);
 
     @media (min-width: $break-tablet) {
       font-size: 1.25rem;

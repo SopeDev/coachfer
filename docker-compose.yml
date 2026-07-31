@@ -1,0 +1,24 @@
+# Optional LOCAL-ONLY Postgres sandbox.
+# Do NOT use this for day-to-day development if you want local + Vercel
+# to share the same data. Preferred setup: Neon (Vercel Marketplace)
+# — one DATABASE_URL for local (.env) and Vercel (Production/Preview/Development).
+#
+# Usage (isolated experiments only):
+#   docker compose up -d
+#   # temporarily point DATABASE_URL at localhost, then migrate/seed
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: astrohacking
+    ports:
+      - '5432:5432'
+    volumes:
+      - astrohacking_pg:/var/lib/postgresql/data
+
+volumes:
+  astrohacking_pg:

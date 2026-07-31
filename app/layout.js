@@ -3,6 +3,7 @@ import { Cormorant_Garamond } from "next/font/google"
 import { Suspense } from "react"
 import Script from "next/script"
 import GoogleAnalytics from "../components/Analytics/GoogleAnalytics"
+import Providers from "../components/Providers/Providers"
 
 const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
@@ -12,8 +13,12 @@ const cormorantGaramond = Cormorant_Garamond({
 })
 
 export const metadata = {
-  title: "Fernando Quintero - Astrología Cuántica Kabbalista",
-  description: "AstroHacking: Reprogramación del Software Astrológico - Un método de reprogramación cuántica para reconectarte con tu propósito más elevado",
+  title: {
+    default: "AstroHacking® — Fernando Quintero",
+    template: "%s | AstroHacking®",
+  },
+  description:
+    "AstroHacking®: reprogramación cuántica del destino. Coaching privado y Entrenamiento de la Consciencia.",
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",
@@ -46,7 +51,7 @@ export default function RootLayout({ children }) {
         <Suspense fallback={null}>
           <GoogleAnalytics />
         </Suspense>
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

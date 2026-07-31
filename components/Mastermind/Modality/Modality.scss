@@ -1,0 +1,98 @@
+@import "../../../styles/variables.scss";
+
+.modality {
+  background: var(--color-white);
+  padding: 4rem 1.25rem;
+  position: relative;
+
+  @media (min-width: $break-tablet) {
+    padding: 6rem 2rem;
+  }
+
+  @media (min-width: $break-desktop) {
+    padding: 8rem 4rem;
+  }
+
+  &__container {
+    max-width: $break-desktop;
+    margin: 0 auto;
+  }
+
+  &__title {
+    @include section-title;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    transform: translateY(32px);
+
+    @media (min-width: $break-tablet) {
+      margin-bottom: 3.5rem;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    gap: 1.25rem;
+
+    @media (min-width: $break-tablet) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (min-width: $break-desktop) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+    }
+  }
+
+  &__card {
+    background: var(--color-soft-gray);
+    border: 1px solid rgba(58, 24, 177, 0.1);
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+    opacity: 0;
+    transform: translateY(32px);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+    @media (min-width: $break-desktop) {
+      &:hover {
+        border-color: rgba(58, 24, 177, 0.22);
+        box-shadow: 0 10px 28px rgba(58, 24, 177, 0.08);
+      }
+    }
+  }
+
+  &__icon {
+    width: 40px;
+    height: 40px;
+    color: var(--color-indigo);
+    margin-bottom: 1.1rem;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__label {
+    font-family: var(--font-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-golden);
+    margin: 0 0 0.6rem;
+  }
+
+  &__value {
+    font-family: var(--font-primary);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--color-indigo-dark);
+    margin: 0;
+    font-weight: 700;
+
+    @media (min-width: $break-tablet) {
+      font-size: 1.1rem;
+    }
+  }
+}

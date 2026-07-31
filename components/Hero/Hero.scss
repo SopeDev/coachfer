@@ -154,6 +154,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    opacity: 0;
   }
 
   &__description {
@@ -313,6 +314,29 @@
 
     @media (min-width: $break-tablet) {
       font-size: 1rem;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    @media (min-width: $break-tablet) {
+      flex-direction: row;
+      justify-content: center;
+      gap: 1.25rem;
+    }
+  }
+
+  &__cta-secondary.button--secondary {
+    color: var(--color-white);
+    border-color: rgba(255, 255, 255, 0.45);
+
+    &:hover {
+      border-color: var(--color-white);
+      background: rgba(255, 255, 255, 0.08);
     }
   }
 

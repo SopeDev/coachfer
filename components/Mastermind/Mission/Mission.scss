@@ -1,0 +1,58 @@
+@import "../../../styles/variables.scss";
+
+.mission {
+  position: relative;
+  padding: 5rem 1.25rem;
+  background: var(--color-space-bg, #0a0a15);
+  overflow: hidden;
+  text-align: center;
+
+  @media (min-width: $break-tablet) {
+    padding: 7rem 2rem;
+  }
+
+  &__glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(500px, 90vw);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(58, 24, 177, 0.35), transparent 70%);
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  &__container {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  &__label {
+    font-family: var(--font-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-golden);
+    margin: 0 0 1.5rem;
+    opacity: 0;
+  }
+
+  &__quote {
+    font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+    font-size: 1.65rem;
+    font-weight: 500;
+    line-height: 1.45;
+    color: var(--color-white);
+    margin: 0;
+    opacity: 0;
+
+    @media (min-width: $break-tablet) {
+      font-size: 2.15rem;
+    }
+  }
+}

@@ -8,7 +8,7 @@ import "./Testimonials.scss"
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
-export default function Testimonials() {
+export default function Testimonials({ tone = 'soft' }) {
   const sectionRef = useRef(null)
   const titleRef = useRef(null)
   const carouselRef = useRef(null)
@@ -255,7 +255,11 @@ export default function Testimonials() {
   }, { scope: sectionRef })
 
   return (
-    <section id="testimonials" ref={sectionRef} className="testimonials">
+    <section
+      id="testimonials"
+      ref={sectionRef}
+      className={`testimonials${tone === 'white' ? ' testimonials--white' : ''}`}
+    >
       <div className="testimonials__container">
         <h2 ref={titleRef} className="testimonials__title">
           Lo que dicen quienes han vivido el proceso

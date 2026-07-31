@@ -39,21 +39,8 @@
   }
 
   &__cta-text {
-    text-align: center;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--color-indigo);
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-
-    @media (min-width: $break-tablet) {
-      font-size: 1rem;
-    }
-
-    @media (min-width: $break-desktop) {
-      font-size: 1.125rem;
-    }
+    @include section-title;
+    margin-bottom: 0;
   }
 
   &__scroll-indicator {

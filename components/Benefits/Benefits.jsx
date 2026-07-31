@@ -15,22 +15,25 @@ export default function Benefits() {
 
   const panels = [
     {
-      type: "content",
-      backgroundImage: "/images/panel-1.png",
-      eyebrow: "Viendo lo Invisible",
-      text: "Muchos de tus patrones no son tuyos. Son lealtades heredadas. Tu carta natal revela dónde se grabaron esos contratos y cómo liberarte de ellos."
+      type: 'content',
+      backgroundImage: '/images/panel-1.png',
+      phase: '01',
+      eyebrow: 'Viendo lo Invisible',
+      text: 'Muchos de tus patrones no son tuyos. Son lealtades heredadas. Tu carta natal revela dónde se grabaron esos contratos y cómo liberarte de ellos.'
     },
     {
-      type: "content",
-      backgroundImage: "/images/panel-2.png",
-      eyebrow: "Sanando lo Heredado",
-      text: "Las heridas de la infancia, la memoria celular y el dolor emocional heredado se transmutan y dejan de gobernar tu vida cuando son vistos con conciencia."
+      type: 'content',
+      backgroundImage: '/images/panel-2.png',
+      phase: '02',
+      eyebrow: 'Sanando lo Heredado',
+      text: 'Las heridas de la infancia, la memoria celular y el dolor emocional heredado se transmutan y dejan de gobernar tu vida cuando son vistos con conciencia.'
     },
     {
-      type: "content",
-      backgroundImage: "/images/panel-3.png",
-      eyebrow: "Activando Tu Diseño Original",
-      text: "Tu poder personal se restaura, haciendo que los mismos patrones que te limitaban se transformen en tus pilares de ascención, al anclar la frecuencia de tu ser superior."
+      type: 'content',
+      backgroundImage: '/images/panel-3.png',
+      phase: '03',
+      eyebrow: 'Activando Tu Diseño Original',
+      text: 'Tu poder personal se restaura, haciendo que los mismos patrones que te limitaban se transformen en impulso para tu ascensión, al anclar la frecuencia de tu ser superior.'
     }
   ]
 
@@ -95,6 +98,10 @@ export default function Benefits() {
 
   return (
     <section id="benefits" ref={sectionRef} className="benefits">
+      <div className="benefits__header">
+        <h2 className="benefits__title">Cómo funciona el proceso</h2>
+        <p className="benefits__subtitle">Tres fases de transformación</p>
+      </div>
       <div ref={columnsWrapperRef} className="benefits__columns-wrapper">
         {panels.map((panel, index) => (
           <div
@@ -102,7 +109,7 @@ export default function Benefits() {
             ref={el => columnsRef.current[index] = el}
             className={`benefits__column benefits__column--${panel.type}`}
           >
-            <div 
+            <div
               className="benefits__column-bg"
               style={{
                 backgroundImage: panel.backgroundImage ? `url(${panel.backgroundImage})` : 'none'
@@ -160,6 +167,9 @@ export default function Benefits() {
                     </svg>
                   )}
                 </div>
+                {panel.phase && (
+                  <span className="benefits__column-phase">Fase {panel.phase}</span>
+                )}
                 {panel.eyebrow && (
                   <span className="benefits__column-eyebrow">{panel.eyebrow}</span>
                 )}

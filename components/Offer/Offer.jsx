@@ -4,7 +4,7 @@ import { useRef } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useGSAP } from "@gsap/react"
-import Button from "../Button/Button"
+import StartInterestButton from "../StartInterestButton/StartInterestButton"
 import { trackWhatsAppClick } from "../../lib/analytics"
 import "./Offer.scss"
 
@@ -81,6 +81,7 @@ export default function Offer() {
             <div className="offer__package-price-section">
               <p className="offer__price">$278 USD</p>
               <p className="offer__price-detail">$93 por sesión</p>
+              <p className="offer__savings">Ahorras $55 vs. sesiones individuales</p>
             </div>
 
             <div className="offer__package-features">
@@ -120,16 +121,15 @@ export default function Offer() {
             </div>
 
             <div className="offer__package-footer">
-              <Button 
+              <StartInterestButton
                 type="secondary"
-                href="https://wa.me/529982230431?text=Hola,%20estoy%20interesado%20en%20el%20paquete%20Iniciación"
+                product="COACHING"
+                packageSlug="iniciacion"
                 className="offer__package-cta"
-                target="_blank"
-                rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick("package_iniciacion")}
               >
-                Reservar Iniciación
-              </Button>
+                Crear cuenta y continuar
+              </StartInterestButton>
             </div>
           </div>
 
@@ -188,16 +188,15 @@ export default function Offer() {
             </div>
 
             <div className="offer__package-footer">
-              <Button 
+              <StartInterestButton
                 type="secondary"
-                href="https://wa.me/529982230431?text=Hola,%20estoy%20interesado%20en%20el%20paquete%20Transformación%20Completa"
+                product="COACHING"
+                packageSlug="transformacion-profunda"
                 className="offer__package-cta"
-                target="_blank"
-                rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick("package_transformacion_completa")}
               >
-                Agendar Transformación
-              </Button>
+                Crear cuenta y continuar
+              </StartInterestButton>
             </div>
           </div>
 
@@ -259,16 +258,15 @@ export default function Offer() {
             </div>
 
             <div className="offer__package-footer">
-              <Button 
+              <StartInterestButton
                 type="secondary"
-                href="https://wa.me/529982230431?text=Hola,%20estoy%20interesado%20en%20el%20paquete%20Maestría%20Total"
+                product="COACHING"
+                packageSlug="maestria-360"
                 className="offer__package-cta"
-                target="_blank"
-                rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick("package_maestria_total")}
               >
-                Solicitar Maestría
-              </Button>
+                Crear cuenta y continuar
+              </StartInterestButton>
             </div>
           </div>
         </div>
@@ -276,16 +274,16 @@ export default function Offer() {
         {/* SINGLE SESSION - ENTRY POINT */}
         <div className="offer__single-session-section">
           <h3 className="offer__single-session-title">
-            ¿Prefieres empezar con una sesión única?
+            ¿Prefieres empezar con una Sesión Única?
           </h3>
           <p className="offer__single-session-subtitle">
-            Si aún no estás seguro de comprometerte con un paquete completo, puedes comenzar con una sesión individual para conocer tu programa y experimentar el método.
+            Si aún no estás seguro de comprometerte con un paquete completo, puedes comenzar con Descubrimiento: una sesión individual para conocer tu programa y experimentar el método.
           </p>
           
           <div ref={el => packagesRef.current[0] = el} className="offer__single-session">
             <div className="offer__single-session-content">
               <div className="offer__single-session-header">
-                <h3 className="offer__single-session-name">Sesión Única</h3>
+                <h3 className="offer__single-session-name">Descubrimiento</h3>
                 <p className="offer__single-session-tagline">"Conoce tu programa"</p>
               </div>
               <div className="offer__single-session-duration">
@@ -301,16 +299,15 @@ export default function Offer() {
                 <span>Mapa básico de tus contratos kármicos</span>
               </div>
               <div className="offer__single-session-footer">
-                <Button 
+                <StartInterestButton
                   type="secondary"
-                  href="https://wa.me/529982230431?text=Hola,%20estoy%20interesado%20en%20el%20paquete%20Sesión%20Única"
+                  product="COACHING"
+                  packageSlug="sesion-unica"
                   className="offer__single-session-cta"
-                  target="_blank"
-                  rel="noopener noreferrer"
                   onClick={() => trackWhatsAppClick("package_sesion_unica")}
                 >
-                  Reservar Sesión
-                </Button>
+                  Crear cuenta y continuar
+                </StartInterestButton>
               </div>
             </div>
           </div>

@@ -1,10 +1,11 @@
-"use client"
+'use client'
 
-import { useRef } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { useGSAP } from "@gsap/react"
-import "./Footer.scss"
+import { useRef } from 'react'
+import Link from 'next/link'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
+import './Footer.scss'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
@@ -14,17 +15,15 @@ export default function Footer() {
   const starsArrayRef = useRef([])
 
   useGSAP(() => {
-    // Create subtle stars for footer with parallax effect
     if (starsRef.current && footerRef.current) {
       const starsContainer = starsRef.current
-      const starCount = 50 // Subtle stars for footer
+      const starCount = 50
       const stars = []
 
-      // Create stars
       for (let i = 0; i < starCount; i++) {
-        const star = document.createElement("div")
-        star.className = "footer__star"
-        
+        const star = document.createElement('div')
+        star.className = 'footer__star'
+
         const size = Math.random() * 2 + 0.5
         const x = Math.random() * 100
         const y = Math.random() * 100
@@ -37,8 +36,8 @@ export default function Footer() {
         star.style.top = `${y}%`
         star.style.animationDelay = `${delay}s`
         star.style.animationDuration = `${duration}s`
-        star.style.willChange = "transform, opacity"
-        star.style.transform = "translateZ(0)"
+        star.style.willChange = 'transform, opacity'
+        star.style.transform = 'translateZ(0)'
 
         starsContainer.appendChild(star)
         stars.push(star)
@@ -46,30 +45,24 @@ export default function Footer() {
 
       starsArrayRef.current = stars
 
-      // Apply parallax effect to ALL stars
-      // Wait a frame to ensure DOM is ready
       requestAnimationFrame(() => {
-        if (!footerRef.current) return // Safety check
-        
+        if (!footerRef.current) return
+
         const footerHeight = footerRef.current.offsetHeight || 400
 
         stars.forEach((star) => {
-          // Different parallax speeds: from 0.3 to 1.5 (subtle range for footer)
-          const parallaxSpeed = 0.3 + (Math.random() * 1.2) // Range: 0.3 to 1.5
-          
-          // Calculate movement based on footer height - subtle intensity
+          const parallaxSpeed = 0.3 + Math.random() * 1.2
           const movementY = footerHeight * 0.3 * parallaxSpeed
-          
-          // Parallax animation with ScrollTrigger - using force3D for hardware acceleration
+
           gsap.to(star, {
-            y: -movementY, // Move up as user scrolls down, back as scroll up
-            ease: "none",
-            force3D: true, // Force hardware acceleration
+            y: -movementY,
+            ease: 'none',
+            force3D: true,
             scrollTrigger: {
               trigger: footerRef.current,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1, // Smooth scrubbing - automatically bidirectional
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 1,
               invalidateOnRefresh: true
             }
           })
@@ -82,10 +75,9 @@ export default function Footer() {
     <footer ref={footerRef} className="footer">
       <div ref={starsRef} className="footer__stars-container"></div>
       <div className="footer__glow"></div>
-      
+
       <div className="footer__container">
         <div className="footer__content">
-          {/* Logo/Brand Section */}
           <div className="footer__brand">
             <h3 className="footer__brand-name">Fernando Quintero</h3>
             <p className="footer__brand-tagline">Coach en Astrología Cuántica</p>
@@ -94,43 +86,37 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Quick Links */}
           <div className="footer__links">
             <h4 className="footer__links-title">Navegación</h4>
             <ul className="footer__links-list">
-              <li><a href="#inicio">Inicio</a></li>
-              <li><a href="#sobre">Sobre Fernando</a></li>
-              <li><a href="#metodo">El Método</a></li>
-              <li><a href="#benefits">Beneficios</a></li>
-              <li><a href="#offer">Paquetes</a></li>
+              <li><Link href="/">Inicio</Link></li>
+              <li><Link href="/coaching">Coaching</Link></li>
+              <li><Link href="/mastermind">Mastermind</Link></li>
+              <li><Link href="/coaching#offer">Paquetes de coaching</Link></li>
             </ul>
           </div>
 
-          {/* Contact */}
           <div className="footer__contact">
             <h4 className="footer__contact-title">Contacto</h4>
             <ul className="footer__contact-list">
               <li>
-                <a href="#offer" className="footer__cta-link">
+                <Link href="/coaching#offer" className="footer__cta-link">
                   Agenda tu proceso
-                </a>
+                </Link>
               </li>
-              {/* Add email/phone if available */}
             </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <div className="footer__bottom">
           <p className="footer__copyright">
             © {new Date().getFullYear()} Fernando Quintero. Todos los derechos reservados.
           </p>
           <p className="footer__disclaimer">
-            AstroHacking es un método de transformación energética y cuántica.
+            AstroHacking® es un método de transformación energética y cuántica.
           </p>
         </div>
       </div>
     </footer>
   )
 }
-

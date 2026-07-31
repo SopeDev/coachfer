@@ -2,21 +2,43 @@
 
 .metodo {
   background: var(--color-white);
-  padding: 3rem 1rem;
+  padding: 4rem 1.25rem;
   position: relative;
 
+  &--soft {
+    background: var(--color-soft-gray);
+
+    .metodo__quadrant-item {
+      background: var(--color-white);
+    }
+
+    &.metodo--compact .metodo__quadrant-item {
+      background: linear-gradient(
+        165deg,
+        rgba(58, 24, 177, 0.04) 0%,
+        var(--color-white) 45%
+      );
+    }
+  }
+
   @media (min-width: $break-tablet) {
-    padding: 4rem 2rem;
+    padding: 5.5rem 2rem;
   }
 
   @media (min-width: $break-desktop) {
-    padding: 5rem 4rem;
+    padding: 7rem 4rem;
   }
 
   &__container {
     max-width: $break-desktop;
     margin: 0 auto;
     width: 100%;
+  }
+
+  &__section-heading {
+    @include section-title;
+    opacity: 0;
+    transform: translateY(50px);
   }
 
   &__title {
@@ -29,6 +51,8 @@
     text-transform: uppercase;
     letter-spacing: 0.02em;
     line-height: 1.2;
+    opacity: 0;
+    transform: translateY(50px);
 
     @media (min-width: $break-tablet) {
       font-size: 2.5rem;
@@ -82,6 +106,8 @@
   &__quadrant-intro {
     text-align: center;
     margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(50px);
 
     @media (min-width: $break-tablet) {
       margin-bottom: 4rem;
@@ -135,6 +161,8 @@
     gap: 2rem;
     position: relative;
     z-index: 1;
+    opacity: 0;
+    transform: translateY(50px);
 
     @media (min-width: $break-tablet) {
       grid-template-columns: repeat(2, 1fr);
@@ -224,6 +252,125 @@
     @media (min-width: $break-desktop) {
       font-size: 1.125rem;
       margin-bottom: 2.5rem;
+    }
+  }
+
+  &__quadrant-number {
+    display: none;
+  }
+
+  &--compact {
+    .metodo__quadrant-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+
+      @media (min-width: $break-desktop) {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    .metodo__quadrant-item {
+      background: linear-gradient(
+        165deg,
+        rgba(58, 24, 177, 0.04) 0%,
+        var(--color-soft-gray) 45%
+      );
+      border: 1px solid rgba(58, 24, 177, 0.1);
+      border-top: 3px solid var(--color-indigo);
+      border-radius: 12px;
+      padding: 1.35rem 1.15rem 1.5rem;
+      height: 100%;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+      @media (min-width: $break-tablet) {
+        padding: 1.5rem 1.35rem 1.65rem;
+      }
+
+      @media (min-width: $break-desktop) {
+        padding: 1.65rem 1.4rem 1.75rem;
+
+        &:hover {
+          transform: translateY(-3px);
+          border-color: rgba(58, 24, 177, 0.22);
+          box-shadow: 0 10px 28px rgba(58, 24, 177, 0.1);
+        }
+      }
+
+      &:nth-child(2) {
+        border-top-color: #6366F1;
+      }
+
+      &:nth-child(3) {
+        border-top-color: #8B5CF6;
+      }
+
+      &:nth-child(4) {
+        border-top-color: var(--color-golden);
+      }
+    }
+
+    .metodo__quadrant-number {
+      display: block;
+      font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--color-golden);
+      margin: 0 0 0.5rem;
+      line-height: 1;
+    }
+
+    .metodo__quadrant-title {
+      font-family: var(--font-primary);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--color-indigo-dark);
+      margin: 0 0 0.85rem;
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+
+      @media (min-width: $break-tablet) {
+        font-size: 1.45rem;
+        margin-bottom: 1rem;
+      }
+
+      @media (min-width: $break-desktop) {
+        font-size: 1.55rem;
+        margin-bottom: 1rem;
+      }
+    }
+
+    .metodo__quadrant-description {
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: var(--color-gray);
+      margin: 0;
+
+      @media (min-width: $break-tablet) {
+        font-size: 0.9rem;
+        line-height: 1.7;
+      }
+
+      @media (min-width: $break-desktop) {
+        font-size: 0.9rem;
+      }
+    }
+
+    .metodo__quadrant-intro {
+      margin-bottom: 3.5rem;
+
+      @media (min-width: $break-tablet) {
+        margin-bottom: 4.5rem;
+      }
+
+      @media (min-width: $break-desktop) {
+        margin-bottom: 5.5rem;
+      }
+    }
+
+    .metodo__quadrant-intro-text {
+      max-width: 920px;
     }
   }
 

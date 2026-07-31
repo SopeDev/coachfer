@@ -1,0 +1,122 @@
+@import "../../../styles/variables.scss";
+
+.mastermind-cta {
+  background: var(--color-white);
+  padding: 6rem 2rem 10rem;
+  position: relative;
+  overflow: hidden;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: $break-tablet) {
+    padding: 8rem 3rem 12rem;
+    min-height: 600px;
+  }
+
+  @media (min-width: $break-desktop) {
+    padding: 10rem 4rem 14rem;
+    min-height: 700px;
+  }
+
+  &__arc {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    max-width: 600px;
+    height: 375px;
+    z-index: 1;
+    opacity: 0;
+    filter: drop-shadow(0 0 20px rgba(58, 24, 177, 0.1));
+    transform-origin: center center;
+    pointer-events: none;
+
+    @media (min-width: $break-tablet) {
+      max-width: 800px;
+      height: 500px;
+    }
+
+    @media (min-width: $break-desktop) {
+      max-width: 1000px;
+      height: 625px;
+    }
+  }
+
+  &__container {
+    max-width: $break-desktop;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 3;
+  }
+
+  &__content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  &__title {
+    @include section-title;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(30px);
+
+    @media (min-width: $break-tablet) {
+      margin-bottom: 2.5rem;
+    }
+
+    @media (min-width: $break-desktop) {
+      margin-bottom: 3rem;
+    }
+  }
+
+  &__text {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--color-gray);
+    margin-bottom: 3rem;
+    font-weight: 400;
+    opacity: 0;
+    transform: translateY(30px);
+
+    @media (min-width: $break-tablet) {
+      font-size: 1.125rem;
+      margin-bottom: 3.5rem;
+    }
+
+    @media (min-width: $break-desktop) {
+      font-size: 1.25rem;
+      margin-bottom: 4rem;
+    }
+  }
+
+  &__button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  &__button {
+    font-size: 1rem;
+    padding: 1.25rem 3rem;
+    letter-spacing: 0.1em;
+    transition: all 0.4s ease;
+
+    @media (min-width: $break-tablet) {
+      font-size: 1.125rem;
+      padding: 1.5rem 4rem;
+    }
+
+    @media (min-width: $break-desktop) {
+      font-size: 1.25rem;
+      padding: 1.75rem 5rem;
+    }
+  }
+}

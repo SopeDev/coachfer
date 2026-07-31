@@ -38,22 +38,14 @@
   }
 
   &__title {
-    font-family: var(--font-cormorant), "Cormorant Garamond", serif;
-    font-size: 2rem;
-    font-weight: 500;
-    color: var(--color-indigo);
-    text-align: center;
+    @include section-title;
     margin-bottom: 1.5rem;
-    letter-spacing: 0.02em;
-    line-height: 1.2;
 
     @media (min-width: $break-tablet) {
-      font-size: 2.5rem;
       margin-bottom: 2rem;
     }
 
     @media (min-width: $break-desktop) {
-      font-size: 3rem;
       margin-bottom: 2.5rem;
     }
   }

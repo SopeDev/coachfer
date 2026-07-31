@@ -1,0 +1,143 @@
+@import "../../styles/variables.scss";
+
+.product-offerings {
+  position: relative;
+  padding: 4rem 1.25rem;
+  background: var(--color-soft-gray);
+  overflow: hidden;
+
+  @media (min-width: $break-tablet) {
+    padding: 5.5rem 2rem;
+  }
+
+  @media (min-width: $break-desktop) {
+    padding: 7rem 4rem;
+  }
+
+  &__container {
+    max-width: $break-desktop;
+    margin: 0 auto;
+  }
+
+  &__title {
+    @include section-title;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  &__subtitle {
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--color-gray);
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3rem;
+    opacity: 0;
+    transform: translateY(40px);
+
+    @media (min-width: $break-tablet) {
+      font-size: 1.05rem;
+      margin-bottom: 4rem;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    gap: 2.5rem;
+
+    @media (min-width: $break-tablet) {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: stretch;
+    }
+  }
+
+  &__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 0 1.5rem;
+    border-left: 2px solid transparent;
+    opacity: 0;
+    transform: translateY(40px);
+
+    &--personal {
+      border-left-color: var(--color-indigo);
+    }
+
+    &--collective {
+      border-left-color: var(--color-golden);
+    }
+  }
+
+  &__label {
+    font-family: var(--font-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-gray);
+    margin: 0 0 0.75rem;
+  }
+
+  &__name {
+    font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--color-indigo-dark);
+    line-height: 1.2;
+    margin: 0 0 1rem;
+
+    @media (min-width: $break-tablet) {
+      font-size: 2rem;
+    }
+  }
+
+  &__description {
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--color-gray);
+    margin: 0 0 1.5rem;
+    flex-grow: 0;
+  }
+
+  &__points {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    flex-grow: 1;
+
+    li {
+      font-family: var(--font-primary);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--color-indigo-dark);
+      padding-left: 1.1rem;
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.55em;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--color-indigo);
+      }
+    }
+  }
+
+  &__item--collective &__points li::before {
+    background: var(--color-golden);
+  }
+
+  &__cta {
+    align-self: flex-start;
+  }
+}

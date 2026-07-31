@@ -1,0 +1,52 @@
+@import "../../styles/variables.scss";
+
+.home-cta {
+  position: relative;
+  padding: 4.5rem 1.25rem;
+  background: var(--color-soft-gray);
+  text-align: center;
+
+  &--white {
+    background: var(--color-white);
+  }
+
+  @media (min-width: $break-tablet) {
+    padding: 6rem 2rem;
+  }
+
+  &__container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  &__title {
+    @include section-title;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  &__text {
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--color-gray);
+    margin: 0 0 2rem;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    transform: translateY(30px);
+
+    @media (min-width: $break-tablet) {
+      flex-direction: row;
+      justify-content: center;
+      gap: 1.25rem;
+    }
+  }
+}

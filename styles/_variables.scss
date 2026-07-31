@@ -25,6 +25,7 @@
   --color-gray: #777777;
   --color-white: #ffffff;
   --color-soft-gray: #f4f4f4;
+  --color-space-bg: #0a0a15;
   --color-indigo-glow: rgba(58, 24, 177, 0.18);
   --color-golden: #F59E0B;
 
@@ -36,4 +37,22 @@
 $break-mobile: 480px;
 $break-tablet: 768px;
 $break-desktop: 1200px;
+
+/// Canonical section heading — matches “Dos caminos. Una misma consciencia.”
+@mixin section-title {
+  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-indigo-dark);
+  text-align: center;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  text-transform: none;
+  margin: 0 0 1rem;
+
+  @media (min-width: $break-tablet) {
+    font-size: 2.75rem;
+    margin-bottom: 1.25rem;
+  }
+}
 
