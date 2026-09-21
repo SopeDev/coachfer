@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import Button from '../Button/Button'
 import './Metodo.scss'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
@@ -60,13 +61,16 @@ export default function Metodo({ sectionLabel, compact = false, tone = 'white' }
   const quadrantRef = useRef(null)
   const introRef = useRef(null)
   const labelRef = useRef(null)
+  const ctaRef = useRef(null)
 
   useGSAP(() => {
     if (!sectionRef.current || !titleRef.current) return
 
     const labelEl = labelRef.current
+    const ctaEl = ctaRef.current
     const fadeTargets = [titleRef.current, introRef.current, quadrantRef.current]
     if (labelEl) fadeTargets.unshift(labelEl)
+    if (ctaEl) fadeTargets.push(ctaEl)
 
     gsap.set(fadeTargets, {
       opacity: 0,
@@ -108,6 +112,15 @@ export default function Metodo({ sectionLabel, compact = false, tone = 'white' }
         duration: 1,
         ease: 'power3.out'
       }, '-=0.5')
+
+    if (ctaEl) {
+      tl.to(ctaEl, {
+        opacity: 1,
+        y: 0,
+        duration: 0.85,
+        ease: 'power3.out'
+      }, '-=0.45')
+    }
   }, { scope: sectionRef })
 
   return (
@@ -183,6 +196,14 @@ export default function Metodo({ sectionLabel, compact = false, tone = 'white' }
             ))}
           </div>
         </div>
+
+        {compact ? (
+          <div ref={ctaRef} className="metodo__cta">
+            <Button type="primary" href="/coaching#metodo">
+              Conocer el Método
+            </Button>
+          </div>
+        ) : null}
       </div>
     </section>
   )

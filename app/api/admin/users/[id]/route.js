@@ -135,3 +135,45 @@ export async function PATCH(request, { params }) {
 
   return NextResponse.json({ user })
 }
+
+/**
+ * Permanently delete a user and all related records:
+ * credit transactions, bookings, session access, credit grants (packages),
+ * purchases, auth sessions/accounts, and password reset tokens.
+ * Shared ProductPackage / LiveSession rows are kept.
+ */
+export async function DELETE(_request, { params }) {
+  const { session, error } = await requireAdmin()
+  if (error) {
+    return NextResponse.json({ error }, { status: error === 'UNAUTHORIZED' ? 401 : 403 })
+  }
+
+  const userId = params.id
+  const existing = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { id: true, email: true }
+  })
+
+  if (!existing) {
+    return NextResponse.json({ error: 'NOT_FOUND' }, { status: 404 })
+  }
+
+  if (existing.id === session.user.id) {
+    return NextResponse.json({ error: 'CANNOT_DELETE_SELF' }, { status: 400 })
+  }
+
+  await prisma.$transaction(async (tx) => {
+    // Order matters: sibling FKs use Restrict (booking ↔ tx, grant ↔ booking, purchase ↔ grant)
+    await tx.creditTransaction.deleteMany({ where: { userId } })
+    await tx.booking.deleteMany({ where: { userId } })
+    await tx.sessionAccess.deleteMany({ where: { userId } })
+    await tx.creditGrant.deleteMany({ where: { userId } })
+    await tx.purchase.deleteMany({ where: { userId } })
+    await tx.session.deleteMany({ where: { userId } })
+    await tx.account.deleteMany({ where: { userId } })
+    await tx.passwordResetToken.deleteMany({ where: { userId } })
+    await tx.user.delete({ where: { id: userId } })
+  })
+
+  return NextResponse.json({ ok: true, deletedUserId: userId })
+}

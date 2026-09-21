@@ -64,11 +64,13 @@ export async function POST(request) {
       message === 'BOOKING_CLOSED' ||
       message === 'ZOOM_NOT_CONFIGURED'
         ? 400
-        : message === 'ZOOM_REGISTRATION_FAILED'
-          ? 502
-          : message === 'SESSION_NOT_FOUND' || message === 'USER_NOT_FOUND'
-            ? 404
-            : 500
+        : message === 'ZOOM_REGISTRANT_DAILY_LIMIT'
+          ? 429
+          : message === 'ZOOM_REGISTRATION_FAILED'
+            ? 502
+            : message === 'SESSION_NOT_FOUND' || message === 'USER_NOT_FOUND'
+              ? 404
+              : 500
 
     return NextResponse.json({ error: message }, { status })
   }

@@ -3,6 +3,7 @@ import { z } from 'zod'
 import prisma from '@/lib/prisma'
 import { requireAdmin } from '@/lib/session'
 import { DEFAULT_TIMEZONE, wallClockLocalInputToUtc } from '@/lib/timezone-server'
+import { createRegisteredMeeting } from '@/lib/zoom'
 
 export async function GET() {
   const { error } = await requireAdmin()
@@ -45,9 +46,6 @@ const createSchema = z.object({
   startsAtLocal: z.string().min(10),
   endsAtLocal: z.string().min(10),
   capacity: z.number().int().positive().max(500).optional(),
-  status: z.enum(['DRAFT', 'SCHEDULED', 'LIVE', 'COMPLETED', 'CANCELLED']).optional(),
-  zoomMeetingId: z.string().trim().min(1).max(64).optional().nullable(),
-  zoomJoinUrl: z.string().url().nullable().optional(),
   cancelDeadlineHours: z.number().int().positive().optional()
 })
 
@@ -76,15 +74,26 @@ export async function POST(request) {
     return NextResponse.json({ error: 'INVALID_RANGE' }, { status: 400 })
   }
 
-  const status = parsed.data.status || 'DRAFT'
-  if (
-    (status === 'SCHEDULED' || status === 'LIVE') &&
-    !parsed.data.zoomMeetingId
-  ) {
-    return NextResponse.json(
-      { error: 'ZOOM_MEETING_ID_REQUIRED' },
-      { status: 400 }
-    )
+  const slugTaken = await prisma.liveSession.findUnique({
+    where: { slug: parsed.data.slug },
+    select: { id: true }
+  })
+  if (slugTaken) {
+    return NextResponse.json({ error: 'SLUG_IN_USE' }, { status: 409 })
+  }
+
+  let zoom
+  try {
+    zoom = await createRegisteredMeeting({
+      topic: parsed.data.title,
+      startTime: startsAt,
+      durationMinutes: Math.round((endsAt - startsAt) / 60000),
+      timezone: DEFAULT_TIMEZONE,
+      agenda: parsed.data.description
+    })
+  } catch (err) {
+    console.error('[admin/sessions] zoom create failed', err)
+    return NextResponse.json({ error: 'ZOOM_CREATE_FAILED' }, { status: 502 })
   }
 
   try {
@@ -96,17 +105,18 @@ export async function POST(request) {
         startsAt,
         endsAt,
         capacity: parsed.data.capacity || 50,
-        status,
-        zoomMeetingId: parsed.data.zoomMeetingId || null,
-        zoomJoinUrl: parsed.data.zoomJoinUrl || null,
+        status: 'SCHEDULED',
+        zoomMeetingId: zoom.meetingId,
+        zoomJoinUrl: zoom.startUrl || zoom.joinUrl,
         cancelDeadlineHours: parsed.data.cancelDeadlineHours ?? 2,
         timezone: DEFAULT_TIMEZONE
       }
     })
 
     return NextResponse.json({ session }, { status: 201 })
-  } catch {
-    return NextResponse.json({ error: 'SLUG_IN_USE' }, { status: 409 })
+  } catch (err) {
+    console.error('[admin/sessions] create failed after zoom meeting', zoom.meetingId, err)
+    return NextResponse.json({ error: 'SESSION_CREATE_FAILED' }, { status: 500 })
   }
 }
 
@@ -114,7 +124,7 @@ const patchSchema = z.object({
   id: z.string().min(1),
   title: z.string().trim().min(3).max(160).optional(),
   description: z.string().max(5000).nullable().optional(),
-  status: z.enum(['DRAFT', 'SCHEDULED', 'LIVE', 'COMPLETED', 'CANCELLED']).optional(),
+  status: z.enum(['SCHEDULED', 'LIVE', 'COMPLETED', 'CANCELLED']).optional(),
   capacity: z.number().int().positive().max(500).optional(),
   zoomMeetingId: z.string().trim().min(1).max(64).nullable().optional(),
   zoomJoinUrl: z.string().url().nullable().optional(),

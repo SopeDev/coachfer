@@ -100,3 +100,80 @@ img {
 }
 
 
+.app-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(10, 10, 21, 0.62);
+  backdrop-filter: blur(3px);
+}
+
+.app-modal {
+  width: min(100%, 32rem);
+  padding: 1.4rem;
+  border: 1px solid rgba(99, 102, 241, 0.22);
+  background: #fff;
+  box-shadow: 0 24px 70px rgba(10, 10, 21, 0.3);
+
+  &__title {
+    margin: 0;
+    color: var(--color-indigo-dark, #2a0f7d);
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+  }
+
+  &__body {
+    margin-top: 0.75rem;
+    color: #555;
+    line-height: 1.6;
+
+    p {
+      margin: 0;
+    }
+
+    p + p {
+      margin-top: 0.55rem;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.65rem;
+    margin-top: 1.25rem;
+  }
+
+  &__button {
+    padding: 0.7rem 1rem;
+    border: 1px solid transparent;
+    background: var(--color-purple, #6366f1);
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    &--ghost {
+      border-color: rgba(58, 24, 177, 0.25);
+      background: transparent;
+      color: var(--color-indigo, #3a18b1);
+    }
+
+    &--danger {
+      background: #b91c1c;
+    }
+
+    &:focus-visible {
+      outline: 3px solid rgba(99, 102, 241, 0.35);
+      outline-offset: 2px;
+    }
+  }
+}

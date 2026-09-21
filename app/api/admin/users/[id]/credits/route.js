@@ -45,7 +45,8 @@ export async function POST(request, { params }) {
         ? 404
         : message === 'INSUFFICIENT_CREDITS' ||
             message === 'INVALID_AMOUNT' ||
-            message === 'REASON_REQUIRED'
+            message === 'REASON_REQUIRED' ||
+            message === 'INVALID_EXPIRATION'
           ? 400
           : 500
 

@@ -45,7 +45,6 @@ enum CreditTransactionType {
 }
 
 enum LiveSessionStatus {
-  DRAFT
   SCHEDULED
   LIVE
   COMPLETED
@@ -152,7 +151,6 @@ model ProductPackage {
   stripePriceId   String?
   price           Decimal     @db.Decimal(10, 2)
   currency        String      @default("usd")
-  active          Boolean     @default(true)
   displayOrder    Int         @default(0)
   tagline         String?
   description     String?     @db.Text
@@ -163,7 +161,7 @@ model ProductPackage {
 
   purchases Purchase[]
 
-  @@index([productType, active, displayOrder])
+  @@index([productType, displayOrder])
 }
 
 model Purchase {
@@ -246,7 +244,7 @@ model LiveSession {
   endsAt                DateTime
   timezone              String            @default("America/Mexico_City")
   capacity              Int               @default(50)
-  status                LiveSessionStatus @default(DRAFT)
+  status                LiveSessionStatus @default(SCHEDULED)
   zoomJoinUrl           String?
   zoomMeetingId         String?
   recordingUrl          String?

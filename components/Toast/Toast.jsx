@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import './Toast.scss'
 
-const AUTO_DISMISS_MS = 4500
+const AUTO_DISMISS_MS = 10_000
 
 export default function Toast({
   message,

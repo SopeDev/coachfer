@@ -12,12 +12,10 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url)
     const type = searchParams.get('type')
 
-    const where = {
-      active: true,
-      ...(type === 'MASTERMIND' || type === 'COACHING'
+    const where =
+      type === 'MASTERMIND' || type === 'COACHING'
         ? { productType: type }
-        : {})
-    }
+        : {}
 
     const packages = await prisma.productPackage.findMany({
       where,

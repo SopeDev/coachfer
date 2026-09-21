@@ -372,6 +372,22 @@
     .metodo__quadrant-intro-text {
       max-width: 920px;
     }
+
+    .metodo__cta {
+      display: flex;
+      justify-content: center;
+      margin-top: 2.5rem;
+      opacity: 0;
+      transform: translateY(50px);
+
+      @media (min-width: $break-tablet) {
+        margin-top: 3rem;
+      }
+
+      @media (min-width: $break-desktop) {
+        margin-top: 3.5rem;
+      }
+    }
   }
 
   &__quadrant-result {

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import SessionWhen from '../../components/SessionWhen/SessionWhen'
+import { formatSessionTitle } from '../../lib/timezone'
 
 export default function DashboardHomePage() {
   const [credits, setCredits] = useState(null)
@@ -74,7 +75,13 @@ export default function DashboardHomePage() {
         {nextBooking ? (
           <>
             <div className="member-card__meta">
-              <strong>{nextBooking.liveSession.title}</strong>
+              <strong>
+                {formatSessionTitle(
+                  nextBooking.liveSession.title,
+                  nextBooking.liveSession.startsAt,
+                  nextBooking.liveSession.timezone
+                )}
+              </strong>
               <SessionWhen
                 startsAt={nextBooking.liveSession.startsAt}
                 sessionTimezone={nextBooking.liveSession.timezone}
@@ -84,11 +91,18 @@ export default function DashboardHomePage() {
               />
             </div>
             <div className="member-actions">
-              <Link
-                className="member-btn"
-                href={`/dashboard/sesiones/${nextBooking.liveSession.id}`}
-              >
-                Ver detalles / Zoom
+              {nextBooking.zoomJoinUrl ? (
+                <a
+                  className="member-btn"
+                  href={nextBooking.zoomJoinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Unirme a Zoom
+                </a>
+              ) : null}
+              <Link className="member-btn member-btn--ghost" href="/dashboard/reservas">
+                Gestionar reserva
               </Link>
             </div>
           </>

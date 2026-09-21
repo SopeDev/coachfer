@@ -2,7 +2,14 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
+import ConfirmModal from '../../../../components/ConfirmModal/ConfirmModal'
+import {
+  DEFAULT_TIMEZONE,
+  TIMEZONE_OPTIONS,
+  getTimezoneLabel,
+  getTimezoneUtcOffset
+} from '../../../../lib/timezone'
 
 const formatDate = (value) => {
   if (!value) return '—'
@@ -12,14 +19,34 @@ const formatDate = (value) => {
   })
 }
 
+const getDefaultCreditExpiration = () => {
+  const date = new Date()
+  date.setDate(date.getDate() + 90)
+  date.setHours(23, 59, 0, 0)
+
+  const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000)
+  return localDate.toISOString().slice(0, 16)
+}
+
+const creditErrors = {
+  INVALID_AMOUNT: 'La cantidad debe ser un número entero distinto de cero.',
+  INVALID_EXPIRATION: 'La expiración debe ser una fecha y hora futuras.',
+  INSUFFICIENT_CREDITS: 'El usuario no tiene suficientes créditos disponibles.',
+  REASON_REQUIRED: 'Indica el motivo del ajuste.'
+}
+
 export default function AdminUserDetailPage() {
   const params = useParams()
+  const router = useRouter()
   const id = params.id
 
   const [user, setUser] = useState(null)
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const [confirmingDelete, setConfirmingDelete] = useState(false)
   const [creditAmount, setCreditAmount] = useState('4')
+  const [creditExpiresAt, setCreditExpiresAt] = useState(getDefaultCreditExpiration)
   const [creditReason, setCreditReason] = useState('')
   const [message, setMessage] = useState('')
 
@@ -65,18 +92,46 @@ export default function AdminUserDetailPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         amount: Number(creditAmount),
-        reason: creditReason
+        reason: creditReason,
+        expiresAt:
+          Number(creditAmount) > 0
+            ? new Date(creditExpiresAt).toISOString()
+            : undefined
       })
     })
     const data = await res.json()
     setSaving(false)
     if (!res.ok) {
-      setMessage(data.error || 'Error al ajustar créditos')
+      setMessage(creditErrors[data.error] || data.error || 'Error al ajustar créditos')
       return
     }
     setCreditReason('')
     setMessage('Créditos actualizados.')
     await load()
+  }
+
+  const deleteUser = async () => {
+    setDeleting(true)
+    setMessage('')
+    const res = await fetch(`/api/admin/users/${id}`, { method: 'DELETE' })
+    const data = await res.json().catch(() => ({}))
+    setDeleting(false)
+
+    if (!res.ok) {
+      setConfirmingDelete(false)
+      const errors = {
+        CANNOT_DELETE_SELF: 'No puedes eliminar tu propia cuenta.',
+        NOT_FOUND: 'Usuario no encontrado.',
+        FORBIDDEN: 'Sin permiso.',
+        UNAUTHORIZED: 'Sesión expirada.'
+      }
+      setMessage(errors[data.error] || data.error || 'Error al eliminar')
+      return
+    }
+
+    setConfirmingDelete(false)
+    router.push('/admin/usuarios')
+    router.refresh()
   }
 
   if (error) {
@@ -148,11 +203,23 @@ export default function AdminUserDetailPage() {
             </label>
             <label>
               Zona horaria
-              <input
-                className="admin-input"
+              <select
+                className="admin-select"
                 name="timezone"
-                defaultValue={user.timezone || 'America/Mexico_City'}
-              />
+                defaultValue={user.timezone || DEFAULT_TIMEZONE}
+              >
+                {TIMEZONE_OPTIONS.map((tz) => (
+                  <option key={tz.value} value={tz.value}>
+                    {tz.label} ({getTimezoneUtcOffset(tz.value)})
+                  </option>
+                ))}
+                {user.timezone &&
+                !TIMEZONE_OPTIONS.some((tz) => tz.value === user.timezone) ? (
+                  <option value={user.timezone}>
+                    {getTimezoneLabel(user.timezone)} ({getTimezoneUtcOffset(user.timezone)})
+                  </option>
+                ) : null}
+              </select>
             </label>
             <label>
               Notas internas
@@ -167,12 +234,12 @@ export default function AdminUserDetailPage() {
             </button>
           </form>
 
-          <div style={{ marginTop: '1rem', display: 'flex', gap: '0.75rem' }}>
+          <div style={{ marginTop: '1rem', display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
             {user.disabledAt ? (
               <button
                 className="admin-btn admin-btn--ghost"
                 type="button"
-                disabled={saving}
+                disabled={saving || deleting}
                 onClick={() => saveUser({ disabled: false })}
               >
                 Rehabilitar cuenta
@@ -181,12 +248,20 @@ export default function AdminUserDetailPage() {
               <button
                 className="admin-btn admin-btn--danger"
                 type="button"
-                disabled={saving}
+                disabled={saving || deleting}
                 onClick={() => saveUser({ disabled: true })}
               >
                 Deshabilitar cuenta
               </button>
             )}
+            <button
+              className="admin-btn admin-btn--danger"
+              type="button"
+              disabled={saving || deleting}
+              onClick={() => setConfirmingDelete(true)}
+            >
+              {deleting ? 'Eliminando…' : 'Eliminar usuario'}
+            </button>
           </div>
         </section>
 
@@ -217,6 +292,21 @@ export default function AdminUserDetailPage() {
                 minLength={3}
               />
             </label>
+            {Number(creditAmount) > 0 ? (
+              <label>
+                Fecha y hora de expiración
+                <input
+                  className="admin-input"
+                  type="datetime-local"
+                  value={creditExpiresAt}
+                  onChange={(e) => setCreditExpiresAt(e.target.value)}
+                  required
+                />
+                <span className="admin-muted">
+                  Se interpreta según la zona horaria de tu navegador.
+                </span>
+              </label>
+            ) : null}
             <button className="admin-btn" type="submit" disabled={saving}>
               Ajustar créditos
             </button>
@@ -329,6 +419,22 @@ export default function AdminUserDetailPage() {
           </table>
         </div>
       </section>
+
+      <ConfirmModal
+        open={confirmingDelete}
+        title="Eliminar usuario"
+        confirmLabel={deleting ? 'Eliminando…' : 'Eliminar permanentemente'}
+        tone="danger"
+        busy={deleting}
+        onConfirm={deleteUser}
+        onClose={() => setConfirmingDelete(false)}
+      >
+        <p>
+          Se eliminará permanentemente a <strong>{user.email}</strong> junto con sus
+          compras, créditos, reservas y datos de autenticación.
+        </p>
+        <p>Esta acción no se puede deshacer.</p>
+      </ConfirmModal>
     </div>
   )
 }

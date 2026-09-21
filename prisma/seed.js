@@ -179,8 +179,7 @@ async function seedPackages(packages) {
         tagline: pkg.tagline,
         description: pkg.description,
         featured: pkg.featured,
-        features: pkg.features,
-        active: true
+        features: pkg.features
       },
       create: pkg
     })

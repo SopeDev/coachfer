@@ -30,7 +30,6 @@ const patchSchema = z.object({
   tagline: z.string().max(300).nullable().optional(),
   description: z.string().max(5000).nullable().optional(),
   price: z.number().nonnegative().optional(),
-  active: z.boolean().optional(),
   featured: z.boolean().optional(),
   displayOrder: z.number().int().optional(),
   creditQuantity: z.number().int().positive().optional(),

@@ -6,7 +6,8 @@ import Toast from '../../../components/Toast/Toast'
 import {
   DEFAULT_TIMEZONE,
   TIMEZONE_OPTIONS,
-  getTimezoneLabel
+  getTimezoneLabel,
+  getTimezoneUtcOffset
 } from '../../../lib/timezone'
 
 const profileErrors = {
@@ -193,11 +194,13 @@ export default function MiCuentaPage() {
             >
               {TIMEZONE_OPTIONS.map((tz) => (
                 <option key={tz.value} value={tz.value}>
-                  {tz.label}
+                  {tz.label} ({getTimezoneUtcOffset(tz.value)})
                 </option>
               ))}
               {!TIMEZONE_OPTIONS.some((tz) => tz.value === timezone) ? (
-                <option value={timezone}>{getTimezoneLabel(timezone)}</option>
+                <option value={timezone}>
+                  {getTimezoneLabel(timezone)} ({getTimezoneUtcOffset(timezone)})
+                </option>
               ) : null}
             </select>
             <span className="member-form__hint">

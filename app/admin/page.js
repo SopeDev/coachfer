@@ -62,10 +62,6 @@ export default function AdminHomePage() {
             <p className="admin-stat__value">{stats.sessionsUpcoming}</p>
           </div>
           <div className="admin-stat">
-            <p className="admin-stat__label">Paquetes activos</p>
-            <p className="admin-stat__value">{stats.packagesActive}</p>
-          </div>
-          <div className="admin-stat">
             <p className="admin-stat__label">Cuentas deshabilitadas</p>
             <p className="admin-stat__value">{stats.usersDisabled}</p>
           </div>

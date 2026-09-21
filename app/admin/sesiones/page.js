@@ -54,12 +54,11 @@ export default function AdminSessionsPage() {
   const createSession = async (event) => {
     event.preventDefault()
     setSaving(true)
-    const form = new FormData(event.currentTarget)
+    const formEl = event.currentTarget
+    const form = new FormData(formEl)
     const startsLocal = form.get('startsAt')
     const endsLocal = form.get('endsAt')
     const title = String(form.get('title') || '')
-    const status = form.get('status') || 'DRAFT'
-    const zoomMeetingId = String(form.get('zoomMeetingId') || '').trim() || null
     const slug =
       String(form.get('slug') || '') ||
       title
@@ -68,15 +67,6 @@ export default function AdminSessionsPage() {
         .replace(/[\u0300-\u036f]/g, '')
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/(^-|-$)/g, '')
-
-    if ((status === 'SCHEDULED' || status === 'LIVE') && !zoomMeetingId) {
-      setSaving(false)
-      showToast(
-        'Pega el Meeting ID de Zoom para publicar la sesión.',
-        'error'
-      )
-      return
-    }
 
     const res = await fetch('/api/admin/sessions', {
       method: 'POST',
@@ -88,9 +78,6 @@ export default function AdminSessionsPage() {
         startsAtLocal: String(startsLocal),
         endsAtLocal: String(endsLocal),
         capacity: Number(form.get('capacity') || 50),
-        status,
-        zoomMeetingId,
-        zoomJoinUrl: form.get('zoomJoinUrl') || null,
         cancelDeadlineHours: Number(form.get('cancelDeadlineHours') || 2)
       })
     })
@@ -99,15 +86,17 @@ export default function AdminSessionsPage() {
     const data = await res.json()
     if (!res.ok) {
       showToast(
-        data.error === 'ZOOM_MEETING_ID_REQUIRED'
-          ? 'Meeting ID de Zoom obligatorio para SCHEDULED.'
-          : data.error || 'No se pudo crear la sesión.',
+        data.error === 'ZOOM_CREATE_FAILED'
+          ? 'No se pudo crear la reunión de Zoom. No se creó la sesión.'
+          : data.error === 'SLUG_IN_USE'
+            ? 'Ya existe una sesión con ese slug.'
+            : data.error || 'No se pudo crear la sesión.',
         'error'
       )
       return
     }
 
-    event.currentTarget.reset()
+    formEl.reset()
     showToast('Sesión creada.')
     await load()
   }
@@ -181,7 +170,9 @@ export default function AdminSessionsPage() {
         <h2 className="admin-card__title">Nueva sesión manual</h2>
         <p className="admin-muted" style={{ marginBottom: '1rem' }}>
           Las fechas/horas se interpretan en <strong>America/Mexico_City</strong>
-          (hora oficial del entrenamiento), no en la zona de tu navegador.
+          (hora oficial del entrenamiento), no en la zona de tu navegador. La
+          reunión de Zoom (con registro) se crea automáticamente y la sesión se
+          publica en el dashboard.
         </p>
         <form className="admin-form" onSubmit={createSession}>
           <label>
@@ -224,23 +215,6 @@ export default function AdminSessionsPage() {
               <input className="admin-input" type="number" name="capacity" defaultValue={50} min={1} />
             </label>
             <label>
-              Estado
-              <select className="admin-select" name="status" defaultValue="DRAFT">
-                <option value="DRAFT">DRAFT</option>
-                <option value="SCHEDULED">SCHEDULED</option>
-              </select>
-            </label>
-          </div>
-          <div className="admin-grid-2">
-            <label>
-              Zoom Meeting ID (obligatorio si SCHEDULED)
-              <input
-                className="admin-input"
-                name="zoomMeetingId"
-                placeholder="12345678901"
-              />
-            </label>
-            <label>
               Cancelación hasta (horas antes)
               <input
                 className="admin-input"
@@ -251,17 +225,8 @@ export default function AdminSessionsPage() {
               />
             </label>
           </div>
-          <label>
-            Zoom host URL (solo admin, opcional)
-            <input
-              className="admin-input"
-              name="zoomJoinUrl"
-              type="url"
-              placeholder="https://zoom.us/s/..."
-            />
-          </label>
           <button className="admin-btn" type="submit" disabled={saving}>
-            Crear sesión
+            {saving ? 'Creando…' : 'Crear sesión'}
           </button>
         </form>
       </section>

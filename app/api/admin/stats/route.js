@@ -15,7 +15,6 @@ export async function GET() {
     usersTotal,
     usersNewWeek,
     usersDisabled,
-    packagesActive,
     purchasesPaid,
     purchasesPending,
     creditGrantsActive,
@@ -25,7 +24,6 @@ export async function GET() {
     prisma.user.count(),
     prisma.user.count({ where: { createdAt: { gte: weekAgo } } }),
     prisma.user.count({ where: { disabledAt: { not: null } } }),
-    prisma.productPackage.count({ where: { active: true } }),
     prisma.purchase.count({ where: { status: 'PAID' } }),
     prisma.purchase.count({ where: { status: 'PENDING' } }),
     prisma.creditGrant.count({
@@ -56,7 +54,6 @@ export async function GET() {
       usersTotal,
       usersNewWeek,
       usersDisabled,
-      packagesActive,
       purchasesPaid,
       purchasesPending,
       creditGrantsActive,
