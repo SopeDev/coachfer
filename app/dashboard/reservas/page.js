@@ -123,7 +123,6 @@ function ReservationCard({
               )}
             </h3>
           </div>
-          <StatusBadge booking={booking} now={now} />
         </div>
 
         {featured ? (
@@ -138,6 +137,8 @@ function ReservationCard({
           viewerTimezone={booking.viewerTimezone}
         />
       </div>
+
+      <StatusBadge booking={booking} now={now} />
 
       {upcoming ? (
         <div className="member-reservation-card__actions">
@@ -239,7 +240,7 @@ export default function ReservasPage() {
         message:
           data.error === 'CANCEL_DEADLINE_PASSED'
             ? 'Ya pasó el plazo permitido para cancelar.'
-            : data.error || 'No se pudo cancelar la reserva.',
+            : 'No se pudo cancelar la reserva.',
         type: 'error',
         id: Date.now()
       })

@@ -57,7 +57,7 @@ const getBookingErrorMessage = (error, timeZone) => {
       timeZone
     )}.`
   }
-  return bookingErrors[error] || error
+  return bookingErrors[error] || null
 }
 
 const getRelativeTime = (startsAt, now) => {
@@ -171,11 +171,6 @@ function SessionCard({ session, now, onUpdate, onToast }) {
               {formatSessionTitle(session.title, session.startsAt, session.timezone)}
             </h2>
           </div>
-          <span
-            className={`member-reservation-status member-reservation-status--${availability.tone}`}
-          >
-            {availability.label}
-          </span>
         </div>
 
         <p className="member-reservation-card__countdown">
@@ -197,6 +192,12 @@ function SessionCard({ session, now, onUpdate, onToast }) {
         </p>
 
       </div>
+
+      <span
+        className={`member-reservation-status member-reservation-status--${availability.tone}`}
+      >
+        {availability.label}
+      </span>
 
       <div className="member-reservation-card__actions">
         {reserved ? (

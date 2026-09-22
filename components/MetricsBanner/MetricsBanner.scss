@@ -33,7 +33,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
     position: relative;
 
     @media (min-width: $break-tablet) {
@@ -45,15 +45,21 @@
     }
   }
 
+  // Mobile: metric with a horizontal divider line underneath.
+  // Tablet+: metric with a vertical "|" divider beside it.
   &__wrapper {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    flex: 1;
+    gap: 1.5rem;
+    width: 100%;
     justify-content: center;
     max-width: 100%;
 
     @media (min-width: $break-tablet) {
+      flex-direction: row;
+      gap: 1rem;
+      width: auto;
       flex: 0 1 auto;
       max-width: none;
     }
@@ -80,18 +86,28 @@
     }
   }
 
+  // Mobile: 1px horizontal line (the "|" glyph is hidden).
+  // Tablet+: the original vertical "|" divider.
   &__divider {
-    display: none;
-    color: rgba(58, 24, 177, 0.3);
-    font-size: 1.5rem;
-    font-weight: 300;
-    margin: 0 1.5rem;
-    align-self: center;
+    display: block;
+    width: 100px;
+    height: 1px;
     flex-shrink: 0;
+    background: rgba(58, 24, 177, 0.3);
+    font-size: 0;
+    color: transparent;
+    overflow: hidden;
 
     @media (min-width: $break-tablet) {
       display: inline-block;
+      width: auto;
+      height: auto;
+      background: none;
+      overflow: visible;
+      color: rgba(58, 24, 177, 0.3);
       font-size: 1.75rem;
+      font-weight: 300;
+      margin: 0 1.5rem;
       align-self: center;
     }
 
@@ -101,7 +117,3 @@
     }
   }
 }
-
-
-
-

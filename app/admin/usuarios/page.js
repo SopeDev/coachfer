@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
+import { ROLE_LABELS, labelFor } from '../../../lib/labels'
 
 export default function AdminUsersPage() {
   const [q, setQ] = useState('')
@@ -71,9 +72,9 @@ export default function AdminUsersPage() {
           }}
         >
           <option value="">Todos los roles</option>
-          <option value="USER">USER</option>
-          <option value="ADMIN">ADMIN</option>
-          <option value="FACILITATOR">FACILITATOR</option>
+          <option value="USER">Usuario</option>
+          <option value="ADMIN">Administrador</option>
+          <option value="FACILITATOR">Facilitador</option>
         </select>
         <button className="admin-btn" type="submit">
           Buscar
@@ -106,7 +107,7 @@ export default function AdminUsersPage() {
                       <div className="admin-muted">{user.email}</div>
                     </td>
                     <td>
-                      <span className="admin-badge">{user.role}</span>
+                      <span className="admin-badge">{labelFor(ROLE_LABELS, user.role)}</span>
                     </td>
                     <td>{user.availableCredits}</td>
                     <td>{user.purchasesCount}</td>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Toast from '../../../components/Toast/Toast'
+import { LIVE_SESSION_STATUS_LABELS, labelFor } from '../../../lib/labels'
 
 const formatDate = (value) => {
   if (!value) return '—'
@@ -90,7 +91,7 @@ export default function AdminSessionsPage() {
           ? 'No se pudo crear la reunión de Zoom. No se creó la sesión.'
           : data.error === 'SLUG_IN_USE'
             ? 'Ya existe una sesión con ese slug.'
-            : data.error || 'No se pudo crear la sesión.',
+            : 'No se pudo crear la sesión.',
         'error'
       )
       return
@@ -109,7 +110,7 @@ export default function AdminSessionsPage() {
       })
       const data = await res.json()
       if (!res.ok) {
-        showToast(data.error || 'No se pudo ejecutar el cron.', 'error')
+        showToast('No se pudo ejecutar el cron.', 'error')
       } else if (data.created) {
         showToast(`Sesión creada: ${data.session.title}`)
         await load()
@@ -251,7 +252,7 @@ export default function AdminSessionsPage() {
                 </td>
                 <td>{formatDate(session.startsAt)}</td>
                 <td>
-                  <span className="admin-badge">{session.status}</span>
+                  <span className="admin-badge">{labelFor(LIVE_SESSION_STATUS_LABELS, session.status)}</span>
                 </td>
                 <td>
                   {session.reservedCount ?? 0} / {session.capacity}

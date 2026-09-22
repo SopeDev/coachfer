@@ -2,6 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import { DEFAULT_TIMEZONE, formatDateTime } from '../../../lib/timezone'
+import {
+  CREDIT_GRANT_STATUS_LABELS,
+  getGrantDisplayStatus,
+  labelFor
+} from '../../../lib/labels'
 
 export default function CreditosPage() {
   const [data, setData] = useState(null)
@@ -46,8 +51,8 @@ export default function CreditosPage() {
             <table className="member-table">
               <thead>
                 <tr>
-                  <th>Restantes</th>
                   <th>Total</th>
+                  <th>Restantes</th>
                   <th>Otorgado</th>
                   <th>Expira</th>
                   <th>Estado</th>
@@ -56,12 +61,12 @@ export default function CreditosPage() {
               <tbody>
                 {data.grants.map((grant) => (
                   <tr key={grant.id}>
-                    <td>{grant.creditsRemaining}</td>
                     <td>{grant.creditsGranted}</td>
+                    <td>{grant.creditsRemaining}</td>
                     <td>{formatWhen(grant.createdAt || grant.startsAt)}</td>
                     <td>{formatWhen(grant.expiresAt)}</td>
                     <td>
-                      <span className="member-badge">{grant.status}</span>
+                      <span className="member-badge">{labelFor(CREDIT_GRANT_STATUS_LABELS, getGrantDisplayStatus(grant))}</span>
                     </td>
                   </tr>
                 ))}

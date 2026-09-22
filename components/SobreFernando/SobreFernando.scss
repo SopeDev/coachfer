@@ -233,6 +233,44 @@
     }
   }
 
+  // MOBILE (< tablet): no sticky/crossfade. Flatten both columns into the
+  // content grid and interleave: image 1, text 1, image 2, text 2.
+  @media (max-width: $break-tablet - 1px) {
+    &__content {
+      gap: 1.5rem;
+    }
+
+    &__images,
+    &__texts,
+    &__texts-inner {
+      display: contents;
+    }
+
+    &__images > &__image-wrapper:nth-child(1) {
+      order: 1;
+    }
+
+    &__text--primary {
+      order: 2;
+    }
+
+    &__images > &__image-wrapper:nth-child(2) {
+      order: 3;
+      margin-top: 2.5rem;
+    }
+
+    &__text--secondary {
+      order: 4;
+    }
+
+    &__text {
+      position: static;
+      inset: auto;
+      // Beats any inline opacity left by the desktop crossfade
+      opacity: 1 !important;
+    }
+  }
+
   &__image-placeholder {
     width: 100%;
     height: 100%;

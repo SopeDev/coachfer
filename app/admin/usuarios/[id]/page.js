@@ -5,6 +5,14 @@ import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import ConfirmModal from '../../../../components/ConfirmModal/ConfirmModal'
 import {
+  CREDIT_GRANT_STATUS_LABELS,
+  CREDIT_TRANSACTION_TYPE_LABELS,
+  PURCHASE_STATUS_LABELS,
+  ROLE_LABELS,
+  getGrantDisplayStatus,
+  labelFor
+} from '../../../../lib/labels'
+import {
   DEFAULT_TIMEZONE,
   TIMEZONE_OPTIONS,
   getTimezoneLabel,
@@ -76,7 +84,7 @@ export default function AdminUserDetailPage() {
     const data = await res.json()
     setSaving(false)
     if (!res.ok) {
-      setMessage(data.error || 'Error al guardar')
+      setMessage('Error al guardar')
       return
     }
     setMessage('Guardado.')
@@ -102,7 +110,7 @@ export default function AdminUserDetailPage() {
     const data = await res.json()
     setSaving(false)
     if (!res.ok) {
-      setMessage(creditErrors[data.error] || data.error || 'Error al ajustar créditos')
+      setMessage(creditErrors[data.error] || 'Error al ajustar créditos')
       return
     }
     setCreditReason('')
@@ -125,7 +133,7 @@ export default function AdminUserDetailPage() {
         FORBIDDEN: 'Sin permiso.',
         UNAUTHORIZED: 'Sesión expirada.'
       }
-      setMessage(errors[data.error] || data.error || 'Error al eliminar')
+      setMessage(errors[data.error] || 'Error al eliminar')
       return
     }
 
@@ -162,7 +170,7 @@ export default function AdminUserDetailPage() {
           <p className="admin-page__subtitle">{user.email}</p>
         </div>
         <div>
-          <span className="admin-badge">{user.role}</span>{' '}
+          <span className="admin-badge">{labelFor(ROLE_LABELS, user.role)}</span>{' '}
           {user.disabledAt ? (
             <span className="admin-badge admin-badge--danger">Deshabilitado</span>
           ) : (
@@ -196,9 +204,9 @@ export default function AdminUserDetailPage() {
             <label>
               Rol
               <select className="admin-select" name="role" defaultValue={user.role}>
-                <option value="USER">USER</option>
-                <option value="ADMIN">ADMIN</option>
-                <option value="FACILITATOR">FACILITATOR</option>
+                <option value="USER">Usuario</option>
+                <option value="ADMIN">Administrador</option>
+                <option value="FACILITATOR">Facilitador</option>
               </select>
             </label>
             <label>
@@ -331,7 +339,7 @@ export default function AdminUserDetailPage() {
                     </td>
                     <td>{formatDate(grant.expiresAt)}</td>
                     <td>
-                      <span className="admin-badge">{grant.status}</span>
+                      <span className="admin-badge">{labelFor(CREDIT_GRANT_STATUS_LABELS, getGrantDisplayStatus(grant))}</span>
                     </td>
                   </tr>
                 ))}
@@ -364,7 +372,7 @@ export default function AdminUserDetailPage() {
               {(user.creditTransactions || []).map((tx) => (
                 <tr key={tx.id}>
                   <td>{formatDate(tx.createdAt)}</td>
-                  <td>{tx.type}</td>
+                  <td>{labelFor(CREDIT_TRANSACTION_TYPE_LABELS, tx.type)}</td>
                   <td>{tx.amount > 0 ? `+${tx.amount}` : tx.amount}</td>
                   <td>{tx.reason || '—'}</td>
                 </tr>
@@ -398,7 +406,7 @@ export default function AdminUserDetailPage() {
                 <tr key={purchase.id}>
                   <td>{purchase.packageName || purchase.package?.name}</td>
                   <td>
-                    <span className="admin-badge">{purchase.status}</span>
+                    <span className="admin-badge">{labelFor(PURCHASE_STATUS_LABELS, purchase.status)}</span>
                   </td>
                   <td>
                     {purchase.amountPaid

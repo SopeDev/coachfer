@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
+import { PRODUCT_TYPE_LABELS, PURCHASE_STATUS_LABELS, labelFor } from '../../../lib/labels'
 
 const formatDate = (value) => {
   if (!value) return '—'
@@ -50,10 +51,10 @@ export default function AdminPurchasesPage() {
           onChange={(e) => setStatus(e.target.value)}
         >
           <option value="">Todos los estados</option>
-          <option value="PENDING">PENDING</option>
-          <option value="PAID">PAID</option>
-          <option value="FAILED">FAILED</option>
-          <option value="REFUNDED">REFUNDED</option>
+          <option value="PENDING">Pendiente</option>
+          <option value="PAID">Pagada</option>
+          <option value="FAILED">Fallida</option>
+          <option value="REFUNDED">Reembolsada</option>
         </select>
       </div>
 
@@ -81,10 +82,10 @@ export default function AdminPurchasesPage() {
                 </td>
                 <td>
                   {purchase.packageName || purchase.package?.name}
-                  <div className="admin-muted">{purchase.productType || purchase.package?.productType}</div>
+                  <div className="admin-muted">{labelFor(PRODUCT_TYPE_LABELS, purchase.productType || purchase.package?.productType)}</div>
                 </td>
                 <td>
-                  <span className="admin-badge">{purchase.status}</span>
+                  <span className="admin-badge">{labelFor(PURCHASE_STATUS_LABELS, purchase.status)}</span>
                 </td>
                 <td>
                   {purchase.amountPaid

@@ -38,45 +38,43 @@ export default function SobreFernando() {
     const t2 = text2Ref.current
     if (!img2 || !t1 || !t2) return
 
-    // Wait for fonts and images to load before calculating
-    const calculateAfterLoad = () => {
+    // Scroll-driven sticky text + crossfade only on tablet/desktop.
+    // Mobile is a plain stack: image 1, text 1, image 2, text 2 (see SCSS).
+    const mm = gsap.matchMedia()
+
+    mm.add("(min-width: 768px)", () => {
+      // Wait for fonts and images to load before calculating
       calculateStickyTop()
-    }
-    
-    // Calculate immediately
-    calculateStickyTop()
-    
-    // Also calculate after fonts load (for accurate measurements)
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => {
-        // Wait a bit for images to render
-        setTimeout(calculateAfterLoad, 100)
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+          // Wait a bit for images to render
+          setTimeout(calculateStickyTop, 100)
+        })
+      }
+
+      window.addEventListener('resize', calculateStickyTop)
+
+      // When 2nd image hits center, fade text 1 -> text 2
+      ScrollTrigger.create({
+        trigger: img2,
+        start: "top 60%",
+        onEnter: () => {
+          gsap.to(t1, { opacity: 0, duration: 0.3 })
+          gsap.to(t2, { opacity: 1, duration: 0.3 })
+        },
+        onLeaveBack: () => {
+          gsap.to(t1, { opacity: 1, duration: 0.3 })
+          gsap.to(t2, { opacity: 0, duration: 0.3 })
+        }
       })
-    }
 
-    // Recalculate on resize
-    const handleResize = () => {
-      calculateStickyTop()
-    }
-    window.addEventListener('resize', handleResize)
-
-    // When 2nd image hits center, fade text 1 -> text 2
-    ScrollTrigger.create({
-      trigger: img2,
-      start: "top 60%",
-      onEnter: () => {
-        gsap.to(t1, { opacity: 0, duration: 0.3 })
-        gsap.to(t2, { opacity: 1, duration: 0.3 })
-      },
-      onLeaveBack: () => {
-        gsap.to(t1, { opacity: 1, duration: 0.3 })
-        gsap.to(t2, { opacity: 0, duration: 0.3 })
+      return () => {
+        window.removeEventListener('resize', calculateStickyTop)
+        if (textsRef.current) textsRef.current.style.top = ''
       }
     })
 
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
+    return () => mm.revert()
   }, { scope: sectionRef })
 
   return (
