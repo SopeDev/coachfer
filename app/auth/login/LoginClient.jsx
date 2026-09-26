@@ -73,8 +73,8 @@ export default function LoginClient() {
             Email
             <input
               className="auth__input"
-              type="email"
-              autoComplete="email"
+              type="text"
+              autoComplete="username"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
