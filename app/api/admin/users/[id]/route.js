@@ -6,10 +6,15 @@ import { getUserCreditSummary } from '@/lib/credits'
 
 const patchSchema = z.object({
   name: z.string().trim().min(1).max(120).optional(),
+  // Not `.email()` — admins may set this to a phone number too.
+  username: z.string().trim().min(6).max(190).optional(),
   role: z.enum(['USER', 'ADMIN', 'FACILITATOR']).optional(),
   timezone: z.string().trim().min(1).max(80).optional(),
   adminNotes: z.string().max(5000).nullable().optional(),
-  disabled: z.boolean().optional()
+  disabled: z.boolean().optional(),
+  hasUnlimitedAccess: z.boolean().optional(),
+  unlimitedAccessUntil: z.string().datetime().nullable().optional(),
+  unlimitedAccessReason: z.string().max(500).nullable().optional()
 })
 
 export async function GET(_request, { params }) {
@@ -28,6 +33,9 @@ export async function GET(_request, { params }) {
       timezone: true,
       disabledAt: true,
       adminNotes: true,
+      hasUnlimitedAccess: true,
+      unlimitedAccessUntil: true,
+      unlimitedAccessReason: true,
       createdAt: true,
       updatedAt: true,
       stripeCustomerId: true,
@@ -110,13 +118,35 @@ export async function PATCH(request, { params }) {
     return NextResponse.json({ error: 'CANNOT_DISABLE_SELF' }, { status: 400 })
   }
 
+  if (parsed.data.username !== undefined) {
+    const username = parsed.data.username.toLowerCase()
+    if (username !== existing.email) {
+      const taken = await prisma.user.findUnique({ where: { email: username } })
+      if (taken) {
+        return NextResponse.json({ error: 'USERNAME_IN_USE' }, { status: 409 })
+      }
+    }
+  }
+
   const data = {}
   if (parsed.data.name !== undefined) data.name = parsed.data.name
+  if (parsed.data.username !== undefined) data.email = parsed.data.username.toLowerCase()
   if (parsed.data.role !== undefined) data.role = parsed.data.role
   if (parsed.data.timezone !== undefined) data.timezone = parsed.data.timezone
   if (parsed.data.adminNotes !== undefined) data.adminNotes = parsed.data.adminNotes
   if (parsed.data.disabled === true) data.disabledAt = new Date()
   if (parsed.data.disabled === false) data.disabledAt = null
+  if (parsed.data.hasUnlimitedAccess !== undefined) {
+    data.hasUnlimitedAccess = parsed.data.hasUnlimitedAccess
+  }
+  if (parsed.data.unlimitedAccessUntil !== undefined) {
+    data.unlimitedAccessUntil = parsed.data.unlimitedAccessUntil
+      ? new Date(parsed.data.unlimitedAccessUntil)
+      : null
+  }
+  if (parsed.data.unlimitedAccessReason !== undefined) {
+    data.unlimitedAccessReason = parsed.data.unlimitedAccessReason
+  }
 
   const user = await prisma.user.update({
     where: { id: params.id },
@@ -129,6 +159,9 @@ export async function PATCH(request, { params }) {
       timezone: true,
       disabledAt: true,
       adminNotes: true,
+      hasUnlimitedAccess: true,
+      unlimitedAccessUntil: true,
+      unlimitedAccessReason: true,
       updatedAt: true
     }
   })

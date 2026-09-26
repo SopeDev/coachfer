@@ -3,6 +3,7 @@ import prisma from '@/lib/prisma'
 import { requireUser } from '@/lib/session'
 import { serializeSessionForMember } from '@/lib/booking-policy'
 import { DEFAULT_TIMEZONE } from '@/lib/timezone'
+import { hasActiveUnlimitedAccess } from '@/lib/credits'
 
 export const dynamic = 'force-dynamic'
 
@@ -14,9 +15,10 @@ export async function GET(_request, { params }) {
 
   const user = await prisma.user.findUnique({
     where: { id: session.user.id },
-    select: { timezone: true }
+    select: { timezone: true, hasUnlimitedAccess: true, unlimitedAccessUntil: true }
   })
   const viewerTimezone = user?.timezone || DEFAULT_TIMEZONE
+  const viewerUnlimitedAccess = hasActiveUnlimitedAccess(user)
 
   const live = await prisma.liveSession.findUnique({
     where: { id: params.id },
@@ -51,6 +53,7 @@ export async function GET(_request, { params }) {
 
   return NextResponse.json({
     viewerTimezone,
+    viewerUnlimitedAccess,
     session: serializeSessionForMember(sessionRow, {
       reservedCount,
       viewerBooking,

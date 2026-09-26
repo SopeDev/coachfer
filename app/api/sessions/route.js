@@ -3,15 +3,19 @@ import prisma from '@/lib/prisma'
 import { requireUser } from '@/lib/session'
 import { serializeSessionForMember } from '@/lib/booking-policy'
 import { DEFAULT_TIMEZONE } from '@/lib/timezone'
+import { hasActiveUnlimitedAccess } from '@/lib/credits'
 
 export const dynamic = 'force-dynamic'
 
-const getViewerTimezone = async (userId) => {
+const getViewer = async (userId) => {
   const user = await prisma.user.findUnique({
     where: { id: userId },
-    select: { timezone: true }
+    select: { timezone: true, hasUnlimitedAccess: true, unlimitedAccessUntil: true }
   })
-  return user?.timezone || DEFAULT_TIMEZONE
+  return {
+    timezone: user?.timezone || DEFAULT_TIMEZONE,
+    unlimitedAccess: hasActiveUnlimitedAccess(user)
+  }
 }
 
 export async function GET() {
@@ -20,7 +24,8 @@ export async function GET() {
     return NextResponse.json({ error }, { status: 401 })
   }
 
-  const viewerTimezone = await getViewerTimezone(session.user.id)
+  const { timezone: viewerTimezone, unlimitedAccess: viewerUnlimitedAccess } =
+    await getViewer(session.user.id)
   const now = new Date()
   const sessions = await prisma.liveSession.findMany({
     where: {
@@ -47,6 +52,7 @@ export async function GET() {
 
   return NextResponse.json({
     viewerTimezone,
+    viewerUnlimitedAccess,
     sessions: sessions.map((live) => {
       const reservedCount = live.bookings.filter((b) => b.status === 'RESERVED').length
       const viewerBooking =

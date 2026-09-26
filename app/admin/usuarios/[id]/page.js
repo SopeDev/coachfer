@@ -43,6 +43,28 @@ const creditErrors = {
   REASON_REQUIRED: 'Indica el motivo del ajuste.'
 }
 
+const packageErrors = {
+  PACKAGE_NOT_FOUND: 'Selecciona un paquete válido.',
+  INVALID_CREDITS_USED: 'Los créditos usados no pueden ser más que los del paquete.',
+  INVALID_INPUT: 'Revisa los datos del paquete.'
+}
+
+/** datetime-local default: right now, in the browser's local time */
+const getDefaultAssignedAt = () => {
+  const now = new Date()
+  const local = new Date(now.getTime() - now.getTimezoneOffset() * 60 * 1000)
+  return local.toISOString().slice(0, 16)
+}
+
+/** ISO string → datetime-local input value, in the browser's local time. */
+const toDatetimeLocalValue = (isoString) => {
+  if (!isoString) return ''
+  const date = new Date(isoString)
+  if (Number.isNaN(date.getTime())) return ''
+  const local = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000)
+  return local.toISOString().slice(0, 16)
+}
+
 export default function AdminUserDetailPage() {
   const params = useParams()
   const router = useRouter()
@@ -57,6 +79,15 @@ export default function AdminUserDetailPage() {
   const [creditExpiresAt, setCreditExpiresAt] = useState(getDefaultCreditExpiration)
   const [creditReason, setCreditReason] = useState('')
   const [message, setMessage] = useState('')
+
+  const [packages, setPackages] = useState([])
+  const [assignPackageId, setAssignPackageId] = useState('')
+  const [assignCreditsUsed, setAssignCreditsUsed] = useState('0')
+  const [assignAssignedAt, setAssignAssignedAt] = useState(getDefaultAssignedAt)
+  const [assigningPackage, setAssigningPackage] = useState(false)
+  const [packageMessage, setPackageMessage] = useState('')
+  const [deletingGrantId, setDeletingGrantId] = useState('')
+  const [removingGrant, setRemovingGrant] = useState(false)
 
   const load = useCallback(async () => {
     setError('')
@@ -73,6 +104,23 @@ export default function AdminUserDetailPage() {
     load()
   }, [load])
 
+  useEffect(() => {
+    // Credits are only meaningful for Mastermind packages — Coaching
+    // packages aren't credit-based, so leave them out of this dropdown.
+    fetch('/api/admin/packages?type=MASTERMIND')
+      .then((res) => res.json())
+      .then((data) => {
+        setPackages(data.packages || [])
+        if (data.packages?.length) setAssignPackageId((id) => id || data.packages[0].id)
+      })
+      .catch(() => {})
+  }, [])
+
+  const profileErrors = {
+    USERNAME_IN_USE: 'Ese usuario (email o teléfono) ya está en uso.',
+    INVALID_INPUT: 'Revisa los datos del perfil.'
+  }
+
   const saveUser = async (patch) => {
     setSaving(true)
     setMessage('')
@@ -84,7 +132,7 @@ export default function AdminUserDetailPage() {
     const data = await res.json()
     setSaving(false)
     if (!res.ok) {
-      setMessage('Error al guardar')
+      setMessage(profileErrors[data.error] || 'Error al guardar')
       return
     }
     setMessage('Guardado.')
@@ -115,6 +163,60 @@ export default function AdminUserDetailPage() {
     }
     setCreditReason('')
     setMessage('Créditos actualizados.')
+    await load()
+  }
+
+  const assignPackage = async (event) => {
+    event.preventDefault()
+    setAssigningPackage(true)
+    setPackageMessage('')
+
+    const res = await fetch(`/api/admin/users/${id}/packages`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        packageId: assignPackageId,
+        creditsUsed: Number(assignCreditsUsed) || 0,
+        assignedAt: new Date(assignAssignedAt).toISOString()
+      })
+    })
+    const data = await res.json()
+    setAssigningPackage(false)
+
+    if (!res.ok) {
+      setPackageMessage(packageErrors[data.error] || 'No se pudo asignar el paquete.')
+      return
+    }
+
+    setAssignCreditsUsed('0')
+    setAssignAssignedAt(getDefaultAssignedAt())
+    setPackageMessage('Paquete asignado.')
+    await load()
+  }
+
+  const grantErrors = {
+    GRANT_IN_USE:
+      'No se puede eliminar: ya se usó en una reserva. Cancela esa reserva primero (así se libera el crédito correctamente).',
+    GRANT_NOT_FOUND: 'Ese registro ya no existe.'
+  }
+
+  const removeGrant = async () => {
+    if (!deletingGrantId) return
+    setRemovingGrant(true)
+    setPackageMessage('')
+    const res = await fetch(`/api/admin/users/${id}/packages/${deletingGrantId}`, {
+      method: 'DELETE'
+    })
+    const data = await res.json().catch(() => ({}))
+    setRemovingGrant(false)
+    setDeletingGrantId('')
+
+    if (!res.ok) {
+      setPackageMessage(grantErrors[data.error] || 'No se pudo eliminar.')
+      return
+    }
+
+    setPackageMessage('Paquete eliminado.')
     await load()
   }
 
@@ -159,6 +261,10 @@ export default function AdminUserDetailPage() {
     )
   }
 
+  const scholarshipActive =
+    user.hasUnlimitedAccess &&
+    (!user.unlimitedAccessUntil || new Date(user.unlimitedAccessUntil) > new Date())
+
   return (
     <div className="admin-page">
       <div className="admin-page__header">
@@ -175,7 +281,10 @@ export default function AdminUserDetailPage() {
             <span className="admin-badge admin-badge--danger">Deshabilitado</span>
           ) : (
             <span className="admin-badge admin-badge--ok">Activo</span>
-          )}
+          )}{' '}
+          {scholarshipActive ? (
+            <span className="admin-badge admin-badge--ok">Beca — ilimitado</span>
+          ) : null}
         </div>
       </div>
 
@@ -191,6 +300,7 @@ export default function AdminUserDetailPage() {
               const form = new FormData(e.currentTarget)
               saveUser({
                 name: form.get('name'),
+                username: form.get('username'),
                 role: form.get('role'),
                 timezone: form.get('timezone'),
                 adminNotes: form.get('adminNotes')
@@ -200,6 +310,19 @@ export default function AdminUserDetailPage() {
             <label>
               Nombre
               <input className="admin-input" name="name" defaultValue={user.name || ''} />
+            </label>
+            <label>
+              Usuario (email o teléfono)
+              <input
+                className="admin-input"
+                name="username"
+                defaultValue={user.email || ''}
+                required
+                minLength={6}
+              />
+              <span className="admin-muted">
+                Es lo que la persona usa para iniciar sesión.
+              </span>
             </label>
             <label>
               Rol
@@ -328,12 +451,17 @@ export default function AdminUserDetailPage() {
                   <th>Restantes</th>
                   <th>Expira</th>
                   <th>Estado</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 {(user.creditGrants || []).map((grant) => (
                   <tr key={grant.id}>
-                    <td className="admin-muted">{grant.id.slice(0, 8)}…</td>
+                    <td>
+                      {grant.purchase?.packageName ||
+                        grant.purchase?.package?.name ||
+                        'Ajuste manual'}
+                    </td>
                     <td>
                       {grant.creditsRemaining}/{grant.creditsGranted}
                     </td>
@@ -341,11 +469,20 @@ export default function AdminUserDetailPage() {
                     <td>
                       <span className="admin-badge">{labelFor(CREDIT_GRANT_STATUS_LABELS, getGrantDisplayStatus(grant))}</span>
                     </td>
+                    <td>
+                      <button
+                        className="admin-btn admin-btn--ghost"
+                        type="button"
+                        onClick={() => setDeletingGrantId(grant.id)}
+                      >
+                        Eliminar
+                      </button>
+                    </td>
                   </tr>
                 ))}
                 {!user.creditGrants?.length ? (
                   <tr>
-                    <td colSpan={4} className="admin-muted">
+                    <td colSpan={5} className="admin-muted">
                       Sin paquetes de créditos aún
                     </td>
                   </tr>
@@ -355,6 +492,121 @@ export default function AdminUserDetailPage() {
           </div>
         </section>
       </div>
+
+      <section className="admin-card">
+        <h2 className="admin-card__title">Beca (acceso ilimitado)</h2>
+        <p className="admin-muted" style={{ marginBottom: '1rem' }}>
+          Bypasa el sistema de créditos por completo: la persona puede
+          reservar cualquier sesión sin que se descuente nada. Úsalo para
+          estudiantes becados.
+        </p>
+        <form
+          className="admin-form"
+          onSubmit={(e) => {
+            e.preventDefault()
+            const form = new FormData(e.currentTarget)
+            const until = form.get('unlimitedAccessUntil')
+            saveUser({
+              hasUnlimitedAccess: form.get('hasUnlimitedAccess') === 'on',
+              unlimitedAccessUntil: until ? new Date(until).toISOString() : null,
+              unlimitedAccessReason: form.get('unlimitedAccessReason') || null
+            })
+          }}
+        >
+          <label style={{ flexDirection: 'row', alignItems: 'center', gap: '0.5rem' }}>
+            <input
+              type="checkbox"
+              name="hasUnlimitedAccess"
+              defaultChecked={user.hasUnlimitedAccess}
+            />
+            Acceso ilimitado activo
+          </label>
+          <label>
+            Vigente hasta (opcional)
+            <input
+              className="admin-input"
+              type="datetime-local"
+              name="unlimitedAccessUntil"
+              defaultValue={toDatetimeLocalValue(user.unlimitedAccessUntil)}
+            />
+            <span className="admin-muted">
+              Déjalo vacío para que no expire nunca.
+            </span>
+          </label>
+          <label>
+            Motivo / convenio (opcional)
+            <input
+              className="admin-input"
+              name="unlimitedAccessReason"
+              defaultValue={user.unlimitedAccessReason || ''}
+              placeholder="Ej. Beca completa, convenio Universidad X"
+            />
+          </label>
+          <button className="admin-btn" type="submit" disabled={saving}>
+            Guardar beca
+          </button>
+        </form>
+      </section>
+
+      <section className="admin-card">
+        <h2 className="admin-card__title">Asignar paquete</h2>
+        <p className="admin-muted" style={{ marginBottom: '1rem' }}>
+          A diferencia del ajuste manual de arriba, esto crea una compra real
+          ligada a un paquete: los créditos otorgados salen del paquete
+          elegido, y puedes indicar cuántos ya se usaron y desde qué fecha
+          corre la vigencia.
+        </p>
+        {packageMessage ? <p className="admin-muted">{packageMessage}</p> : null}
+        <form className="admin-form" onSubmit={assignPackage}>
+          <label>
+            Paquete
+            <select
+              className="admin-select"
+              value={assignPackageId}
+              onChange={(e) => setAssignPackageId(e.target.value)}
+              required
+            >
+              {packages.map((pkg) => (
+                <option key={pkg.id} value={pkg.id}>
+                  {pkg.name} ({pkg.creditQuantity} créditos
+                  {pkg.validityDays ? `, ${pkg.validityDays} días` : ''})
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Créditos ya usados
+            <input
+              className="admin-input"
+              type="number"
+              min="0"
+              step="1"
+              value={assignCreditsUsed}
+              onChange={(e) => setAssignCreditsUsed(e.target.value)}
+            />
+            <span className="admin-muted">
+              Los créditos pendientes se calculan como (total del paquete − usados).
+            </span>
+          </label>
+          <label>
+            Fecha de asignación
+            <input
+              className="admin-input"
+              type="datetime-local"
+              value={assignAssignedAt}
+              onChange={(e) => setAssignAssignedAt(e.target.value)}
+              required
+            />
+            <span className="admin-muted">
+              La vigencia del paquete corre desde esta fecha. Se interpreta
+              según la zona horaria de tu navegador.
+            </span>
+          </label>
+          <button className="admin-btn" type="submit" disabled={assigningPackage || !packages.length}>
+            {assigningPackage ? 'Asignando…' : 'Asignar paquete'}
+          </button>
+        </form>
+      </section>
 
       <section className="admin-card">
         <h2 className="admin-card__title">Historial de créditos</h2>
@@ -442,6 +694,25 @@ export default function AdminUserDetailPage() {
           compras, créditos, reservas y datos de autenticación.
         </p>
         <p>Esta acción no se puede deshacer.</p>
+      </ConfirmModal>
+
+      <ConfirmModal
+        open={Boolean(deletingGrantId)}
+        title="Eliminar paquete asignado"
+        confirmLabel={removingGrant ? 'Eliminando…' : 'Eliminar'}
+        tone="danger"
+        busy={removingGrant}
+        onConfirm={removeGrant}
+        onClose={() => setDeletingGrantId('')}
+      >
+        <p>
+          Se eliminará este paquete/ajuste y su compra asociada (si la tiene),
+          junto con su historial de movimientos.
+        </p>
+        <p>
+          Solo se puede eliminar si nadie ha reservado una sesión con estos
+          créditos todavía. Esta acción no se puede deshacer.
+        </p>
       </ConfirmModal>
     </div>
   )

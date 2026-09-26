@@ -31,8 +31,9 @@ export default function CreditosPage() {
       <div className="member-page__header">
         <h1 className="member-page__title">Mis créditos</h1>
         <p className="member-page__subtitle">
-          Cada reserva de sesión en vivo usa 1 crédito del paquete que vence
-          primero. Fechas en tu zona horaria.
+          {data?.unlimitedAccess
+            ? 'Tu beca te da acceso ilimitado: no necesitas créditos para reservar.'
+            : 'Cada reserva de sesión en vivo usa 1 crédito del paquete que vence primero. Fechas en tu zona horaria.'}
         </p>
       </div>
 
@@ -40,10 +41,26 @@ export default function CreditosPage() {
 
       {data ? (
         <>
+          {data.unlimitedAccess ? (
+            <div
+              className="member-card"
+              style={{ marginBottom: '1.25rem', borderColor: 'var(--color-indigo, #3a18b1)' }}
+            >
+              <strong>Beca activa — acceso ilimitado</strong>
+              <p className="member-muted" style={{ margin: '0.35rem 0 0' }}>
+                {data.unlimitedAccessUntil
+                  ? `Vigente hasta ${formatWhen(data.unlimitedAccessUntil)}.`
+                  : 'Sin fecha de vencimiento.'}
+              </p>
+            </div>
+          ) : null}
+
           <div className="member-stats">
             <div className="member-stat">
               <p className="member-stat__label">Disponibles ahora</p>
-              <p className="member-stat__value">{data.availableCredits}</p>
+              <p className="member-stat__value">
+                {data.unlimitedAccess ? 'Ilimitado' : data.availableCredits}
+              </p>
             </div>
           </div>
 
@@ -73,7 +90,9 @@ export default function CreditosPage() {
                 {!data.grants.length ? (
                   <tr>
                     <td colSpan={5} className="member-muted">
-                      Aún no tienes créditos. Adquiere un paquete del Entrenamiento.
+                      {data.unlimitedAccess
+                        ? 'No necesitas paquetes de créditos: tu beca te da acceso ilimitado.'
+                        : 'Aún no tienes créditos. Adquiere un paquete del Entrenamiento.'}
                     </td>
                   </tr>
                 ) : null}

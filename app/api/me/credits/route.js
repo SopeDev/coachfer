@@ -26,6 +26,8 @@ export async function GET() {
     viewerTimezone,
     availableCredits: summary.availableCredits,
     activeGrantCount: summary.activeGrantCount,
+    unlimitedAccess: summary.unlimitedAccess,
+    unlimitedAccessUntil: summary.unlimitedAccessUntil,
     grants: summary.grants.map((g) => ({
       id: g.id,
       creditsGranted: g.creditsGranted,

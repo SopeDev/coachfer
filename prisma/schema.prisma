@@ -74,6 +74,11 @@ model User {
   timezone         String?   @default("America/Mexico_City")
   disabledAt       DateTime?
   adminNotes       String?
+  // Scholarship / unlimited access — bypasses the credit system entirely
+  // for live-session bookings. unlimitedAccessUntil null = no expiration.
+  hasUnlimitedAccess    Boolean   @default(false)
+  unlimitedAccessUntil  DateTime?
+  unlimitedAccessReason String?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
 
@@ -266,7 +271,9 @@ model Booking {
   id                   String        @id @default(cuid())
   userId               String
   liveSessionId        String
-  creditGrantId        String
+  // Nullable: null means the booking was made with unlimited/scholarship
+  // access, so no credit was ever consumed for it.
+  creditGrantId        String?
   status               BookingStatus @default(RESERVED)
   bookedAt             DateTime      @default(now())
   cancelledAt          DateTime?
@@ -281,7 +288,7 @@ model Booking {
 
   user        User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   liveSession LiveSession         @relation(fields: [liveSessionId], references: [id], onDelete: Cascade)
-  creditGrant CreditGrant         @relation(fields: [creditGrantId], references: [id])
+  creditGrant CreditGrant?        @relation(fields: [creditGrantId], references: [id])
   transactions CreditTransaction[]
 
   @@unique([userId, liveSessionId])

@@ -4,6 +4,11 @@ import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ROLE_LABELS, labelFor } from '../../../lib/labels'
 
+const formatDate = (value) => {
+  if (!value) return '—'
+  return new Date(value).toLocaleDateString('es-MX', { dateStyle: 'medium' })
+}
+
 export default function AdminUsersPage() {
   const [q, setQ] = useState('')
   const [role, setRole] = useState('')
@@ -46,6 +51,9 @@ export default function AdminUsersPage() {
             Busca miembros, revisa créditos y gestiona accesos.
           </p>
         </div>
+        <Link className="admin-btn" href="/admin/usuarios/nuevo">
+          + Nuevo usuario
+        </Link>
       </div>
 
       <form
@@ -94,6 +102,7 @@ export default function AdminUsersPage() {
                   <th>Usuario</th>
                   <th>Rol</th>
                   <th>Créditos</th>
+                  <th>Paquete activo</th>
                   <th>Compras</th>
                   <th>Estado</th>
                   <th></th>
@@ -109,7 +118,24 @@ export default function AdminUsersPage() {
                     <td>
                       <span className="admin-badge">{labelFor(ROLE_LABELS, user.role)}</span>
                     </td>
-                    <td>{user.availableCredits}</td>
+                    <td>{user.unlimitedAccess ? 'Ilimitado' : user.availableCredits}</td>
+                    <td>
+                      {user.unlimitedAccess ? (
+                        <span className="admin-badge admin-badge--ok">Beca — ilimitado</span>
+                      ) : user.activePackage ? (
+                        <>
+                          {user.activePackage.name}
+                          {user.activePackage.extraCount > 0
+                            ? ` (+${user.activePackage.extraCount} más)`
+                            : ''}
+                          <div className="admin-muted">
+                            Desde {formatDate(user.activePackage.acquiredAt)}
+                          </div>
+                        </>
+                      ) : (
+                        <span className="admin-muted">—</span>
+                      )}
+                    </td>
                     <td>{user.purchasesCount}</td>
                     <td>
                       {user.disabledAt ? (

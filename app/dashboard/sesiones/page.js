@@ -95,7 +95,7 @@ const getAvailabilityCopy = (session) => {
   return `${session.spotsRemaining} de ${session.capacity} lugares disponibles.`
 }
 
-function SessionCard({ session, now, onUpdate, onToast }) {
+function SessionCard({ session, now, unlimitedAccess, onUpdate, onToast }) {
   const [confirming, setConfirming] = useState(false)
   const [confirmingCancel, setConfirmingCancel] = useState(false)
   const [busy, setBusy] = useState(false)
@@ -148,7 +148,9 @@ function SessionCard({ session, now, onUpdate, onToast }) {
     }
 
     setConfirmingCancel(false)
-    onToast('Reserva cancelada. Recuperaste 1 crédito.')
+    onToast(
+      unlimitedAccess ? 'Reserva cancelada.' : 'Reserva cancelada. Recuperaste 1 crédito.'
+    )
     onUpdate({
       ...session,
       spotsTaken: Math.max(0, session.spotsTaken - 1),
@@ -233,18 +235,29 @@ function SessionCard({ session, now, onUpdate, onToast }) {
       <ConfirmModal
         open={confirming && !reserved}
         title="Confirmar reserva"
-        confirmLabel={busy ? 'Reservando…' : 'Confirmar (1 crédito)'}
+        confirmLabel={
+          busy ? 'Reservando…' : unlimitedAccess ? 'Confirmar reserva' : 'Confirmar (1 crédito)'
+        }
         busy={busy}
         onConfirm={reserve}
         onClose={() => setConfirming(false)}
       >
-        <p>
-          Se utilizará <strong>1 crédito</strong> para reservar tu lugar.
-        </p>
-        <p>
-          Puedes cancelar hasta {session.cancelDeadlineHours} horas antes para
-          recuperar el crédito.
-        </p>
+        {unlimitedAccess ? (
+          <p>
+            Tu beca te da <strong>acceso ilimitado</strong>: no se descuenta
+            ningún crédito por esta reserva.
+          </p>
+        ) : (
+          <>
+            <p>
+              Se utilizará <strong>1 crédito</strong> para reservar tu lugar.
+            </p>
+            <p>
+              Puedes cancelar hasta {session.cancelDeadlineHours} horas antes para
+              recuperar el crédito.
+            </p>
+          </>
+        )}
       </ConfirmModal>
 
       <ConfirmModal
@@ -256,7 +269,11 @@ function SessionCard({ session, now, onUpdate, onToast }) {
         onConfirm={cancel}
         onClose={() => setConfirmingCancel(false)}
       >
-        <p>Recuperarás 1 crédito y tu lugar quedará disponible para otra persona.</p>
+        <p>
+          {unlimitedAccess
+            ? 'Tu lugar quedará disponible para otra persona.'
+            : 'Recuperarás 1 crédito y tu lugar quedará disponible para otra persona.'}
+        </p>
       </ConfirmModal>
     </article>
   )
@@ -268,6 +285,7 @@ export default function SesionesPage() {
   const [loading, setLoading] = useState(true)
   const [now] = useState(() => Date.now())
   const [toast, setToast] = useState(null)
+  const [unlimitedAccess, setUnlimitedAccess] = useState(false)
 
   const showToast = (message, type = 'success') => {
     setToast({ message, type, id: Date.now() })
@@ -279,6 +297,7 @@ export default function SesionesPage() {
         const data = await res.json()
         if (!res.ok) throw new Error(data.error || 'Error')
         setSessions(data.sessions || [])
+        setUnlimitedAccess(Boolean(data.viewerUnlimitedAccess))
       })
       .catch(() => setError('No se pudieron cargar las sesiones.'))
       .finally(() => setLoading(false))
@@ -295,7 +314,9 @@ export default function SesionesPage() {
       <div className="member-page__header">
         <h1 className="member-page__title">Explorar sesiones</h1>
         <p className="member-page__subtitle">
-          Encuentra tu próxima sesión y reserva tu lugar. Cada reserva usa 1 crédito.
+          {unlimitedAccess
+            ? 'Encuentra tu próxima sesión y reserva tu lugar. Tu beca te da acceso ilimitado.'
+            : 'Encuentra tu próxima sesión y reserva tu lugar. Cada reserva usa 1 crédito.'}
         </p>
       </div>
 
@@ -324,6 +345,7 @@ export default function SesionesPage() {
                 key={session.id}
                 session={session}
                 now={now}
+                unlimitedAccess={unlimitedAccess}
                 onUpdate={(updated) =>
                   setSessions((current) =>
                     current.map((item) => (item.id === updated.id ? updated : item))

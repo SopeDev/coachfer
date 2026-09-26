@@ -40,7 +40,9 @@ export default function DashboardHomePage() {
       <div className="member-page__header">
         <h1 className="member-page__title">Mi espacio</h1>
         <p className="member-page__subtitle">
-          Reserva sesiones del Entrenamiento de la Consciencia con tus créditos.
+          {credits?.unlimitedAccess
+            ? 'Tu beca te da acceso ilimitado a las sesiones del Entrenamiento de la Consciencia.'
+            : 'Reserva sesiones del Entrenamiento de la Consciencia con tus créditos.'}
         </p>
       </div>
 
@@ -50,13 +52,13 @@ export default function DashboardHomePage() {
         <div className="member-stat">
           <p className="member-stat__label">Créditos disponibles</p>
           <p className="member-stat__value">
-            {credits ? credits.availableCredits : '…'}
+            {!credits ? '…' : credits.unlimitedAccess ? 'Ilimitado' : credits.availableCredits}
           </p>
         </div>
         <div className="member-stat">
           <p className="member-stat__label">Paquetes activos</p>
           <p className="member-stat__value">
-            {credits ? credits.activeGrantCount : '…'}
+            {!credits ? '…' : credits.unlimitedAccess ? 'Beca' : credits.activeGrantCount}
           </p>
         </div>
       </div>

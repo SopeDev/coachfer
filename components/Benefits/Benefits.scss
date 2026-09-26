@@ -6,12 +6,21 @@
   overflow-x: hidden;
   padding: 3rem 1rem;
 
+  // Tablet+: this section gets pinned while its phases fade in. Give it
+  // the full viewport height so its own (opaque) background always covers
+  // the screen during the pin — otherwise, since the section is shorter
+  // than 100vh, the fixed section leaves a gap at the bottom that exposes
+  // GSAP's unstyled pin-spacer underneath.
   @media (min-width: $break-tablet) {
     padding: 4rem 2rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   @media (min-width: $break-desktop) {
-    padding: 5rem 4rem;
+    padding: 10rem 4rem 8rem;
   }
 
   &__header {
@@ -46,106 +55,87 @@
   }
 
   &__columns-wrapper {
-    width: 100%;
-    position: relative;
-    min-height: 100vh;
+    max-width: $break-desktop;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 
-    @media (min-width: 769px) {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+    @media (min-width: $break-tablet) {
+      flex-direction: row;
+      align-items: stretch;
       gap: 0;
-    }
-
-    @media (max-width: $break-tablet) {
-      display: flex;
-      flex-direction: column;
     }
   }
 
   &__column {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    transform: translateZ(0); // Force GPU acceleration
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    will-change: transform;
-
-    &--content {
-      position: relative;
-    }
-  }
-
-  &__column-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &__column-content {
-    position: relative;
-    z-index: 2;
-    max-width: 90%;
-    width: 100%;
-    padding: 4rem 2rem;
-    text-align: center;
-    color: var(--color-gray);
+    background: var(--color-soft-gray);
+    border: 1px solid rgba(58, 24, 177, 0.1);
+    border-radius: 16px;
+    padding: 2rem 1.75rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    
-    // Subtle phase-panel framing
-    border-left: 1px solid rgba(58, 24, 177, 0.15);
-    border-right: 1px solid rgba(58, 24, 177, 0.15);
+    text-align: center;
 
     @media (min-width: $break-tablet) {
-      max-width: 85%;
-      padding: 5rem 2.5rem;
-      border-left-width: 2px;
-      border-right-width: 2px;
+      flex: 1;
+      min-width: 0;
+      padding: 2.25rem 1.5rem;
     }
 
     @media (min-width: $break-desktop) {
-      max-width: 80%;
-      padding: 6rem 3rem;
-      border-left-width: 2px;
-      border-right-width: 2px;
+      padding: 2.75rem 2rem;
+    }
+  }
+
+  // Step connector between phases — desktop/tablet only
+  &__connector {
+    display: none;
+
+    @media (min-width: $break-tablet) {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      color: rgba(58, 24, 177, 0.28);
+
+      svg {
+        width: 22px;
+        height: 22px;
+      }
+    }
+
+    @media (min-width: $break-desktop) {
+      width: 3rem;
+
+      svg {
+        width: 26px;
+        height: 26px;
+      }
     }
   }
 
   &__column-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 2rem;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1.25rem;
     color: var(--color-indigo);
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 
     @media (min-width: $break-tablet) {
-      width: 100px;
-      height: 100px;
-      margin-bottom: 2.5rem;
+      width: 72px;
+      height: 72px;
     }
 
     @media (min-width: $break-desktop) {
-      width: 120px;
-      height: 120px;
-      margin-bottom: 3rem;
+      width: 84px;
+      height: 84px;
+      margin-bottom: 1.5rem;
     }
   }
 
@@ -155,26 +145,10 @@
 
     &--small {
       transform: scale(0.75);
-
-      @media (min-width: $break-tablet) {
-        transform: scale(0.8);
-      }
-
-      @media (min-width: $break-desktop) {
-        transform: scale(0.85);
-      }
     }
 
     &--large {
       transform: scale(1.25);
-
-      @media (min-width: $break-tablet) {
-        transform: scale(1.35);
-      }
-
-      @media (min-width: $break-desktop) {
-        transform: scale(1.5);
-      }
     }
   }
 
@@ -186,57 +160,35 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--color-indigo);
-    margin-bottom: 0.75rem;
-
-    @media (min-width: $break-tablet) {
-      font-size: 0.8125rem;
-      margin-bottom: 1rem;
-    }
+    margin-bottom: 0.6rem;
   }
 
   &__column-eyebrow {
     display: block;
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     color: var(--color-golden);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     font-weight: 700;
-
-    @media (min-width: $break-tablet) {
-      font-size: 0.9375rem;
-      margin-bottom: 2rem;
-    }
 
     @media (min-width: $break-desktop) {
       font-size: 1rem;
-      margin-bottom: 2.5rem;
     }
   }
 
   &__column-paragraph {
-    font-size: 1rem;
-    line-height: 1.8;
+    font-size: 0.9375rem;
+    line-height: 1.7;
     color: var(--color-gray);
     margin: 0;
 
     @media (min-width: $break-tablet) {
-      font-size: 1.125rem;
+      font-size: 0.9375rem;
     }
 
     @media (min-width: $break-desktop) {
-      font-size: 1.25rem;
-    }
-  }
-
-  // ===== MOBILE RESPONSIVE OVERRIDES =====
-  @media (max-width: $break-tablet) {
-    &__columns-wrapper {
-      grid-template-columns: 1fr;
-    }
-
-    &__column {
-      min-height: 100vh;
+      font-size: 1rem;
     }
   }
 }
